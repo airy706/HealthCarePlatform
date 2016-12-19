@@ -1,16 +1,19 @@
 package com.nirvana.dal.po;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Length;
 
 import com.nirvana.app.validator.BadWords;
 @Entity
-@Table(name="test")
+@Table(name="user")
 public class User {
 	
 	@Id
@@ -21,6 +24,10 @@ public class User {
 	@BadWords
 	private String password;
 
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="carId")
+	private Car car;
+	
 	public int getId() {
 		return id;
 	}
@@ -39,6 +46,14 @@ public class User {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public Car getCar() {
+		return car;
+	}
+
+	public void setCar(Car car) {
+		this.car = car;
 	}
 
 	public void setPassword(String password) {

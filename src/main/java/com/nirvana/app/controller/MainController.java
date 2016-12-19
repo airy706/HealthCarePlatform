@@ -17,12 +17,14 @@ public class MainController extends BaseController {
 
 	@RequestMapping({ "/test" })
 	public void test(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		User u = new User();
-		u.setUsername("test");
-		u.setPassword("123");
-		userbo.save(u);
-		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print("Congratulations!");
+//		User u = new User();
+//		u.setUsername("test");
+//		u.setPassword("123");
+//		userbo.save(u);
+//		response.setContentType("text/html;charset=utf-8");
+//		response.getWriter().print("Congratulations!");
+		userbo.test(null);
+		
 	}
 
 }

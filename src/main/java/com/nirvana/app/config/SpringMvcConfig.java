@@ -7,7 +7,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @ImportResource("classpath:spring-jpa.xml")
-@EnableTransactionManagement
-@EnableJpaRepositories(basePackages="com.nirvana.dal.api")
+//@EnableTransactionManagement
+//@EnableJpaRepositories(basePackages="com.nirvana.dal.api")
 public class SpringMvcConfig {
+	
 }
