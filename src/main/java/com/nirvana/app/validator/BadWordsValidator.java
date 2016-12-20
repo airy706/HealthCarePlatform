@@ -14,12 +14,10 @@ public class BadWordsValidator implements ConstraintValidator<BadWords, String> 
 		return true;
 	}
 	
-	@Override
 	public void initialize(BadWords arg0) {
 		
 	}
 
-	@Override
 	public boolean isValid(String val, ConstraintValidatorContext arg1) {
 		return checkValid(val);
 	}

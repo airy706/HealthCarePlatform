@@ -17,8 +17,6 @@ public class UserServiceBO implements UserService {
 	@Autowired
 	private UserDao userdao;
 	
-	@Override
-	
 	@Transactional
 	public void test(User u) {
 		User user=userdao.findOne(1);
