@@ -27,7 +27,7 @@ public class NodeData {
 	private String onekeycall;
 	private String pid;
 	private String sensortype;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date status_change_time;
 	private String wheelstyle;
 	private String gps;

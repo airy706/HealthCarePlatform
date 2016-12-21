@@ -21,7 +21,7 @@ public class Notice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer noticeid;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date noticedate;
 	private String noticetitle;
 	@Length(max=10000)

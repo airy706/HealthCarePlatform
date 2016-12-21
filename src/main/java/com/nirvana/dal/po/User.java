@@ -28,9 +28,9 @@ public class User {
 	private String userapartment;
 	private String useridentity;
 	private Integer typeid;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date logintime;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date logouttime;
 	private String ipaddress;
 	private Integer status;
