@@ -17,14 +17,14 @@ public class UserServiceBO implements UserService {
 	@Autowired
 	private UserDao userdao;
 	
-	@Transactional
-	public void test(User u) {
-		User user=userdao.findOne(1);
-		
-		user.setUsername(UUID.randomUUID().toString().substring(0,5));
-		userdao.save(user);
-		throw new RuntimeException("fuck");
-	}
+//	@Transactional
+//	public void test(User u) {
+//		User user=userdao.findOne(1);
+//		
+//		user.setUsername(UUID.randomUUID().toString().substring(0,5));
+//		userdao.save(user);
+//		throw new RuntimeException("fuck");
+//	}
 	
 	
 

@@ -23,7 +23,7 @@ public class MainController extends BaseController {
 //		userbo.save(u);
 //		response.setContentType("text/html;charset=utf-8");
 //		response.getWriter().print("Congratulations!");
-		userbo.test(null);
+//		userbo.test(null);
 		
 	}
 
