@@ -9,7 +9,7 @@ import com.nirvana.dal.po.User;
 
 @Repository
 public interface UserDao extends JpaRepository<User, Integer> {
-	@Query("SELECT u FROM User u WHERE u.username=:username")
-	User findByUsername(@Param("username") String username);
+//	@Query("SELECT u FROM User u WHERE u.username=:username")
+//	User findByUsername(@Param("username") String username);
 
 }
