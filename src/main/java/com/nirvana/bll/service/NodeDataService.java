@@ -1,5 +1,7 @@
 package com.nirvana.bll.service;
 
-public interface NodeDataService {
+import com.nirvana.dal.po.NodeData;
 
+public interface NodeDataService {
+	void addData(NodeData data);
 }
