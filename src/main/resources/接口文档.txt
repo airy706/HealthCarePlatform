@@ -6,21 +6,27 @@
 		result:{}  //结果数据
 	}
 
-1. 登录 url:
+1. 登录 url:/login
  	request:
 		username
     	password
 	response:
 
-2. 创建社区 url:
+2. 创建社区 url:/community/create
 	request:
+		{communityname:bb, communitytel:1231241, communitylocation:12313123123, latitude:11, longtitude:532}
 	response:
 
-3. 删除社区 url:
+3. 删除社区 url:/community/del
 	request:
+		id
 	response:
 
 4. 查找社区 url:
+	request:
+		name
+		location
+	response:
 5. 超管公告添加
 6. 超管公告删除
 7. 超管公告编辑

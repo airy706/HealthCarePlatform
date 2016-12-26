@@ -12,7 +12,7 @@ public class Result {
 	public static Result getFailInstance(String msg,Object result){
 		Result r=new Result();
 		r.state=FAIL;
-		r.msg="";
+		r.msg=msg;
 		r.result=result;
 		return r;
 	}

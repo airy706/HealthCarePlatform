@@ -1,5 +1,13 @@
 package com.nirvana.bll.service;
 
-public interface CommunityService {
+import java.util.List;
 
+import com.nirvana.dal.po.Community;
+
+public interface CommunityService {
+	boolean add(Community community);
+	
+	boolean delById(Integer id);
+	
+	List<Community> findFuzzy(String name,String location);
 }
