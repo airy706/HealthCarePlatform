@@ -2,31 +2,23 @@ package com.nirvana.dal.po;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 @Entity
-@Table(name = "nodedata")
-public class NodeData {
+@Table(name = "alarmdata")
+public class AlarmData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer dataid;
 	private String did;
-	private String sensortype;
+	private Integer reasontype;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date status_change_time;
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "nodeid")
-	private Node node;
-	private String data;
 
 	public Integer getDataid() {
 		return dataid;
@@ -44,12 +36,12 @@ public class NodeData {
 		this.did = did;
 	}
 
-	public String getSensortype() {
-		return sensortype;
+	public Integer getReasontype() {
+		return reasontype;
 	}
 
-	public void setSensortype(String sensortype) {
-		this.sensortype = sensortype;
+	public void setReasontype(Integer reasontype) {
+		this.reasontype = reasontype;
 	}
 
 	public Date getStatus_change_time() {
@@ -60,26 +52,10 @@ public class NodeData {
 		this.status_change_time = status_change_time;
 	}
 
-	public Node getNode() {
-		return node;
-	}
-
-	public void setNode(Node node) {
-		this.node = node;
-	}
-
-	public String getData() {
-		return data;
-	}
-
-	public void setData(String data) {
-		this.data = data;
-	}
-
 	@Override
 	public String toString() {
-		return "NodeData [dataid=" + dataid + ", did=" + did + ", sensortype=" + sensortype + ", status_change_time="
-				+ status_change_time + ", node=" + node + ", data=" + data + "]";
+		return "AlarmData [dataid=" + dataid + ", did=" + did + ", reasontype=" + reasontype + ", status_change_time="
+				+ status_change_time + "]";
 	}
 
 }
