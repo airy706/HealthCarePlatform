@@ -14,23 +14,32 @@ import javax.persistence.Table;
 @Table(name = "community")
 public class Community {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer communityid;
-	
+
+	private String areaname;
 	private String communityname;
 	private String communitytel;
 	private String communitylocation;
 	private String latitude;
 	private String longtitude;
-	
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="community")
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "community")
 	private Set<User> users;
-	
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="community")
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "community")
 	private Set<Notice> notices;
 
 	public Set<Notice> getNotices() {
 		return notices;
+	}
+
+	public String getAreaname() {
+		return areaname;
+	}
+
+	public void setAreaname(String areaname) {
+		this.areaname = areaname;
 	}
 
 	public void setNotices(Set<Notice> notices) {
@@ -95,9 +104,11 @@ public class Community {
 
 	@Override
 	public String toString() {
-		return "Community [communityid=" + communityid + ", communityname=" + communityname + ", communitytel="
-				+ communitytel + ", communitylocation=" + communitylocation + ", latitude=" + latitude + ", longtitude="
-				+ longtitude + ", users=" + users + ", notices=" + notices + "]";
+		return "Community [communityid=" + communityid + ", areaname=" + areaname + ", communityname=" + communityname
+				+ ", communitytel=" + communitytel + ", communitylocation=" + communitylocation + ", latitude="
+				+ latitude + ", longtitude=" + longtitude + ", users=" + users + ", notices=" + notices + "]";
 	}
+
+	
 
 }
