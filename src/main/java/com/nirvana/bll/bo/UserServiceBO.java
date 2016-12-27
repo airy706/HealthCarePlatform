@@ -22,6 +22,11 @@ public class UserServiceBO implements UserService {
 		User user = userdao.findByUsernameandPsd(username, password);
 		return user;
 	}
+
+	@Override
+	public void add(User user) {
+		userdao.save(user);
+	}
 	
 
 	

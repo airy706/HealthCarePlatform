@@ -16,26 +16,15 @@ import javax.persistence.Table;
 @Table(name = "node")
 public class Node {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer nodeid;
 	private String nodename;
 	private Integer nodetype;
 	private Integer nodestatus;
-	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="userid")
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "userid")
 	private User user;
-	
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="node")
-	private Set<NodeData> nodedatas;
-
-	public Set<NodeData> getNodedatas() {
-		return nodedatas;
-	}
-
-	public void setNodedatas(Set<NodeData> nodedatas) {
-		this.nodedatas = nodedatas;
-	}
 
 	public Integer getNodeid() {
 		return nodeid;
@@ -80,7 +69,7 @@ public class Node {
 	@Override
 	public String toString() {
 		return "Node [nodeid=" + nodeid + ", nodename=" + nodename + ", nodetype=" + nodetype + ", nodestatus="
-				+ nodestatus + ", user=" + user + ", nodedatas=" + nodedatas + "]";
+				+ nodestatus + ", user=" + user + "]";
 	}
 
 }

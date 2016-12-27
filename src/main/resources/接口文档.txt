@@ -27,9 +27,35 @@
 		name
 		location
 	response:
+		{"state":"success","msg":"","result":[{"communityid":1,"communityname":"bb","communitytel":"1231241","communitylocation":"123","latitude":"11","longtitude":"532","users":[],"notices":[]},{"communityid":3,"communityname":"bb","communitytel":"1231241","communitylocation":"1231312312313132123","latitude":"11","longtitude":"532","users":[],"notices":[]}]}
 5. 超管公告添加
+
 6. 超管公告删除
 7. 超管公告编辑
 8. 超管公告查询
+
+
+
+NodeData访问url   http://139.199.76.64:8080/MavenJpaDemo/data/uploadnode/{jsonstr}
+jsonstr 格式：
+{"did":"131341413132","sensortype":"1","status_change_time":当前时间就new Date().toString(),"data":"datavalue","nodeid":"1312"}
+注意：sensortype：代表此数据的传感器类型
+	具体传的值你事先定义好
+	比如：1：压力传感器
+	     2：心率传感器
+	     。。。。
+LocationData  url   http://139.199.76.64:8080/MavenJpaDemo/data/uploadloc/{jsonstr}
+jsonstr 格式：
+{"did":"1313231312","gps":"address","longtitude":"110","latitude":"110","status_change_time":new Date().toString()}
+
+AlarmData访问  url  http://139.199.76.64:8080/MavenJpaDemo/data/uploadalarm/{jsonstr}
+jsonstr 格式：
+{"did":"131313","reasontype":1,"status_change_time":new Date().toString()}
+注意：这里reasontype代表哪种异常
+比如1：心率
+    2：血压
+    。。。。
+    你可以实现定义好
+    
 
 

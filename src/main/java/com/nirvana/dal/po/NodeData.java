@@ -17,22 +17,19 @@ import javax.persistence.TemporalType;
 @Table(name = "nodedata")
 public class NodeData {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer dataid;
+	private String dataid;
 	private String did;
 	private String sensortype;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date status_change_time;
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "nodeid")
-	private Node node;
+	private String nodeid;
 	private String data;
 
-	public Integer getDataid() {
+	public String getDataid() {
 		return dataid;
 	}
 
-	public void setDataid(Integer dataid) {
+	public void setDataid(String dataid) {
 		this.dataid = dataid;
 	}
 
@@ -60,12 +57,12 @@ public class NodeData {
 		this.status_change_time = status_change_time;
 	}
 
-	public Node getNode() {
-		return node;
+	public String getNodeid() {
+		return nodeid;
 	}
 
-	public void setNode(Node node) {
-		this.node = node;
+	public void setNodeid(String nodeid) {
+		this.nodeid = nodeid;
 	}
 
 	public String getData() {
@@ -79,7 +76,7 @@ public class NodeData {
 	@Override
 	public String toString() {
 		return "NodeData [dataid=" + dataid + ", did=" + did + ", sensortype=" + sensortype + ", status_change_time="
-				+ status_change_time + ", node=" + node + ", data=" + data + "]";
+				+ status_change_time + ", nodeid=" + nodeid + ", data=" + data + "]";
 	}
 
 }
