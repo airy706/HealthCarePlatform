@@ -14,12 +14,12 @@
 
 2. 创建社区 url:/community/create
 	request:
-		{communityname:bb, communitytel:1231241, communitylocation:12313123123, latitude:11, longtitude:532}
+		{communityname:bb, communitytel:1231241, a:12313123123, latitude:11, longtitude:532}
 	response:
 
 3. 删除社区 url:/community/del
 	request:
-		id
+		idc
 	response:
 
 4. 查找社区 url:
