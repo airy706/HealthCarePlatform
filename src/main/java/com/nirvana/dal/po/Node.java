@@ -16,8 +16,7 @@ import javax.persistence.Table;
 @Table(name = "node")
 public class Node {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer nodeid;
+	private String nodeid;
 	private String nodename;
 	private Integer nodetype;
 	private Integer nodestatus;
@@ -26,11 +25,11 @@ public class Node {
 	@JoinColumn(name = "userid")
 	private User user;
 
-	public Integer getNodeid() {
+	public String getNodeid() {
 		return nodeid;
 	}
 
-	public void setNodeid(Integer nodeid) {
+	public void setNodeid(String nodeid) {
 		this.nodeid = nodeid;
 	}
 

@@ -1,8 +1,9 @@
 package com.nirvana.bll.bo;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.nirvana.bll.service.NodeDataService;
 import com.nirvana.dal.api.NodeDataDao;
@@ -15,9 +16,10 @@ public class NodeDataServiceBO implements NodeDataService {
 	private NodeDataDao nodedatadao;
 
 	@Override
+	@Transactional
 	public void addData(NodeData data) {
-		nodedatadao.save(data);
+		data = nodedatadao.save(data);
+
 	}
-	
-	
+
 }

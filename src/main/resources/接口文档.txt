@@ -57,5 +57,6 @@ jsonstr 格式：
     。。。。
     你可以实现定义好
     
+{"did":"131341413132","sensortype":"1","status_change_time":"Dec 27, 2016 4:03:34 PM","nodeid":"123","data":"datavalue"}
 
 

@@ -16,6 +16,6 @@ public class LocationDataServiceBO implements LocationDataSerivce {
 
 	@Override
 	public void addData(LocationData data) {
-		locationdatadao.save(data);
+			locationdatadao.save(data);
 	}
 }

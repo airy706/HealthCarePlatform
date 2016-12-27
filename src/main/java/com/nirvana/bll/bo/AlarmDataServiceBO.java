@@ -16,6 +16,6 @@ public class AlarmDataServiceBO implements AlarmDataService{
 
 	@Override
 	public void addData(AlarmData data) {
-		alarmdatadao.save(data);
+			alarmdatadao.save(data);		
 	}
 }

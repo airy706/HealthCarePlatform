@@ -17,7 +17,8 @@ import javax.persistence.TemporalType;
 @Table(name = "nodedata")
 public class NodeData {
 	@Id
-	private String dataid;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer dataid;
 	private String did;
 	private String sensortype;
 	@Temporal(TemporalType.TIMESTAMP)
@@ -25,11 +26,13 @@ public class NodeData {
 	private String nodeid;
 	private String data;
 
-	public String getDataid() {
+	
+
+	public Integer getDataid() {
 		return dataid;
 	}
 
-	public void setDataid(String dataid) {
+	public void setDataid(Integer dataid) {
 		this.dataid = dataid;
 	}
 
