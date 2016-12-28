@@ -11,6 +11,6 @@ import com.nirvana.dal.po.Community;
 
 @Repository
 public interface CommunityDao extends JpaRepository<Community, Integer>{
-	@Query("SELECT c FROM Community c WHERE c.communityname LIKE %:name% AND c.communitylocation LIKE %:location%")
-	List<Community> fuzzyQuery(@Param("name") String name,@Param("location") String location);
+	@Query("SELECT c FROM Community c WHERE c.communityname LIKE %:key% OR c.communitylocation LIKE %:key%")
+	List<Community> fuzzyQuery(@Param("key") String key);
 }

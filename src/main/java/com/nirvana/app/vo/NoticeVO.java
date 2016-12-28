@@ -1,41 +1,59 @@
-package com.nirvana.dal.po;
+package com.nirvana.app.vo;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.validator.constraints.Length;
-import org.springframework.format.annotation.DateTimeFormat;
 
-@Entity
-@Table(name = "notice")
-public class Notice {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+import com.nirvana.dal.po.Community;
+import com.nirvana.dal.po.Notice;
+import com.nirvana.dal.po.User;
+
+public class NoticeVO {
 	private Integer noticeid;
-	
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date noticedate;
 	private String noticetitle;
-	@Length(max=10000)
 	private String noticecontent;
 	private Integer noticetype;
 	private String attachurl;
-	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "userid")
-	private User user;
-	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "communityid")
-	private Community community;
+	private Integer userid;
+	private Integer communityid;
+	private String username;
+	private String communityname;
+	public NoticeVO() {
+
+	}
+
+	public NoticeVO(Notice notice) {
+		this.noticeid = notice.getNoticeid();
+		this.attachurl = notice.getAttachurl();
+		this.communityid = notice.getCommunity().getCommunityid();
+		this.noticecontent = notice.getNoticecontent();
+		this.noticedate = notice.getNoticedate();
+		this.noticetitle = notice.getNoticetitle();
+		this.noticetype = notice.getNoticetype();
+		this.userid = notice.getUser().getUserid();
+		this.communityname = notice.getCommunity().getCommunityname();
+		this.username = notice.getUser().getUsername();
+	}
+	
+	public static List<NoticeVO> toVoList(List<Notice> polist){
+		List<NoticeVO> list = new ArrayList<NoticeVO>();
+		for(int i=0;i<polist.size();i++){
+			list.add(new NoticeVO(polist.get(i)));
+		}
+		return list;
+	}
 
 	public Integer getNoticeid() {
 		return noticeid;
@@ -85,27 +103,27 @@ public class Notice {
 		this.attachurl = attachurl;
 	}
 
-	public User getUser() {
-		return user;
+	public Integer getUserid() {
+		return userid;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserid(Integer userid) {
+		this.userid = userid;
 	}
 
-	public Community getCommunity() {
-		return community;
+	public Integer getCommunityid() {
+		return communityid;
 	}
 
-	public void setCommunity(Community community) {
-		this.community = community;
+	public void setCommunityid(Integer communityid) {
+		this.communityid = communityid;
 	}
 
 	@Override
 	public String toString() {
-		return "Notice [noticeid=" + noticeid + ", noticedate=" + noticedate + ", noticetitle=" + noticetitle
+		return "NoticeVO [noticeid=" + noticeid + ", noticedate=" + noticedate + ", noticetitle=" + noticetitle
 				+ ", noticecontent=" + noticecontent + ", noticetype=" + noticetype + ", attachurl=" + attachurl
-				+ ", user=" + user + ", community=" + community + "]";
+				+ ", userid=" + userid + ", communityid=" + communityid + "]";
 	}
 
 }

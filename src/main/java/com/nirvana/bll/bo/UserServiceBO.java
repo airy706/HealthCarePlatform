@@ -27,6 +27,12 @@ public class UserServiceBO implements UserService {
 	public void add(User user) {
 		userdao.save(user);
 	}
+
+	@Override
+	public User findById(Integer id) {
+		User user = userdao.findOne(id);
+		return user;
+	}
 	
 
 	

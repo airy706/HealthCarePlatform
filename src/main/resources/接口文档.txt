@@ -22,17 +22,37 @@
 		id
 	response:
 
-4. 查找社区 url:
+4. 查找社区 url:/community/search
 	request:
-		name
-		location
+		key
 	response:
 		{"state":"success","msg":"","result":[{"communityid":1,"communityname":"bb","communitytel":"1231241","communitylocation":"123","latitude":"11","longtitude":"532","users":[],"notices":[]},{"communityid":3,"communityname":"bb","communitytel":"1231241","communitylocation":"1231312312313132123","latitude":"11","longtitude":"532","users":[],"notices":[]}]}
-5. 超管公告添加
 
-6. 超管公告删除
-7. 超管公告编辑
-8. 超管公告查询
+5. 超管公告添加  url: /notice/create
+		request:
+		{"userid:1,"communityid":2,""noticedate":"Dec 27, 2016 10:07:25 PM","noticetitle":"title","noticecontent":"haha","noticetype":1,"attachurl":"http://172.0.0.1/"}
+		response:
+6. 超管公告删除url： /notice/del
+		request:
+		id
+		response:
+7. 超管公告编辑  url /notice/create
+		request 包含noticeid
+		
+8. 超管公告查询 
+url  
+/notice/all
+
+
+/notice/community
+request:  id
+response:
+
+
+/notice/admin
+
+
+
 
 
 

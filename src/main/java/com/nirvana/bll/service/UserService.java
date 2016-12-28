@@ -6,4 +6,6 @@ public interface UserService {
 	 User login(String username,String password);
 	 
 	 void add(User user);
+	 
+	 User findById(Integer id);
 }

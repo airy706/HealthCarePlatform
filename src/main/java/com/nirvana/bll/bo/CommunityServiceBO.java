@@ -27,14 +27,19 @@ public class CommunityServiceBO implements CommunityService{
 	}
 
 	@Override
-	public boolean delById(Integer id) {
+	public void delById(Integer id) {
 		communitydao.delete(id);
-		return true;
 	}
 
 	@Override
-	public List<Community> findFuzzy(String name, String location) {
-		List<Community> list = communitydao.fuzzyQuery(name, location);
+	public List<Community> findFuzzy(String key) {
+		List<Community> list = communitydao.fuzzyQuery(key);
 		return list;
+	}
+
+	@Override
+	public Community findById(Integer id) {
+		Community community = communitydao.findOne(id);
+		return community;
 	}
 }

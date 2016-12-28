@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.nirvana.dal.po.Node;
 
 @Repository
-public interface NodeDao extends JpaRepository<Node, Integer>{
+public interface NodeDao extends JpaRepository<Node, String>{
 
 }

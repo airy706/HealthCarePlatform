@@ -1,5 +1,9 @@
 package com.nirvana.bll.service;
 
-public interface SolutionCaseService {
+import com.nirvana.dal.po.SolutionCase;
 
+public interface SolutionCaseService {
+	void add(SolutionCase solutionCase);
+	
+	void delById(Integer id);
 }
