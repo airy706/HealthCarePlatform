@@ -4,20 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.validator.constraints.Length;
-
-import com.nirvana.dal.po.Community;
 import com.nirvana.dal.po.Notice;
-import com.nirvana.dal.po.User;
 
 public class NoticeVO {
 	private Integer noticeid;
@@ -30,6 +17,7 @@ public class NoticeVO {
 	private Integer communityid;
 	private String username;
 	private String communityname;
+
 	public NoticeVO() {
 
 	}
@@ -46,10 +34,10 @@ public class NoticeVO {
 		this.communityname = notice.getCommunity().getCommunityname();
 		this.username = notice.getUser().getUsername();
 	}
-	
-	public static List<NoticeVO> toVoList(List<Notice> polist){
+
+	public static List<NoticeVO> toVoList(List<Notice> polist) {
 		List<NoticeVO> list = new ArrayList<NoticeVO>();
-		for(int i=0;i<polist.size();i++){
+		for (int i = 0; i < polist.size(); i++) {
 			list.add(new NoticeVO(polist.get(i)));
 		}
 		return list;
@@ -119,11 +107,28 @@ public class NoticeVO {
 		this.communityid = communityid;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getCommunityname() {
+		return communityname;
+	}
+
+	public void setCommunityname(String communityname) {
+		this.communityname = communityname;
+	}
+
 	@Override
 	public String toString() {
 		return "NoticeVO [noticeid=" + noticeid + ", noticedate=" + noticedate + ", noticetitle=" + noticetitle
 				+ ", noticecontent=" + noticecontent + ", noticetype=" + noticetype + ", attachurl=" + attachurl
-				+ ", userid=" + userid + ", communityid=" + communityid + "]";
+				+ ", userid=" + userid + ", communityid=" + communityid + ", username=" + username + ", communityname="
+				+ communityname + "]";
 	}
 
 }

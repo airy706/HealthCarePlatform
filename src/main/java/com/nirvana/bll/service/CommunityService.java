@@ -2,6 +2,7 @@ package com.nirvana.bll.service;
 
 import java.util.List;
 
+import com.nirvana.app.vo.CommunityVO;
 import com.nirvana.dal.po.Community;
 
 public interface CommunityService {
@@ -9,7 +10,7 @@ public interface CommunityService {
 	
 	void delById(Integer id);
 	
-	List<Community> findFuzzy(String key);
+	List<CommunityVO> findFuzzy(String key);
 	
 	Community findById(Integer id);
 }

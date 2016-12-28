@@ -14,12 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.nirvana.app.vo.NoticeVO;
 import com.nirvana.app.vo.Result;
-import com.nirvana.bll.service.CommunityService;
 import com.nirvana.bll.service.NoticeService;
-import com.nirvana.bll.service.UserService;
-import com.nirvana.dal.po.Community;
+
 import com.nirvana.dal.po.Notice;
-import com.nirvana.dal.po.User;
 
 @RestController
 @RequestMapping("/notice")
@@ -63,9 +60,10 @@ public class NoticeController extends BaseController {
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
-	
+
 	@RequestMapping("/community")
-	public void listadmin(HttpServletRequest request, HttpServletResponse response,@RequestParam("id") Integer id) throws IOException {
+	public void listadmin(HttpServletRequest request, HttpServletResponse response, @RequestParam("id") Integer id)
+			throws IOException {
 		List<NoticeVO> list = noticeservicebo.findByCommunityId(id);
 		Result result = null;
 		result = Result.getSuccessInstance(list);
