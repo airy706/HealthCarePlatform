@@ -51,7 +51,8 @@ response:
 
 /notice/admin
 
-
+搜索 url：/notice/search
+key
 
 
 节点模块
@@ -66,8 +67,9 @@ response:
 				userid
 				username
 				communityName
-				nodeAddTime
+				
 				[{
+				nodeAddTime
 					nodeid,
 					nodename,
 					nodetype,
@@ -87,8 +89,9 @@ response:
 				userid
 				username
 				communityName
-				nodeAddTime
+				
 				[{
+				nodeAddTime
 					nodeid,
 					nodename,
 					nodetype,

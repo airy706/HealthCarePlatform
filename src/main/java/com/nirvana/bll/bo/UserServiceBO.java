@@ -2,6 +2,8 @@ package com.nirvana.bll.bo;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,8 +34,18 @@ public class UserServiceBO implements UserService {
 		User user = userdao.findOne(id);
 		return user;
 	}
+
+	@Override
+	public Page<User> findBykeypage(String key, Integer num, Integer size) {
+		PageRequest request = this.buildPageRequest(num,size);
+        Page<User> pages= this.userdao.findByKey(key, request);
+        return pages;
+	}
 	
 
+	private PageRequest buildPageRequest(int pageNumber, int pagzSize) {
+        return new PageRequest(pageNumber - 1, pagzSize, null);
+    }
 	
 	
 

@@ -16,6 +16,9 @@ public interface NoticeDao extends JpaRepository<Notice, Integer> {
 	@Query("SELECT n FROM Notice n WHERE n.noticetype=1")
 	List<Notice> queryAdmin();
 
-	@Query("SELECT n FROM Notice n WHERE n.noticetype=2 AND communityid=:communityid")
+	@Query("SELECT n FROM Notice n WHERE n.noticetype=2 AND n.community.communityid=:communityid")
 	List<Notice> queryByCommunityId(@Param("communityid") Integer communityid);
+
+	@Query("SELECT n FROM Notice n WHERE n.noticetitle LIKE %:key% OR n.user.username LIKE %:key%")
+	List<Notice> fuzzyQuery(@Param("key") String key);
 }

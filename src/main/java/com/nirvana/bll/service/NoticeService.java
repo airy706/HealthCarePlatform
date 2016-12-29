@@ -15,4 +15,6 @@ public interface NoticeService {
 	List<NoticeVO> findAdmin();
 	
 	List<NoticeVO> findByCommunityId(Integer id);
+	
+	List<NoticeVO> findByTitleOrUn(String key);
 }
