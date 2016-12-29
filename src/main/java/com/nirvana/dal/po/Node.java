@@ -1,5 +1,6 @@
 package com.nirvana.dal.po;
 
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -7,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "node")
@@ -16,7 +19,8 @@ public class Node {
 	private String nodename;
 	private Integer nodetype;
 	private Integer nodestatus;
-
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date nodeaddtime;
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "userid")
 	private User user;
@@ -31,6 +35,14 @@ public class Node {
 
 	public String getNodename() {
 		return nodename;
+	}
+
+	public Date getNodeaddtime() {
+		return nodeaddtime;
+	}
+
+	public void setNodeaddtime(Date nodeaddtime) {
+		this.nodeaddtime = nodeaddtime;
 	}
 
 	public void setNodename(String nodename) {
@@ -64,7 +76,7 @@ public class Node {
 	@Override
 	public String toString() {
 		return "Node [nodeid=" + nodeid + ", nodename=" + nodename + ", nodetype=" + nodetype + ", nodestatus="
-				+ nodestatus + ", user=" + user + "]";
+				+ nodestatus + ", nodeaddtime=" + nodeaddtime + ", user=" + user + "]";
 	}
 
 }

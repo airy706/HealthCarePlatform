@@ -67,8 +67,9 @@ key
 				userid
 				username
 				communityName
-				nodeAddTime
+				
 				[{
+				nodeAddTime
 					nodeid,
 					nodename,
 					nodetype,
@@ -88,8 +89,9 @@ key
 				userid
 				username
 				communityName
-				nodeAddTime
+				
 				[{
+				nodeAddTime
 					nodeid,
 					nodename,
 					nodetype,
