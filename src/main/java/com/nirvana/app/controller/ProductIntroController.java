@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,6 +44,14 @@ public class ProductIntroController {
 			throws IOException {
 		introservicebo.delById(id);
 		Result result = Result.getSuccessInstance(null);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+
+	@RequestMapping("/list")
+	public void list(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		List<ProductIntro> list = introservicebo.findAll();
+		Result result = Result.getSuccessInstance(list);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}

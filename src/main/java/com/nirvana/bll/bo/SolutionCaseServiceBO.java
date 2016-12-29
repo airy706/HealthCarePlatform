@@ -1,5 +1,7 @@
 package com.nirvana.bll.bo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +24,11 @@ public class SolutionCaseServiceBO implements SolutionCaseService {
 	@Override
 	public void delById(Integer id) {
 		solutioncasedao.delete(id);
+	}
+
+	@Override
+	public List<SolutionCase> findAll() {
+		return solutioncasedao.findAll();
 	}
 	
 	

@@ -1,5 +1,7 @@
 package com.nirvana.bll.bo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,5 +24,10 @@ public class ProductIntroServiceBO implements ProductIntroService{
 	@Override
 	public void delById(Integer id) {
 		productintrodao.delete(id);
+	}
+
+	@Override
+	public List<ProductIntro> findAll() {
+		return productintrodao.findAll();
 	}
 }
