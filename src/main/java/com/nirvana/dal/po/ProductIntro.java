@@ -12,11 +12,21 @@ import org.hibernate.validator.constraints.Length;
 @Table(name = "productintro")
 public class ProductIntro {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer productid;
 	private String productimg;
-	@Length(max=1000)
+	@Length(max = 1000)
 	private String productcontent;
+
+	private boolean isshow;
+
+	public boolean isIsshow() {
+		return isshow;
+	}
+
+	public void setIsshow(boolean isshow) {
+		this.isshow = isshow;
+	}
 
 	public Integer getProductid() {
 		return productid;
@@ -45,7 +55,7 @@ public class ProductIntro {
 	@Override
 	public String toString() {
 		return "ProductIntro [productid=" + productid + ", productimg=" + productimg + ", productcontent="
-				+ productcontent + "]";
+				+ productcontent + ", isshow=" + isshow + "]";
 	}
 
 }

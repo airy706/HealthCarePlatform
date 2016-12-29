@@ -98,9 +98,11 @@ key
 				}]	
 			}]
 		}
+	
+	
 		
 解决方案模块
-1. 添加解决方案
+1. 添加解决方案 /case/create
 	request:
 		casetitle
 		caseimg
@@ -109,14 +111,16 @@ key
 	response:
 		default
 		
-2. 删除解决方案
+2. 删除解决方案 /case/del
 	request:
-		caseid
+		id
 	response:
 		default
+		
+3.上传图片 /case/upload
 		
 产品介绍模块
-1. 添加产品介绍
+1. 添加产品介绍/product/create
 	request:
 		productid
 		productimg
@@ -125,14 +129,16 @@ key
 	response:
 		default
 		
-2. 删除解决方案
+2. 删除产品介绍/product/del
 	request:
-		productid
-		productimg
-		productcontent
-		isshow //是否显示在主页
+		id
 	response:
 		default
+
+3.上传图片 /product/upload	
+		
+		
+		
 
 NodeData访问url   http://139.199.76.64:8080/MavenJpaDemo/data/uploadnode/{jsonstr}
 jsonstr 格式：
