@@ -119,6 +119,17 @@ key
 		
 3.上传图片 /case/upload
 		
+4.列出解决方案
+	request：
+	response: 
+		[{
+			caseid
+			casetitle
+			caseimg
+			casecontent
+			isshow
+		}]
+
 产品介绍模块
 1. 添加产品介绍/product/create
 	request:
@@ -137,7 +148,16 @@ key
 
 3.上传图片 /product/upload	
 		
-		
+4.列出产品介绍
+	request：
+	response: 
+		[{
+			productid
+			casetitle
+			caseimg
+			casecontent
+			isshow
+		}]
 		
 
 NodeData访问url   http://139.199.76.64:8080/MavenJpaDemo/data/uploadnode/{jsonstr}
