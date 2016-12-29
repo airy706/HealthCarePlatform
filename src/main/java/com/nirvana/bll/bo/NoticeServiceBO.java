@@ -13,7 +13,7 @@ import com.nirvana.dal.po.Notice;
 
 @Service
 @Transactional
-public class NoticeServiceBO implements NoticeService{
+public class NoticeServiceBO implements NoticeService {
 	@Autowired
 	private NoticeDao noticedao;
 
@@ -35,13 +35,19 @@ public class NoticeServiceBO implements NoticeService{
 
 	@Override
 	public List<NoticeVO> findAdmin() {
-		List<Notice> polist =noticedao.queryAdmin();
+		List<Notice> polist = noticedao.queryAdmin();
 		return NoticeVO.toVoList(polist);
 	}
 
 	@Override
 	public List<NoticeVO> findByCommunityId(Integer id) {
-		List<Notice> polist =noticedao.queryByCommunityId(id);
+		List<Notice> polist = noticedao.queryByCommunityId(id);
+		return NoticeVO.toVoList(polist);
+	}
+
+	@Override
+	public List<NoticeVO> findByTitleOrUn(String key) {
+		List<Notice> polist = noticedao.fuzzyQuery(key);
 		return NoticeVO.toVoList(polist);
 	}
 }

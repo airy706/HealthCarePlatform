@@ -25,14 +25,19 @@ public class NoticeVO {
 	public NoticeVO(Notice notice) {
 		this.noticeid = notice.getNoticeid();
 		this.attachurl = notice.getAttachurl();
-		this.communityid = notice.getCommunity().getCommunityid();
 		this.noticecontent = notice.getNoticecontent();
 		this.noticedate = notice.getNoticedate();
 		this.noticetitle = notice.getNoticetitle();
 		this.noticetype = notice.getNoticetype();
 		this.userid = notice.getUser().getUserid();
-		this.communityname = notice.getCommunity().getCommunityname();
 		this.username = notice.getUser().getUsername();
+		if (this.noticetype == 1) {
+			this.communityid = null;
+			this.communityname = null;
+		} else {
+			this.communityid = notice.getCommunity().getCommunityid();
+			this.communityname = notice.getCommunity().getCommunityname();
+		}
 	}
 
 	public static List<NoticeVO> toVoList(List<Notice> polist) {
