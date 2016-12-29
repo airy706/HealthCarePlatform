@@ -1,22 +1,13 @@
-package com.nirvana.dal.po;
+package com.nirvana.app.vo;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.nirvana.dal.po.Community;
 
-@Entity
-@Table(name = "community")
-public class Community {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CommunityVO {
+
 	private Integer communityid;
-
 	private String areaname;
 	private String communityname;
 	private String communitytel;
@@ -24,15 +15,35 @@ public class Community {
 	private String latitude;
 	private String longtitude;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "community")
+	public CommunityVO() {
+	}
+
+	public CommunityVO(Community community) {
+		this.areaname = community.getAreaname();
+		this.communityid = community.getCommunityid();
+		this.communitylocation = community.getCommunitylocation();
+		this.communityname = community.getCommunityname();
+		this.communitytel = community.getCommunitytel();
+		this.latitude = community.getLatitude();
+		this.longtitude = community.getLongtitude();
+	}
 	
-	private Set<User> users;
+	public static List<CommunityVO> toListVO(List<Community> polist){
+		List<CommunityVO> list = new ArrayList<CommunityVO>();
+		for(int i=0;i<polist.size();i++){
+			list.add(new CommunityVO(polist.get(i)));
+		}
+		return list;
+	}
+	
+	
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "community")
-	private Set<Notice> notices;
+	public Integer getCommunityid() {
+		return communityid;
+	}
 
-	public Set<Notice> getNotices() {
-		return notices;
+	public void setCommunityid(Integer communityid) {
+		this.communityid = communityid;
 	}
 
 	public String getAreaname() {
@@ -41,18 +52,6 @@ public class Community {
 
 	public void setAreaname(String areaname) {
 		this.areaname = areaname;
-	}
-
-	public void setNotices(Set<Notice> notices) {
-		this.notices = notices;
-	}
-
-	public Integer getCommunityid() {
-		return communityid;
-	}
-
-	public void setCommunityid(Integer communityid) {
-		this.communityid = communityid;
 	}
 
 	public String getCommunityname() {
@@ -95,21 +94,11 @@ public class Community {
 		this.longtitude = longtitude;
 	}
 
-	public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
-
 	@Override
 	public String toString() {
-		return "Community [communityid=" + communityid + ", areaname=" + areaname + ", communityname=" + communityname
+		return "CommunityVO [communityid=" + communityid + ", areaname=" + areaname + ", communityname=" + communityname
 				+ ", communitytel=" + communitytel + ", communitylocation=" + communitylocation + ", latitude="
-				+ latitude + ", longtitude=" + longtitude + ", users=" + users + ", notices=" + notices + "]";
+				+ latitude + ", longtitude=" + longtitude + "]";
 	}
-
-	
 
 }

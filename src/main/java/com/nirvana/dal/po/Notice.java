@@ -21,6 +21,7 @@ public class Notice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer noticeid;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date noticedate;
 	private String noticetitle;
@@ -28,10 +29,10 @@ public class Notice {
 	private String noticecontent;
 	private Integer noticetype;
 	private String attachurl;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "userid")
 	private User user;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "communityid")
 	private Community community;
 

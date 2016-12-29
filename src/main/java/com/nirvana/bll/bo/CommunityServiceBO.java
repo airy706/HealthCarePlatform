@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nirvana.app.vo.CommunityVO;
 import com.nirvana.bll.service.CommunityService;
 import com.nirvana.dal.api.CommunityDao;
 import com.nirvana.dal.po.Community;
@@ -27,14 +28,19 @@ public class CommunityServiceBO implements CommunityService{
 	}
 
 	@Override
-	public boolean delById(Integer id) {
+	public void delById(Integer id) {
 		communitydao.delete(id);
-		return true;
 	}
 
 	@Override
-	public List<Community> findFuzzy(String name, String location) {
-		List<Community> list = communitydao.fuzzyQuery(name, location);
-		return list;
+	public List<CommunityVO> findFuzzy(String key) {
+		List<Community> polist = communitydao.fuzzyQuery(key);
+		return CommunityVO.toListVO(polist);
+	}
+
+	@Override
+	public Community findById(Integer id) {
+		Community community = communitydao.findOne(id);
+		return community;
 	}
 }

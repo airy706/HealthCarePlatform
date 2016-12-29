@@ -1,5 +1,7 @@
 package com.nirvana.bll.service;
 
-public interface NodeService {
+import com.nirvana.dal.po.Node;
 
+public interface NodeService {
+	void add(Node node);
 }

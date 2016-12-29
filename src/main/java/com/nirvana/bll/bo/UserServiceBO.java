@@ -1,6 +1,5 @@
 package com.nirvana.bll.bo;
 
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +25,12 @@ public class UserServiceBO implements UserService {
 	@Override
 	public void add(User user) {
 		userdao.save(user);
+	}
+
+	@Override
+	public User findById(Integer id) {
+		User user = userdao.findOne(id);
+		return user;
 	}
 	
 
