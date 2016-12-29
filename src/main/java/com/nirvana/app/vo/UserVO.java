@@ -2,7 +2,6 @@ package com.nirvana.app.vo;
 
 import java.util.List;
 
-import com.nirvana.dal.po.Node;
 import com.nirvana.dal.po.User;
 
 public class UserVO {

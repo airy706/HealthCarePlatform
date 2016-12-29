@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.gson.Gson;
 import com.nirvana.app.util.GsonUtils;
 import com.nirvana.app.vo.NodeListVO;
 import com.nirvana.app.vo.Result;
