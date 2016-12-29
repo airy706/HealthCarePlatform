@@ -55,6 +55,48 @@ response:
 key
 
 
+节点模块
+1. 获取节点 /nodes/list
+	request:
+		page
+		num
+	response:
+		{
+			count,
+			data:[{
+				userid
+				username
+				communityName
+				nodeAddTime
+				[{
+					nodeid,
+					nodename,
+					nodetype,
+				}]	
+			}]
+		}
+		
+2. 搜索节点数据 /nodes/search
+	request:
+		keys
+		page
+		num
+	response:
+		{
+			count,
+			data:[{
+				userid
+				username
+				communityName
+				nodeAddTime
+				[{
+					nodeid,
+					nodename,
+					nodetype,
+				}]	
+			}]
+		}
+		
 
 
 NodeData访问url   http://139.199.76.64:8080/MavenJpaDemo/data/uploadnode/{jsonstr}
@@ -79,5 +121,10 @@ jsonstr 格式：
     你可以实现定义好
     
 {"did":"131341413132","sensortype":"1","status_change_time":"Dec 27, 2016 4:03:34 PM","nodeid":"123","data":"datavalue"}
+
+
+
+
+
 
 

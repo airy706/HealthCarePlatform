@@ -34,7 +34,6 @@ public class User {
 	private Date logouttime;
 	private String ipaddress;
 	private Integer status;
-
 	@ManyToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "communityid")
 	private Community community;
