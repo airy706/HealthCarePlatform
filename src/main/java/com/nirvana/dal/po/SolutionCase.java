@@ -12,12 +12,22 @@ import org.hibernate.validator.constraints.Length;
 @Table(name = "solutioncase")
 public class SolutionCase {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer caseid;
 	private String casetitle;
 	private String caseimg;
-	@Length(max=10000)
+	@Length(max = 10000)
 	private String casecontent;
+
+	private boolean isshow;
+
+	public boolean isIsshow() {
+		return isshow;
+	}
+
+	public void setIsshow(boolean isshow) {
+		this.isshow = isshow;
+	}
 
 	public Integer getCaseid() {
 		return caseid;
@@ -54,7 +64,7 @@ public class SolutionCase {
 	@Override
 	public String toString() {
 		return "SolutionCase [caseid=" + caseid + ", casetitle=" + casetitle + ", caseimg=" + caseimg + ", casecontent="
-				+ casecontent + "]";
+				+ casecontent + ", isshow=" + isshow + "]";
 	}
 
 }
