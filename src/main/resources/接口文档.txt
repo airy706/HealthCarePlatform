@@ -69,7 +69,7 @@ key
 				communityName
 				
 				[{
-				nodeAddTime
+					nodeAddTime
 					nodeid,
 					nodename,
 					nodetype,
@@ -99,7 +99,14 @@ key
 			}]
 		}
 	
-	
+3. 查看节点数据 /node/data
+	request
+		nodeid
+	reponse
+		[{
+			status_change_time
+			data
+		}]
 		
 解决方案模块
 1. 添加解决方案 /case/create
@@ -186,6 +193,33 @@ jsonstr 格式：
 
 
 
+超级管理员首页端接口
+1. 获取所有在线用户信息
+	request:
+		
+	response:
+		[{
+			userid
+			username
+			communityid
+			communityname
+			latitude
+			longitude
+			state //正常状态 异常状态
+		}]
 
-
+2. 检测当前在线人员是否有异常
+	request:
+	response:
+		normal
+		[{
+			userid
+			username
+			communityid
+			communityname
+			latitude
+			longitude
+			state //正常状态 异常状态
+		}]
+	
 
