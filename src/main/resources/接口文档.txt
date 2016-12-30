@@ -58,7 +58,7 @@ key
 节点模块
 1. 获取节点 /node/list
 	request:
-		page
+		size
 		num
 	response:
 		{
@@ -80,7 +80,7 @@ key
 2. 搜索节点数据 /node/search
 	request:
 		keys
-		page
+		size
 		num
 	response:
 		{
@@ -119,7 +119,7 @@ key
 		
 3.上传图片 /case/upload
 		
-4.列出解决方案
+4.列出解决方案/case/list
 	request：
 	response: 
 		[{
@@ -148,7 +148,7 @@ key
 
 3.上传图片 /product/upload	
 		
-4.列出产品介绍
+4.列出产品介绍/product/list
 	request：
 	response: 
 		[{
@@ -159,6 +159,8 @@ key
 			isshow
 		}]
 		
+
+---------------------------------------------------------------------------------------------
 
 NodeData访问url   http://139.199.76.64:8080/MavenJpaDemo/data/uploadnode/{jsonstr}
 jsonstr 格式：
@@ -183,6 +185,7 @@ jsonstr 格式：
     
 {"did":"131341413132","sensortype":"1","status_change_time":"Dec 27, 2016 4:03:34 PM","nodeid":"123","data":"datavalue"}
 
+---------------------------------------------------------------------------------------------------
 
 
 

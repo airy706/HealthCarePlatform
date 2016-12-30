@@ -32,6 +32,8 @@ public class User {
 	private Date logintime;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date logouttime;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date registtime;
 	private String ipaddress;
 	private Integer status;
 	@ManyToOne(cascade = { CascadeType.ALL })
@@ -40,10 +42,10 @@ public class User {
 
 	private String password;
 
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="user")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Relationship> relationships;
 
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="user")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Node> nodes;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
@@ -59,6 +61,14 @@ public class User {
 
 	public Set<Node> getNodes() {
 		return nodes;
+	}
+
+	public Date getRegisttime() {
+		return registtime;
+	}
+
+	public void setRegisttime(Date registtime) {
+		this.registtime = registtime;
 	}
 
 	public void setNodes(Set<Node> nodes) {
@@ -189,9 +199,10 @@ public class User {
 	public String toString() {
 		return "User [userid=" + userid + ", username=" + username + ", usertel=" + usertel + ", useremail=" + useremail
 				+ ", useraddress=" + useraddress + ", userapartment=" + userapartment + ", useridentity=" + useridentity
-				+ ", typeid=" + typeid + ", logintime=" + logintime + ", logouttime=" + logouttime + ", ipaddress="
-				+ ipaddress + ", status=" + status + ", community=" + community + ", password=" + password
-				+ ", relationships=" + relationships + ", nodes=" + nodes + ", notices=" + notices + "]";
+				+ ", typeid=" + typeid + ", logintime=" + logintime + ", logouttime=" + logouttime + ", registtime="
+				+ registtime + ", ipaddress=" + ipaddress + ", status=" + status + ", community=" + community
+				+ ", password=" + password + ", relationships=" + relationships + ", nodes=" + nodes + ", notices="
+				+ notices + "]";
 	}
 
 }
