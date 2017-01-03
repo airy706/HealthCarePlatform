@@ -227,7 +227,7 @@ request jsonstr 格式：
 {"cushion":{"senortype":"3","cushion_statue":["111","人体直坐"，"222":"人体左倾,"333":"人体右倾","444":"人体前倾","555":"左人体后倾"]}}
 
 超级管理员首页端接口
-1. 获取所有在线用户信息
+1. 获取所有在线用户信息/user/online
 	request:
 		
 	response:
@@ -242,18 +242,19 @@ request jsonstr 格式：
 		}]
 
 
-2. 检测当前在线人员是否有异常
-	request:
-	response:
-		normal
-		[{
-			userid
-			username
-			communityid
-			communityname
-			latitude
-			longitude
-			state //正常状态 异常状态
-		}]
-	
+# 2. 检测当前在线人员是否有异常
+	# request:
+	# response:
+		# normal
+		# [{
+			# userid
+			# username
+			# communityid
+			# communityname
+			# latitude
+			# longitude
+			# state //正常状态 异常状态
+		# }]
+
+
 

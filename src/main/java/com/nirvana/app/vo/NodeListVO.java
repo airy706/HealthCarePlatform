@@ -31,7 +31,7 @@ public class NodeListVO {
 			for (Node node : nodes) {
 				nodevos.add(new NodeVO(node));
 			}
-			UserVO uservo = new UserVO(user);
+			UserVO uservo = new UserVO(user,1);
 			uservo.setNodes(nodevos);
 			list.add(uservo);
 		}

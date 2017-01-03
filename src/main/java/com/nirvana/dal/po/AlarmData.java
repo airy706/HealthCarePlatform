@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 @Entity
 @Table(name = "alarmdata")
 public class AlarmData {
@@ -19,6 +20,16 @@ public class AlarmData {
 	private Integer reasontype;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date status_change_time;
+
+	private Integer hasresloved;
+
+	public Integer getHasresloved() {
+		return hasresloved;
+	}
+
+	public void setHasresloved(Integer hasresloved) {
+		this.hasresloved = hasresloved;
+	}
 
 	public Integer getDataid() {
 		return dataid;
@@ -55,7 +66,7 @@ public class AlarmData {
 	@Override
 	public String toString() {
 		return "AlarmData [dataid=" + dataid + ", did=" + did + ", reasontype=" + reasontype + ", status_change_time="
-				+ status_change_time + "]";
+				+ status_change_time + ", hasresloved=" + hasresloved + "]";
 	}
 
 }

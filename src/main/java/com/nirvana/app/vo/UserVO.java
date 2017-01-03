@@ -7,7 +7,11 @@ import com.nirvana.dal.po.User;
 public class UserVO {
 	private Integer userid;
 	private String username;
+	private Integer communityid;
 	private String communityname;
+	private String latitude;
+	private String longitude;
+	private Integer state;
 
 	private List<NodeVO> nodes;
 
@@ -15,11 +19,30 @@ public class UserVO {
 		super();
 	}
 
-	public UserVO(User user) {
-		super();
-		this.userid = user.getUserid();
-		this.username = user.getUsername();
-		this.communityname = user.getCommunity().getCommunityname();
+	public UserVO(User user, int select) {
+		if (select == 1) {
+			this.userid = user.getUserid();
+			this.username = user.getUsername();
+			this.communityname = user.getCommunity().getCommunityname();
+		} else if (select == 2) {
+			this.userid = user.getUserid();
+			this.username = user.getUsername();
+			this.communityname = user.getCommunity().getCommunityname();
+			this.communityid = user.getCommunity().getCommunityid();
+			this.latitude = user.getLatitude();
+			this.longitude = user.getLongtitude();
+			this.state = user.getState();
+		} else {
+
+		}
+	}
+
+	public Integer getCommunityid() {
+		return communityid;
+	}
+
+	public void setCommunityid(Integer communityid) {
+		this.communityid = communityid;
 	}
 
 	public Integer getUserid() {
@@ -52,6 +75,30 @@ public class UserVO {
 
 	public void setNodes(List<NodeVO> nodes) {
 		this.nodes = nodes;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
 	}
 
 }

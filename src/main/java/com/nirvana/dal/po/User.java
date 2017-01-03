@@ -28,6 +28,8 @@ public class User {
 	private String userapartment;
 	private String useridentity;
 	private Integer typeid;
+	private String longtitude;
+	private String latitude;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date logintime;
 	@Temporal(TemporalType.TIMESTAMP)
@@ -35,7 +37,9 @@ public class User {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date registtime;
 	private String ipaddress;
-	private Integer status;
+	private Integer state;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastupdatetime;
 	@ManyToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "communityid")
 	private Community community;
@@ -77,6 +81,22 @@ public class User {
 
 	public Set<Relationship> getRelationships() {
 		return relationships;
+	}
+
+	public String getLongtitude() {
+		return longtitude;
+	}
+
+	public void setLongtitude(String longtitude) {
+		this.longtitude = longtitude;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
 	}
 
 	public void setRelationships(Set<Relationship> relationships) {
@@ -179,12 +199,12 @@ public class User {
 		this.ipaddress = ipaddress;
 	}
 
-	public Integer getStatus() {
-		return status;
+	public Integer getState() {
+		return state;
 	}
 
-	public void setStatus(Integer status) {
-		this.status = status;
+	public void setState(Integer state) {
+		this.state = state;
 	}
 
 	public Community getCommunity() {
@@ -195,14 +215,22 @@ public class User {
 		this.community = community;
 	}
 
+	public Date getLastupdatetime() {
+		return lastupdatetime;
+	}
+
+	public void setLastupdatetime(Date lastupdatetime) {
+		this.lastupdatetime = lastupdatetime;
+	}
+
 	@Override
 	public String toString() {
 		return "User [userid=" + userid + ", username=" + username + ", usertel=" + usertel + ", useremail=" + useremail
 				+ ", useraddress=" + useraddress + ", userapartment=" + userapartment + ", useridentity=" + useridentity
-				+ ", typeid=" + typeid + ", logintime=" + logintime + ", logouttime=" + logouttime + ", registtime="
-				+ registtime + ", ipaddress=" + ipaddress + ", status=" + status + ", community=" + community
-				+ ", password=" + password + ", relationships=" + relationships + ", nodes=" + nodes + ", notices="
-				+ notices + "]";
+				+ ", typeid=" + typeid + ", longtitude=" + longtitude + ", latitude=" + latitude + ", logintime="
+				+ logintime + ", logouttime=" + logouttime + ", registtime=" + registtime + ", ipaddress=" + ipaddress
+				+ ", state=" + state + ", lastupdatetime=" + lastupdatetime + ", community=" + community + ", password="
+				+ password + ", relationships=" + relationships + ", nodes=" + nodes + ", notices=" + notices + "]";
 	}
 
 }
