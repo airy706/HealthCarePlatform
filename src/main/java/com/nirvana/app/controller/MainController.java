@@ -1,6 +1,8 @@
 package com.nirvana.app.controller;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,13 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.nirvana.app.vo.Result;
+import com.nirvana.bll.service.AlarmDataService;
 import com.nirvana.bll.service.UserService;
+import com.nirvana.dal.api.AlarmDataDao;
+import com.nirvana.dal.po.AlarmData;
 import com.nirvana.dal.po.User;
 
 @RestController
 public class MainController extends BaseController {
 	@Autowired
 	private UserService userbo;
+	
+	@Autowired
+	private AlarmDataDao alarmdao;
 
 	@RequestMapping({ "/test" })
 	public void test(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -28,7 +36,10 @@ public class MainController extends BaseController {
 		// response.setContentType("text/html;charset=utf-8");
 		// response.getWriter().print("Congratulations!");
 		// userbo.test(null);
-
+		List<AlarmData> list = alarmdao.findAfter(new Date());
+		Result result = Result.getSuccessInstance(list);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
 	}
 
 	@RequestMapping("/login")

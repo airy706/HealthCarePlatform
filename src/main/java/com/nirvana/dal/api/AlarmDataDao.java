@@ -1,5 +1,8 @@
 package com.nirvana.dal.api;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,4 +15,9 @@ public interface AlarmDataDao extends JpaRepository<AlarmData, Integer>{
 	@Query(nativeQuery=true,value="SELECT TOP 1 a FROM AlarmData a WHERE a.reasontype=:reasontype AND a.did=:did ORDER BY status_change_time DESC")
 	AlarmData findLatest(@Param("reasontype") Integer reasontype,@Param("did") String did);
 	
+	@Query("SELECT a FROM AlarmData a WHERE a.hasresloved=0")
+	List<AlarmData> findUnresloved();
+	
+	@Query("SELECT a FROM AlarmData a WHERE a.status_change_time>:time")
+	List<AlarmData> findAfter(@Param("time") Date time);
 }

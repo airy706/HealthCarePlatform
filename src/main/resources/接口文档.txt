@@ -259,7 +259,7 @@ request jsonstr 格式：
 
 
 异常消息检测模块
-1. 获取所有为解决的异常消息 /
+1. 获取所有为解决的异常消息 /alarm/resolved
 	request:
 	response: //按照世界排列 时间近的优先
 		[{
@@ -270,7 +270,7 @@ request jsonstr 格式：
 			exceptionContent //例如:余家头社区的老人王二心率达到了90,请立即查看并采取措施!
 		}]
 		
-2. 检测是否有新的未解决异常发生
+2. 检测是否有新的未解决异常发生/alarm/detection
 	request:
 		exceptionId
 	response:  //返回新于所传id的异常的异常

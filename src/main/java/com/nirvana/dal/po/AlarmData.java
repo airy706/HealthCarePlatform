@@ -23,6 +23,16 @@ public class AlarmData {
 
 	private Integer hasresloved;
 
+	private Integer level;
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
 	public Integer getHasresloved() {
 		return hasresloved;
 	}
@@ -66,7 +76,7 @@ public class AlarmData {
 	@Override
 	public String toString() {
 		return "AlarmData [dataid=" + dataid + ", did=" + did + ", reasontype=" + reasontype + ", status_change_time="
-				+ status_change_time + ", hasresloved=" + hasresloved + "]";
+				+ status_change_time + ", hasresloved=" + hasresloved + ", level=" + level + "]";
 	}
 
 }
