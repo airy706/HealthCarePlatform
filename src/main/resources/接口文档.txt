@@ -282,3 +282,25 @@ request jsonstr 格式：
 			exceptionContent //例如:余家头社区的老人王二心率达到了90,请立即查看并采取措施!
 		}]
 		
+上传频率模块:
+1. 设置上传频率
+	request:
+		userid
+		valid //配置是否生效
+		value //限制的值  单位 次/小时
+	response:
+
+2. 获取上传频率数据
+	request:
+		key //根据用户名和社区名
+		size
+		num
+	response:
+		[{
+			userid,
+			username,
+			community,
+			valid,  //默认否
+			value
+		}]
+		
