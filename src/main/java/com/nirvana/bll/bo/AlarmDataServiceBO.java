@@ -1,12 +1,14 @@
 package com.nirvana.bll.bo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nirvana.app.vo.AlarmFilterVO;
 import com.nirvana.app.vo.ExceptionVO;
 import com.nirvana.bll.service.AlarmDataService;
 import com.nirvana.dal.api.AlarmDataDao;
@@ -55,10 +57,37 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		AlarmData data = alarmdatadao.findOne(id);
 		List<AlarmData> list = alarmdatadao.findAfter(data.getStatus_change_time());
 		List<ExceptionVO> exs = new ArrayList<ExceptionVO>();
-		for(AlarmData alarm:list){
+		for (AlarmData alarm : list) {
 			User user = userdao.findByDid(alarm.getDid());
-			exs.add(new ExceptionVO(alarm,user));
+			exs.add(new ExceptionVO(alarm, user));
 		}
 		return exs;
 	}
+
+	@Override
+	public List<ExceptionVO> findAlltype() {
+		List<Integer> list = alarmdatadao.findAlltype();
+		List<ExceptionVO> exs = new ArrayList<ExceptionVO>();
+		for (Integer alarm : list) {
+			exs.add(new ExceptionVO(alarm));
+		}
+		return exs;
+	}
+
+	@Override
+	public List<ExceptionVO> findAllTimes() {
+		List<ExceptionVO> list = findAlltype();
+		for(ExceptionVO vo:list){
+			Integer times = alarmdatadao.findTypeTimes(vo.getAlarmType());
+			vo.setAlarmTimes(times);
+		}
+		return list;
+	}
+
+	@Override
+	public List<AlarmFilterVO> findByFilter(String[] ids, String[] types, Date start, Date end) {
+		
+		return null;
+	}
+
 }

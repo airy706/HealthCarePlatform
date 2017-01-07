@@ -12,9 +12,31 @@ public class ExceptionVO {
 	private Integer exceptionLevel;
 	private Date exceptionTime;
 	private String exceptionContent;
+	private Integer alarmType;
+	private String alarmName;
+	private Integer alarmTimes;
 
 	public ExceptionVO() {
 
+	}
+
+	public ExceptionVO(Integer type) {
+		this.alarmType = type;
+		if (type == 4) {
+			this.alarmName = "血压异常";
+		} else if (type == 6) {
+			this.alarmName = "坐姿异常";
+		} else if (type == 99) {
+			this.alarmName = "一键急救";
+		} else if (type == 12) {
+			this.alarmName = "心率异常";
+		} else if (type == 7) {
+			this.alarmName = "轮椅异常";
+		} else if (type == 3) {
+			this.alarmName = "坐垫异常";
+		} else {
+
+		}
 	}
 
 	public ExceptionVO(AlarmData data, User user) {
@@ -51,6 +73,30 @@ public class ExceptionVO {
 
 		}
 
+	}
+
+	public Integer getAlarmTimes() {
+		return alarmTimes;
+	}
+
+	public void setAlarmTimes(Integer alarmTimes) {
+		this.alarmTimes = alarmTimes;
+	}
+
+	public Integer getAlarmType() {
+		return alarmType;
+	}
+
+	public void setAlarmType(Integer alarmType) {
+		this.alarmType = alarmType;
+	}
+
+	public String getAlarmName() {
+		return alarmName;
+	}
+
+	public void setAlarmName(String alarmName) {
+		this.alarmName = alarmName;
 	}
 
 	public Integer getUserid() {

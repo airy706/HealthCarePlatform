@@ -283,14 +283,14 @@ request jsonstr 格式：
 		}]
 		
 上传频率模块:
-1. 设置上传频率
+1. 设置上传频率/user/setf
 	request:
 		userid
 		valid //配置是否生效
 		value //限制的值  单位 次/小时
 	response:
 
-2. 获取上传频率数据
+2. 获取上传频率数据/user/getf
 	request:
 		key //根据用户名和社区名
 		size
@@ -313,7 +313,7 @@ request jsonstr 格式：
 
 
 数据模块:
-1.获取所有的异常种类
+1.获取所有的异常种类/alarm/type
 	request:
 	response:
 		[{
@@ -321,7 +321,7 @@ request jsonstr 格式：
 			alarmType
 		}]
 
-2.获取所有的社区
+2.获取所有的社区 /community/all
 	request:
 	response:
 		[{

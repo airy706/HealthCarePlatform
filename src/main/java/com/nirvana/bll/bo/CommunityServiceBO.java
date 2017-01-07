@@ -1,5 +1,6 @@
 package com.nirvana.bll.bo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,16 @@ public class CommunityServiceBO implements CommunityService{
 	public Community findById(Integer id) {
 		Community community = communitydao.findOne(id);
 		return community;
+	}
+
+	@Override
+	public List<CommunityVO> findAll() {
+		List<Community> list =  communitydao.findAll();
+		List<CommunityVO> polist = new ArrayList<CommunityVO>();
+		
+		for(Community community:list){
+			polist.add(new CommunityVO(community.getCommunityid(),community.getCommunityname()));
+		}
+		return polist;
 	}
 }
