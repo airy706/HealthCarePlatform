@@ -304,3 +304,53 @@ request jsonstr 格式：
 			value
 		}]
 		
+		
+		
+		
+
+
+
+
+
+数据模块:
+1.获取所有的异常种类
+	request:
+	response:
+		[{
+			alarmName,
+			alarmType
+		}]
+
+2.获取所有的社区
+	request:
+	response:
+		[{
+			communityId,
+			communityName
+		}]
+		
+3.筛选异常数据
+	request:
+		communityId:'1,2,4', //逗号隔开 为空全部
+		alarmType:'1,2,3',//逗号隔开  为空全部
+		startTime:'2014/02/02'  为空默认最近一周
+		endTime:'2015/02/02'
+	response:
+		{
+			names:['社区1','社区2'],
+			data:[{
+				name:'社区1',
+				data:[14,21] //每一天的数据
+			}]
+		}
+		
+4. 获取所有异常分布
+	request:
+	response:
+	[{
+		alarmName,  //异常名称
+		alarmTimes, //异常次数
+	}]
+
+
+
