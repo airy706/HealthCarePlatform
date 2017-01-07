@@ -76,4 +76,9 @@ public class UserServiceBO implements UserService {
 		return volist;
 	}
 
+	@Override
+	public void setFrequency(User user) {
+		userdao.updatefrequency(user.getUserid(), user.getValid(), user.getFrequency());
+	}
+
 }

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mysql.fabric.xmlrpc.base.Array;
 import com.nirvana.app.vo.ExceptionVO;
 import com.nirvana.bll.service.AlarmDataService;
 import com.nirvana.dal.api.AlarmDataDao;

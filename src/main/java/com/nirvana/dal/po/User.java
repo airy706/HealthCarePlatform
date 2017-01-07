@@ -30,6 +30,8 @@ public class User {
 	private Integer typeid;
 	private String longtitude;
 	private String latitude;
+	private Integer valid;
+	private Integer frequency;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date logintime;
 	@Temporal(TemporalType.TIMESTAMP)
@@ -223,14 +225,31 @@ public class User {
 		this.lastupdatetime = lastupdatetime;
 	}
 
+	public Integer getValid() {
+		return valid;
+	}
+
+	public void setValid(Integer valid) {
+		this.valid = valid;
+	}
+
+	public Integer getFrequency() {
+		return frequency;
+	}
+
+	public void setFrequency(Integer frequency) {
+		this.frequency = frequency;
+	}
+
 	@Override
 	public String toString() {
 		return "User [userid=" + userid + ", username=" + username + ", usertel=" + usertel + ", useremail=" + useremail
 				+ ", useraddress=" + useraddress + ", userapartment=" + userapartment + ", useridentity=" + useridentity
-				+ ", typeid=" + typeid + ", longtitude=" + longtitude + ", latitude=" + latitude + ", logintime="
-				+ logintime + ", logouttime=" + logouttime + ", registtime=" + registtime + ", ipaddress=" + ipaddress
-				+ ", state=" + state + ", lastupdatetime=" + lastupdatetime + ", community=" + community + ", password="
-				+ password + ", relationships=" + relationships + ", nodes=" + nodes + ", notices=" + notices + "]";
+				+ ", typeid=" + typeid + ", longtitude=" + longtitude + ", latitude=" + latitude + ", valid=" + valid
+				+ ", frequency=" + frequency + ", logintime=" + logintime + ", logouttime=" + logouttime
+				+ ", registtime=" + registtime + ", ipaddress=" + ipaddress + ", state=" + state + ", lastupdatetime="
+				+ lastupdatetime + ", community=" + community + ", password=" + password + ", relationships="
+				+ relationships + ", nodes=" + nodes + ", notices=" + notices + "]";
 	}
 
 }

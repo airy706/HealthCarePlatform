@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,10 +37,9 @@ public class DataController extends BaseController {
 	@RequestMapping(value = "/uploadnode")
 	public void uploadnode(HttpServletRequest request, HttpServletResponse response, @RequestParam("nodedata") String d)
 			throws IOException {
-		System.out.println("before:   "+d);
 		String dd = URLDecoder.decode(d);
-		System.out.println("after:   "+dd);
-		NodeData data = new Gson().fromJson(d,NodeData.class);
+		System.out.println("json:   " + dd);
+		NodeData data = new Gson().fromJson(dd, NodeData.class);
 		nodedatabo.addData(data);
 		Result result = null;
 		result = Result.getSuccessInstance(null);
@@ -52,7 +50,7 @@ public class DataController extends BaseController {
 	@RequestMapping(value = "/uploadloc")
 	public void uploadloc(HttpServletRequest request, HttpServletResponse response, @RequestBody LocationData data)
 			throws IOException {
-		userservicebo.updateloc(data.getDid(), data.getLongtitude(), data.getLatitude(),data.getStatus_change_time());
+		userservicebo.updateloc(data.getDid(), data.getLongtitude(), data.getLatitude(), data.getStatus_change_time());
 		locdatabo.addData(data);
 		Result result = null;
 		result = Result.getSuccessInstance(null);

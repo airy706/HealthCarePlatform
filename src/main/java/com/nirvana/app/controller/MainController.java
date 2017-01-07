@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.nirvana.app.vo.Result;
-import com.nirvana.bll.service.AlarmDataService;
 import com.nirvana.bll.service.UserService;
 import com.nirvana.dal.api.AlarmDataDao;
 import com.nirvana.dal.po.AlarmData;
