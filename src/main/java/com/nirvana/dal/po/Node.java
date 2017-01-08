@@ -11,6 +11,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 @Entity
 @Table(name = "node")
 public class Node {
