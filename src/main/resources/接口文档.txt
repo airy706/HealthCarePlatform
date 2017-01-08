@@ -354,3 +354,39 @@ request jsonstr 格式：
 
 
 
+普通用户模块
+1. 获取节点首页数据
+	request:
+		userid
+	response:
+		[{
+			nodeType,
+			nodeName,
+			normalValue,
+			isNormal, //最近数据是否异常
+			latestData:{
+				value1, //如果是血压 1为高压 2为低压
+				value2
+			},
+			biggestData:{  //轮椅状态之类不传
+				value1, //如果是血压 1为高压 2为低压
+				value2
+			},
+			smallestData:{
+				value1, //如果是血压 1为高压 2为低压
+				value2
+			}
+		}]
+
+2. 获取用户公告
+	request:
+		userid
+	response:
+		[{
+			noticeid,
+			noticedate,
+			noticetitle,
+			isurl //公告是否为url型
+			url //如果是url类型链接返回url
+		}]
+
