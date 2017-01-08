@@ -329,7 +329,7 @@ request jsonstr 格式：
 			communityName
 		}]
 		
-3.筛选异常数据
+3.筛选异常数据 /alarm/filter
 	request:
 		communityId:'1,2,4', //逗号隔开 为空全部
 		alarmType:'1,2,3',//逗号隔开  为空全部
@@ -344,7 +344,7 @@ request jsonstr 格式：
 			}]
 		}
 		
-4. 获取所有异常分布
+4. 获取所有异常分布 /alarm/times
 	request:
 	response:
 	[{

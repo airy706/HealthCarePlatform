@@ -27,5 +27,7 @@ public interface AlarmDataDao extends JpaRepository<AlarmData, Integer>{
 	@Query("SELECT COUNT(*) FROM AlarmData a WHERE a.reasontype=:type")
 	Integer findTypeTimes(@Param("type") Integer alarmType);
 
-	
+	@Query("SELECT a FROM AlarmData a WHERE a.did in :dids AND a.status_change_time>=:start AND a.status_change_time<=:end AND a.reasontype in :types ORDER BY status_change_time")
+	List<AlarmData> findFilter(@Param("types") List<Integer> types,@Param("dids") List<String> dids,@Param("start") Date start,@Param("end") Date end);
+
 }

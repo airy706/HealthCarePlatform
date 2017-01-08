@@ -1,5 +1,7 @@
 package com.nirvana.dal.api;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,4 +24,7 @@ public interface UserDao extends JpaRepository<User, Integer> {
 
 	@Query("UPDATE User u SET u.valid=:valid,u.frequency=:frequency WHERE u.userid=:id")
 	void updatefrequency(@Param("id") Integer id,@Param("valid") Integer valid,@Param("frequency") Integer frequency);
+
+	@Query("SELECT u.useridentity FROM User u WHERE u.community.communityid=:id")
+	List<String> findAlldid(@Param("id") Integer id);
 }

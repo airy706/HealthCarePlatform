@@ -4,7 +4,7 @@ import java.util.List;
 
 public class AlarmCommunityVO {
 	private String name;
-	private List<String> data;
+	private List<Integer> data;
 
 	public String getName() {
 		return name;
@@ -14,11 +14,11 @@ public class AlarmCommunityVO {
 		this.name = name;
 	}
 
-	public List<String> getData() {
+	public List<Integer> getData() {
 		return data;
 	}
 
-	public void setData(List<String> data) {
+	public void setData(List<Integer> data) {
 		this.data = data;
 	}
 

@@ -85,8 +85,8 @@ public class AlarmController {
 			}
 		}
 		
-		List<AlarmFilterVO> list = alarmservicebo.findByFilter(ids,types,start,end);
-		Result result = Result.getSuccessInstance(list);
+		AlarmFilterVO filtervo = alarmservicebo.findByFilter(ids,types,start,end);
+		Result result = Result.getSuccessInstance(filtervo);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}

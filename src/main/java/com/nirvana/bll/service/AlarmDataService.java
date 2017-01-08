@@ -19,5 +19,5 @@ public interface AlarmDataService {
 
 	List<ExceptionVO> findAllTimes();
 
-	List<AlarmFilterVO> findByFilter(String[] ids, String[] types, Date start, Date end);
+	AlarmFilterVO findByFilter(String[] ids, String[] types, Date start, Date end);
 }

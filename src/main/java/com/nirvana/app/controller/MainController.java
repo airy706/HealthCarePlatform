@@ -1,6 +1,7 @@
 package com.nirvana.app.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.nirvana.app.vo.AlarmFilterVO;
 import com.nirvana.app.vo.CommunityVO;
 import com.nirvana.app.vo.ExceptionVO;
 import com.nirvana.app.vo.Result;
@@ -39,8 +41,16 @@ public class MainController extends BaseController {
 		// response.setContentType("text/html;charset=utf-8");
 		// response.getWriter().print("Congratulations!");
 		// userbo.test(null);
-		List<ExceptionVO> list = alarmbo.findAllTimes();
-		Result result = Result.getSuccessInstance(list);
+		Date start = null;
+		Date end  =null;
+		end =  new Date();
+		start = new Date();
+		start.setTime(start.getTime()-7*24*60*60*1000);
+		String[] ids = {};
+		String[] types={};
+		AlarmFilterVO vo = alarmbo.findByFilter(ids, types, start, end);
+		System.out.println("haha");
+		Result result = Result.getSuccessInstance(vo);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}

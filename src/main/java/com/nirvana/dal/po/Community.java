@@ -16,7 +16,6 @@ public class Community {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer communityid;
-
 	private String areaname;
 	private String communityname;
 	private String communitytel;
@@ -25,7 +24,7 @@ public class Community {
 	private String longtitude;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "community")
-	
+
 	private Set<User> users;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "community")
@@ -109,7 +108,5 @@ public class Community {
 				+ ", communitytel=" + communitytel + ", communitylocation=" + communitylocation + ", latitude="
 				+ latitude + ", longtitude=" + longtitude + ", users=" + users + ", notices=" + notices + "]";
 	}
-
-	
 
 }
