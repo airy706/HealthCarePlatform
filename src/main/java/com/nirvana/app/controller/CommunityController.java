@@ -23,8 +23,9 @@ public class CommunityController {
 	@Autowired
 	private CommunityService communityservicebo;
 
-	@RequestMapping({"/create","/update"})
-	public void create(HttpServletRequest request, HttpServletResponse response, Community community) throws IOException {
+	@RequestMapping({ "/create", "/update" })
+	public void create(HttpServletRequest request, HttpServletResponse response, Community community)
+			throws IOException {
 		boolean isSuc = communityservicebo.add(community);
 		Result result = null;
 		if (isSuc) {
@@ -35,21 +36,30 @@ public class CommunityController {
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
-	
-	@RequestMapping({"/del"})
-	public void del(HttpServletRequest request, HttpServletResponse response,@RequestParam("id") Integer id) throws IOException{
+
+	@RequestMapping({ "/del" })
+	public void del(HttpServletRequest request, HttpServletResponse response, @RequestParam("id") Integer id)
+			throws IOException {
 		communityservicebo.delById(id);
 		Result result = Result.getSuccessInstance(null);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
-	
-	@RequestMapping({"/search"})
-	public void search(HttpServletRequest request, HttpServletResponse response,@RequestParam("key") String key) throws IOException{
+
+	@RequestMapping({ "/search" })
+	public void search(HttpServletRequest request, HttpServletResponse response, @RequestParam("key") String key)
+			throws IOException {
 		List<CommunityVO> list = communityservicebo.findFuzzy(key);
 		Result result = Result.getSuccessInstance(list);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
-	
+
+	@RequestMapping("/all")
+	public void all(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		List<CommunityVO> list = communityservicebo.findAll();
+		Result result = Result.getSuccessInstance(list);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
 }

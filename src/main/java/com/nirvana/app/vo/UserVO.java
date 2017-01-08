@@ -12,6 +12,8 @@ public class UserVO {
 	private String latitude;
 	private String longitude;
 	private Integer state;
+	private Integer valid;
+	private Integer frequency;
 
 	private List<NodeVO> nodes;
 
@@ -32,9 +34,29 @@ public class UserVO {
 			this.latitude = user.getLatitude();
 			this.longitude = user.getLongtitude();
 			this.state = user.getState();
-		} else {
-
+		} else if (select == 3) {
+			this.userid = user.getUserid();
+			this.username = user.getUsername();
+			this.communityname = user.getCommunity().getCommunityname();
+			this.valid = user.getValid();
+			this.frequency = user.getFrequency();
 		}
+	}
+
+	public Integer getValid() {
+		return valid;
+	}
+
+	public void setValid(Integer valid) {
+		this.valid = valid;
+	}
+
+	public Integer getFrequency() {
+		return frequency;
+	}
+
+	public void setFrequency(Integer frequency) {
+		this.frequency = frequency;
 	}
 
 	public Integer getCommunityid() {

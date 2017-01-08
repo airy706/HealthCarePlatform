@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.nirvana.app.vo.AlarmFilterVO;
+import com.nirvana.app.vo.CommunityVO;
+import com.nirvana.app.vo.ExceptionVO;
 import com.nirvana.app.vo.Result;
 import com.nirvana.bll.service.AlarmDataService;
+import com.nirvana.bll.service.CommunityService;
 import com.nirvana.bll.service.UserService;
-import com.nirvana.dal.api.AlarmDataDao;
-import com.nirvana.dal.po.AlarmData;
 import com.nirvana.dal.po.User;
 
 @RestController
@@ -25,7 +27,10 @@ public class MainController extends BaseController {
 	private UserService userbo;
 	
 	@Autowired
-	private AlarmDataDao alarmdao;
+	private AlarmDataService alarmbo;
+	
+	@Autowired
+	private CommunityService communitybo;
 
 	@RequestMapping({ "/test" })
 	public void test(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -36,8 +41,16 @@ public class MainController extends BaseController {
 		// response.setContentType("text/html;charset=utf-8");
 		// response.getWriter().print("Congratulations!");
 		// userbo.test(null);
-		List<AlarmData> list = alarmdao.findAfter(new Date());
-		Result result = Result.getSuccessInstance(list);
+		Date start = null;
+		Date end  =null;
+		end =  new Date();
+		start = new Date();
+		start.setTime(start.getTime()-7*24*60*60*1000);
+		String[] ids = {};
+		String[] types={};
+		AlarmFilterVO vo = alarmbo.findByFilter(ids, types, start, end);
+		System.out.println("haha");
+		Result result = Result.getSuccessInstance(vo);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}

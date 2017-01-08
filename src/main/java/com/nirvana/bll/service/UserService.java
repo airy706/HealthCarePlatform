@@ -20,4 +20,6 @@ public interface UserService {
 	void updateloc(String did, String longtitude, String latitude,Date updatetime);
 
 	List<UserVO> findOnline();
+	
+	void setFrequency(User user);
 }

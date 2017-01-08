@@ -27,16 +27,19 @@ public class CommunityVO {
 		this.latitude = community.getLatitude();
 		this.longtitude = community.getLongtitude();
 	}
-	
-	public static List<CommunityVO> toListVO(List<Community> polist){
+
+	public CommunityVO(Integer communityid, String communityname) {
+		this.communityid = communityid;
+		this.communityname = communityname;
+	}
+
+	public static List<CommunityVO> toListVO(List<Community> polist) {
 		List<CommunityVO> list = new ArrayList<CommunityVO>();
-		for(int i=0;i<polist.size();i++){
+		for (int i = 0; i < polist.size(); i++) {
 			list.add(new CommunityVO(polist.get(i)));
 		}
 		return list;
 	}
-	
-	
 
 	public Integer getCommunityid() {
 		return communityid;

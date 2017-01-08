@@ -13,4 +13,6 @@ public interface CommunityService {
 	List<CommunityVO> findFuzzy(String key);
 	
 	Community findById(Integer id);
+
+	List<CommunityVO> findAll();
 }
