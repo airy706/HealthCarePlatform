@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+import com.nirvana.app.vo.NodeHomePageVO;
 import com.nirvana.app.vo.UserVO;
 import com.nirvana.dal.po.User;
 
@@ -22,4 +23,6 @@ public interface UserService {
 	List<UserVO> findOnline();
 	
 	void setFrequency(User user);
+
+	List<NodeHomePageVO> findNodeDataByUid(Integer userid);
 }

@@ -90,6 +90,16 @@ public class NoticeController extends BaseController {
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
+	@RequestMapping("/user")
+	public void user(HttpServletRequest request, HttpServletResponse response, @RequestParam("userid") Integer userid)
+			throws IOException {
+		List<NoticeVO> list = noticeservicebo.findNoticeByUid(userid);
+		Result result = null;
+		result = Result.getSuccessInstance(list);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
+
 	@RequestMapping("/upload")
 	public void upload(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		//  创建一个通用的多部分解析器 ，用于解析SpringMVC的上下文  
@@ -109,7 +119,7 @@ public class NoticeController extends BaseController {
 					//  如果名称不为“”,说明该文件存在，否则说明该文件不存在  
 					if (myFileName.trim() != "") {
 						//  重命名上传后的文件名  
-						String fileName = new Date().getTime()+"_"+ file.getOriginalFilename();
+						String fileName = new Date().getTime() + "_" + file.getOriginalFilename();
 						/*
 						 *    //定义上传路径 String path = "H:/" + fileName; File
 						 *  localFile = new File(path); //
@@ -121,7 +131,7 @@ public class NoticeController extends BaseController {
 						File uploadfile = new File(realPath, fileName);
 						//  不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉  
 						FileUtils.copyInputStreamToFile(file.getInputStream(), uploadfile);
-						String url = request.getServletContext().getContextPath()+"/upload/notice/"+fileName;
+						String url = request.getServletContext().getContextPath() + "/upload/notice/" + fileName;
 						System.out.println(url);
 						Result result = Result.getSuccessInstance(url);
 						response.setContentType("text/html;charset=utf-8");

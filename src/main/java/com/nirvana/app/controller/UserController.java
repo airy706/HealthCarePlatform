@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.nirvana.app.vo.NodeHomePageVO;
 import com.nirvana.app.vo.Result;
 import com.nirvana.app.vo.UserVO;
 import com.nirvana.bll.service.UserService;
@@ -51,6 +52,14 @@ public class UserController {
 			polist.add(new UserVO(user, 3));
 		}
 		Result result = Result.getSuccessInstance(polist);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+
+	@RequestMapping("/home")
+	public void home(HttpServletRequest request, HttpServletResponse response, @RequestParam("userid") Integer userid) throws IOException {
+		List<NodeHomePageVO> list = userservicebo.findNodeDataByUid(userid);
+		Result result = Result.getSuccessInstance(list);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
