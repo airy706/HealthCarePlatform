@@ -33,4 +33,7 @@ public interface AlarmDataDao extends JpaRepository<AlarmData, Integer>{
 	@Query("SELECT a FROM AlarmData a WHERE a.did in :dids AND a.status_change_time>=:start AND a.status_change_time<=:end AND a.reasontype in :types ORDER BY status_change_time")
 	List<AlarmData> findFilter(@Param("types") List<Integer> types,@Param("dids") List<String> dids,@Param("start") Date start,@Param("end") Date end);
 
+	@Query("SELECT a FROM AlarmData a ORDER BY status_change_time DESC")
+	List<AlarmData> findAllDESC();
+
 }

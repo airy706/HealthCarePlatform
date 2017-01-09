@@ -79,7 +79,7 @@ public class UserServiceBO implements UserService {
 			// if(user.getLastupdatetime().)
 			if (user.getLastupdatetime() != null) {
 				long between = now.getTime() - user.getLastupdatetime().getTime();
-				if (between < 60000) {
+				if (between < 60000*5) {
 					volist.add(new UserVO(user, 2));
 				}
 			}
