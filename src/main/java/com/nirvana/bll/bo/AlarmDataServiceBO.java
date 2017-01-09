@@ -56,7 +56,7 @@ public class AlarmDataServiceBO implements AlarmDataService {
 
 	@Override
 	public List<ExceptionVO> findAllRedo() {
-		List<AlarmData> list = alarmdatadao.findAll();
+		List<AlarmData> list = alarmdatadao.findUnresloved();
 		List<ExceptionVO> exs = new ArrayList<ExceptionVO>();
 		for (AlarmData data : list) {
 			User user = userdao.findByDid(data.getDid());
@@ -178,6 +178,13 @@ public class AlarmDataServiceBO implements AlarmDataService {
 			}
 		}
 		return times;
+	}
+
+	@Override
+	public void sloveByAid(Integer id) {
+		AlarmData data = alarmdatadao.findOne(id);
+		data.setHasresloved(1);
+		alarmdatadao.save(data);
 	}
 
 }

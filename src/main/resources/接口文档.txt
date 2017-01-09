@@ -358,7 +358,7 @@ request jsonstr 格式：
 
 
 普通用户模块
-1. 获取节点首页数据
+1. 获取节点首页数据/user/home
 	request:
 		userid
 	response:
