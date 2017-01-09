@@ -10,9 +10,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nirvana.app.vo.NodeHomePageVO;
 import com.nirvana.app.vo.UserVO;
 import com.nirvana.bll.service.UserService;
+import com.nirvana.dal.api.NodeDao;
+import com.nirvana.dal.api.NodeDataDao;
 import com.nirvana.dal.api.UserDao;
+import com.nirvana.dal.po.Node;
+import com.nirvana.dal.po.NodeData;
 import com.nirvana.dal.po.User;
 
 @Service
@@ -21,6 +26,12 @@ public class UserServiceBO implements UserService {
 
 	@Autowired
 	private UserDao userdao;
+
+	@Autowired
+	private NodeDao nodedao;
+
+	@Autowired
+	private NodeDataDao nodedatadao;
 
 	@Override
 	public User login(String username, String password) {
@@ -79,6 +90,74 @@ public class UserServiceBO implements UserService {
 	@Override
 	public void setFrequency(User user) {
 		userdao.updatefrequency(user.getUserid(), user.getValid(), user.getFrequency());
+	}
+
+	@Override
+	public List<NodeHomePageVO> findNodeDataByUid(Integer userid) {
+		User user = userdao.findOne(userid);
+		String did = user.getUseridentity();
+		List<Node> nodes = nodedao.findAllTypeByUid(userid);
+		System.out.println(nodes.size());
+		List<NodeHomePageVO> volist = new ArrayList<NodeHomePageVO>();
+		for (Node node : nodes) {
+			Integer type = node.getNodetype();
+			System.out.println(type);
+			System.out.println(did);
+			PageRequest request = this.buildPageRequest(1, 1);
+			Page<NodeData> pages= nodedatadao.findLatestByDidAndType(did,type,request);
+			List<NodeData> list = pages.getContent();
+			System.out.println(list.size());
+			NodeHomePageVO vo = new NodeHomePageVO();
+			if(list.size()>0){
+			vo.setLatestData(list.get(0).getData());
+			}else{
+				vo.setLatestData("");
+			}
+			vo.setNodeName(node.getNodename());
+			vo.setNodeType(type);
+			if (type == 12 || type == 6) {
+				Integer h1 = 0, h2 = 0;
+				Integer l1 = 0, l2 = 0;
+				Date end = new Date();
+				Date start = new Date();
+				start.setTime(end.getTime() - 7 * 24 * 60 * 60 * 1000);
+				List<NodeData> datas = nodedatadao.findByDidAndTypeinWeek(did, type, start, end);
+				for (int i = 0; i < datas.size(); i++) {
+					String value = datas.get(i).getData();
+					if (type == 6) {
+						String v[] = value.split(",");
+						if (Integer.parseInt(v[0]) > h1) {
+							h1 = Integer.parseInt(v[0]);
+						}
+						if (Integer.parseInt(v[1]) > h2) {
+							h2 = Integer.parseInt(v[1]);
+						}
+						if (Integer.parseInt(v[0]) < l1) {
+							l1 = Integer.parseInt(v[0]);
+						}
+						if (Integer.parseInt(v[1]) < l2) {
+							l2 = Integer.parseInt(v[1]);
+						}
+					} else {
+						if (Integer.parseInt(value) > h1) {
+							h1 = Integer.parseInt(value);
+						}
+						if (Integer.parseInt(value) < l1) {
+							l1 = Integer.parseInt(value);
+						}
+					}
+				}
+				if (type == 6) {
+					vo.setHigh(h1 + "," + h2);
+					vo.setLow(l1 + "," + l2);
+				} else {
+					vo.setHigh(h1 + "");
+					vo.setLow(l1 + "");
+				}
+			}
+			volist.add(vo);
+		}
+		return volist;
 	}
 
 }

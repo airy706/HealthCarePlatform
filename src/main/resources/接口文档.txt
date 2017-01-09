@@ -368,23 +368,27 @@ request jsonstr 格式：
 		[{
 			nodeType,
 			nodeName,
-			normalValue,
-			isNormal, //最近数据是否异常
-			latestData:{
-				value1, //如果是血压 1为高压 2为低压
-				value2
-			},
-			biggestData:{  //轮椅状态之类不传
-				value1, //如果是血压 1为高压 2为低压
-				value2
-			},
-			smallestData:{
-				value1, //如果是血压 1为高压 2为低压
-				value2
-			}
+			# normalValue,
+			# isNormal,
+			 //最近数据是否异常
+			
+			latestData
+			# :{
+				# value1, //如果是血压 1为高压 2为低压
+				# value2
+			# },
+			
+			# biggestData:{  //轮椅状态之类不传
+				# value1, //如果是血压 1为高压 2为低压
+				# value2
+			# },
+			# smallestData:{
+				# value1, //如果是血压 1为高压 2为低压
+				# value2
+			# }
 		}]
 
-2. 获取用户公告
+2. 获取用户公告/notice/user
 	request:
 		userid
 	response:

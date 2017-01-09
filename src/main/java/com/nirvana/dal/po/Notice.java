@@ -21,20 +21,39 @@ public class Notice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer noticeid;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date noticedate;
 	private String noticetitle;
-	@Length(max=10000)
+	@Length(max = 10000)
 	private String noticecontent;
 	private Integer noticetype;
 	private String attachurl;
+	private boolean isurl;
+	private String url;
+
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "userid")
 	private User user;
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "communityid")
 	private Community community;
+
+	public boolean isIsurl() {
+		return isurl;
+	}
+
+	public void setIsurl(boolean isurl) {
+		this.isurl = isurl;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 	public Integer getNoticeid() {
 		return noticeid;
@@ -104,7 +123,7 @@ public class Notice {
 	public String toString() {
 		return "Notice [noticeid=" + noticeid + ", noticedate=" + noticedate + ", noticetitle=" + noticetitle
 				+ ", noticecontent=" + noticecontent + ", noticetype=" + noticetype + ", attachurl=" + attachurl
-				+ ", user=" + user + ", community=" + community + "]";
+				+ ", isurl=" + isurl + ", url=" + url + ", user=" + user + ", community=" + community + "]";
 	}
 
 }
