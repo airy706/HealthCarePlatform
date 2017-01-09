@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,11 +32,17 @@ public class AlarmDataServiceBO implements AlarmDataService {
 
 	@Autowired
 	private CommunityDao communitydao;
+	
+	
+	private PageRequest buildPageRequest(int pageNumber, int pagzSize) {
+		return new PageRequest(pageNumber - 1, pagzSize, null);
+	}
 
 	@Override
 	public void addData(AlarmData data) {
 		data.setHasresloved(0);
-		AlarmData latest = alarmdatadao.findLatest(data.getReasontype(), data.getDid());
+		PageRequest request = this.buildPageRequest(1, 1);
+		AlarmData latest = alarmdatadao.findLatest(data.getReasontype(), data.getDid(),request).getContent().get(0);
 		// 时间间隔设为 30min;
 		if (latest == null) {
 			alarmdatadao.save(data);

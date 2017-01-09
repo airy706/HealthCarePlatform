@@ -16,7 +16,6 @@ public class NodeDataServiceBO implements NodeDataService {
 	private NodeDataDao nodedatadao;
 
 	@Override
-	@Transactional
 	public void addData(NodeData data) {
 		data = nodedatadao.save(data);
 

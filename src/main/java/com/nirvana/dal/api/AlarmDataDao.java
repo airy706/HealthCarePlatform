@@ -3,6 +3,9 @@ package com.nirvana.dal.api;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,8 +15,8 @@ import com.nirvana.dal.po.AlarmData;
 @Repository
 public interface AlarmDataDao extends JpaRepository<AlarmData, Integer>{
 
-	@Query(nativeQuery=true,value="SELECT TOP 1 a FROM AlarmData a WHERE a.reasontype=:reasontype AND a.did=:did ORDER BY status_change_time DESC")
-	AlarmData findLatest(@Param("reasontype") Integer reasontype,@Param("did") String did);
+	@Query(value="SELECT a FROM AlarmData a WHERE a.reasontype=:reasontype AND a.did=:did ORDER BY status_change_time DESC")
+	Page<AlarmData> findLatest(@Param("reasontype") Integer reasontype,@Param("did") String did,Pageable pageable);
 	
 	@Query("SELECT a FROM AlarmData a WHERE a.hasresloved=0")
 	List<AlarmData> findUnresloved();

@@ -17,7 +17,7 @@ public class NodeData {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer dataid;
 	private String did;
-	private String sensortype;
+	private Integer sensortype;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date status_change_time;
 	private String nodeid;
@@ -39,11 +39,11 @@ public class NodeData {
 		this.did = did;
 	}
 
-	public String getSensortype() {
+	public Integer getSensortype() {
 		return sensortype;
 	}
 
-	public void setSensortype(String sensortype) {
+	public void setSensortype(Integer sensortype) {
 		this.sensortype = sensortype;
 	}
 
