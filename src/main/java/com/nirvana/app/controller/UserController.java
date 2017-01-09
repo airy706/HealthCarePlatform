@@ -51,7 +51,9 @@ public class UserController {
 		for (User user : list) {
 			polist.add(new UserVO(user, 3));
 		}
+		//通过message传递总条数
 		Result result = Result.getSuccessInstance(polist);
+		result.setMsg(pages.getTotalElements()+"");
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
