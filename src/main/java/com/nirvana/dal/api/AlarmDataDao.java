@@ -18,7 +18,7 @@ public interface AlarmDataDao extends JpaRepository<AlarmData, Integer>{
 	@Query(value="SELECT a FROM AlarmData a WHERE a.reasontype=:reasontype AND a.did=:did ORDER BY status_change_time DESC")
 	Page<AlarmData> findLatest(@Param("reasontype") Integer reasontype,@Param("did") String did,Pageable pageable);
 	
-	@Query("SELECT a FROM AlarmData a WHERE a.hasresloved=0")
+	@Query("SELECT a FROM AlarmData a WHERE a.hasresloved=0 ORDER BY status_change_time DESC")
 	List<AlarmData> findUnresloved();
 	
 	@Query("SELECT a FROM AlarmData a WHERE a.status_change_time>:time")

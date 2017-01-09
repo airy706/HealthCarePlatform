@@ -56,7 +56,7 @@ public class AlarmDataServiceBO implements AlarmDataService {
 
 	@Override
 	public List<ExceptionVO> findAllRedo() {
-		List<AlarmData> list = alarmdatadao.findAllDESC();
+		List<AlarmData> list = alarmdatadao.findUnresloved();
 		List<ExceptionVO> exs = new ArrayList<ExceptionVO>();
 		for (AlarmData data : list) {
 			User user = userdao.findByDid(data.getDid());
