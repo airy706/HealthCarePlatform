@@ -32,8 +32,7 @@ public class AlarmDataServiceBO implements AlarmDataService {
 
 	@Autowired
 	private CommunityDao communitydao;
-	
-	
+
 	private PageRequest buildPageRequest(int pageNumber, int pagzSize) {
 		return new PageRequest(pageNumber - 1, pagzSize, null);
 	}
@@ -42,7 +41,7 @@ public class AlarmDataServiceBO implements AlarmDataService {
 	public void addData(AlarmData data) {
 		data.setHasresloved(0);
 		PageRequest request = this.buildPageRequest(1, 1);
-		AlarmData latest = alarmdatadao.findLatest(data.getReasontype(), data.getDid(),request).getContent().get(0);
+		AlarmData latest = alarmdatadao.findLatest(data.getReasontype(), data.getDid(), request).getContent().get(0);
 		// 时间间隔设为 30min;
 		if (latest == null) {
 			alarmdatadao.save(data);
@@ -102,10 +101,14 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		List<Integer> typesint = new ArrayList<Integer>();
 		List<Integer> communityids = new ArrayList<Integer>();
 		for (int i = 0; i < types.length; i++) {
-			typesint.add(Integer.parseInt(types[i]));
+			if (!"".equals(types[i])) {
+				typesint.add(Integer.parseInt(types[i]));
+			}
 		}
 		for (int i = 0; i < ids.length; i++) {
-			communityids.add(Integer.parseInt(ids[i]));
+			if (!"".equals(ids[i])) {
+				communityids.add(Integer.parseInt(ids[i]));
+			}
 		}
 		if (typesint.size() == 0) {
 			List<Integer> tps = alarmdatadao.findAlltype();

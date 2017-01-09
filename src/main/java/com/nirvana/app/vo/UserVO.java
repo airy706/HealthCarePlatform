@@ -28,6 +28,7 @@ public class UserVO {
 			this.username = user.getUsername();
 			this.communityname = user.getCommunity().getCommunityname();
 		} else if (select == 2) {
+			this.usertel = user.getUsertel();
 			this.userid = user.getUserid();
 			this.username = user.getUsername();
 			this.communityname = user.getCommunity().getCommunityname();
