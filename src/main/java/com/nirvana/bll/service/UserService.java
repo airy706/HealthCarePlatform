@@ -25,4 +25,6 @@ public interface UserService {
 	void setFrequency(User user);
 
 	List<NodeHomePageVO> findNodeDataByUid(Integer userid);
+
+	UserVO getDetailByUid(Integer userid);
 }

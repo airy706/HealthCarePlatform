@@ -163,4 +163,19 @@ public class UserServiceBO implements UserService {
 		return volist;
 	}
 
+	@Override
+	public UserVO getDetailByUid(Integer userid) {
+		User user = userdao.findOne(userid);
+		UserVO vo = new UserVO();
+		vo.setUserid(user.getUserid());
+		vo.setUsername(user.getUsername());
+		vo.setCommunityid(user.getCommunity().getCommunityid());
+		vo.setCommunityname(user.getCommunity().getCommunityname());
+		vo.setLatitude(user.getLatitude());
+		vo.setLongitude(user.getLongtitude());
+		vo.setState(user.getState());
+		vo.setUsertel(user.getUsertel());
+		return vo;
+	}
+
 }

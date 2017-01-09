@@ -65,5 +65,13 @@ public class UserController {
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
+	
+	@RequestMapping("/detail")
+	public void detail(HttpServletRequest request, HttpServletResponse response, @RequestParam("userid") Integer userid) throws IOException{
+		UserVO vo = userservicebo.getDetailByUid(userid);
+		Result result = Result.getSuccessInstance(vo);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
 
 }

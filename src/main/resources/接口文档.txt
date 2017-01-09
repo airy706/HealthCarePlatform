@@ -381,7 +381,7 @@ request jsonstr 格式：
 			}
 		}]
 
-2. 获取用户公告
+2. 获取用户公告/notice/user
 	request:
 		userid
 	response:
