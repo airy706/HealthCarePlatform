@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.nirvana.app.util.GsonUtils;
 import com.nirvana.app.vo.AlarmFilterVO;
 import com.nirvana.app.vo.ExceptionVO;
@@ -57,6 +54,15 @@ public class AlarmController {
 	public void type(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		List<ExceptionVO> list = alarmservicebo.findAlltype();
 		Result result = Result.getSuccessInstance(list);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+
+	@RequestMapping("/solve")
+	public void solve(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("exceptionId") Integer id) throws IOException {
+		alarmservicebo.sloveByAid(id);
+		Result result = Result.getSuccessInstance(null);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}

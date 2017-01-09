@@ -180,4 +180,11 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		return times;
 	}
 
+	@Override
+	public void sloveByAid(Integer id) {
+		AlarmData data = alarmdatadao.findOne(id);
+		data.setHasresloved(1);
+		alarmdatadao.save(data);
+	}
+
 }

@@ -20,4 +20,6 @@ public interface AlarmDataService {
 	List<ExceptionVO> findAllTimes();
 
 	AlarmFilterVO findByFilter(String[] ids, String[] types, Date start, Date end);
+
+	void sloveByAid(Integer id);
 }
