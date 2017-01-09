@@ -261,7 +261,7 @@ request jsonstr 格式：
 异常消息检测模块
 1. 获取所有为解决的异常消息 /alarm/resolved
 	request:
-	response: //按照世界排列 时间近的优先
+	response: //按照时间排列 时间近的优先
 		[{
 			exceptionId
 			exceptionLevel
@@ -281,6 +281,12 @@ request jsonstr 格式：
 			exceptionTime
 			exceptionContent //例如:余家头社区的老人王二心率达到了90,请立即查看并采取措施!
 		}]
+		
+3. 清除异常 /alarm/solve
+	request:
+		exceptionId
+	response:
+		
 		
 上传频率模块:
 1. 设置上传频率/user/setf
