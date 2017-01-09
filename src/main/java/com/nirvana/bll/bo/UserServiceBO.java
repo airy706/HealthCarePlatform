@@ -89,7 +89,10 @@ public class UserServiceBO implements UserService {
 
 	@Override
 	public void setFrequency(User user) {
-		userdao.updatefrequency(user.getUserid(), user.getValid(), user.getFrequency());
+		User u = userdao.findOne(user.getUserid());
+		u.setFrequency(user.getFrequency());
+		u.setValid(user.getValid());
+		userdao.save(u);
 	}
 
 	@Override
