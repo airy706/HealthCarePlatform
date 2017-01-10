@@ -428,17 +428,17 @@ request jsonstr 格式：
 			userid,
 			username
 		}]
-1.新增咨询服务
+1.新增咨询服务/consult/create
 	request:
 		consultUserId //咨询人id
-		Consulttype.type //咨询类型
+		Consulttype.typeid //咨询类型
 		content //咨询内容
 		User.userid //发出咨询用户的id
 	response:
 		
-2.编辑咨询服务
+2.编辑咨询服务/consult/edit
 	request:
-		consultId
+		consultid
 		consultUserId //咨询人id
 		Consulttype.type //咨询类型
 		content //咨询内容
@@ -465,12 +465,12 @@ request jsonstr 格式：
 			content //咨询内容
 		}]
 		
-5. 删除咨询服务
+5. 删除咨询服务/consult/del
 	request:
 		consultId
 	response:
 		
-6. 完成咨询服务
+6. 完成咨询服务/consult/finish
 	request:
 		consultId
 	response:
