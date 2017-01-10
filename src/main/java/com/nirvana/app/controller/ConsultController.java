@@ -1,6 +1,7 @@
 package com.nirvana.app.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import com.google.gson.Gson;
 import com.nirvana.app.vo.Result;
 import com.nirvana.app.vo.UserVO;
 import com.nirvana.bll.service.ConsultService;
+import com.nirvana.dal.po.Consult;
 import com.nirvana.dal.po.Consulttype;
 
 @RestController
@@ -43,5 +45,35 @@ public class ConsultController {
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
+
+	@RequestMapping("/create")
+	public void create(HttpServletRequest request, HttpServletResponse response, Consult consult) throws IOException {
+		Date now = new Date();
+		consult.setCommittime(now);
+		consult.setIsfinish(false);
+		consultbo.addOne(consult);
+		Result result = null;
+		result = Result.getSuccessInstance(null);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+
+	@RequestMapping("del")
+	public void del(HttpServletRequest request, HttpServletResponse response, @RequestParam("consultId") Integer id) throws IOException {
+		consultbo.delById(id);
+		Result result = null;
+		result = Result.getSuccessInstance(null);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
 	
+	@RequestMapping("/finish")
+	public void finish(HttpServletRequest request, HttpServletResponse response, @RequestParam("consultId") Integer id) throws IOException{
+		consultbo.finishByCid(id);
+		Result result = null;
+		result = Result.getSuccessInstance(null);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+
 }
