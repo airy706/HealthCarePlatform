@@ -113,12 +113,14 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		if (typesint.size() == 0) {
 			List<Integer> tps = alarmdatadao.findAlltype();
 			for (Integer t : tps) {
+				System.out.println(t);
 				typesint.add(t);
 			}
 		}
 		if (communityids.size() == 0) {
 			List<Community> coms = communitydao.findAll();
 			for (Community community : coms) {
+				System.out.println(community.getCommunityid());
 				communityids.add(community.getCommunityid());
 			}
 		}
@@ -151,9 +153,9 @@ public class AlarmDataServiceBO implements AlarmDataService {
 	private List<Integer> analyseTimes(List<AlarmData> list, long start, long end) {
 
 		List<Integer> times = new ArrayList<Integer>();
-		List<AlarmData> copy = null;
 		long now = 0;
 		Integer count = 0;
+		int index = 0;
 		if (list == null || list.size() == 0) {
 			long num = (end - start) / (24 * 60 * 60 * 1000);
 			for (int i = 0; i < num; i++) {
@@ -162,20 +164,21 @@ public class AlarmDataServiceBO implements AlarmDataService {
 			return times;
 		}
 		while (true) {
-			copy = new ArrayList<AlarmData>(list);
-			for (int i = 0; i < copy.size(); i++) {
-				now = start;
-				if ((list.get(i).getStatus_change_time().getTime() - now) < 24 * 60 * 60 * 1000) {
+			now = start;
+			count = 0;
+			for (; index < list.size(); index++) {
+				long test = list.get(index).getStatus_change_time().getTime();
+				long between = test - now;
+
+				if (between < 24 * 60 * 60 * 1000) {
 					count++;
-					list.remove(i);
 				} else {
 					break;
 				}
 			}
-			copy = null;
+			start = start + 24 * 60 * 60 * 1000;
 			times.add(count);
 			count = 0;
-			start = start + 24 * 60 * 60 * 1000;
 			if (start == end) {
 				break;
 			}

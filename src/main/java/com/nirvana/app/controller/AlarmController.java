@@ -86,7 +86,7 @@ public class AlarmController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		if (startTime == null || "".equals(startTime)) {
 			end = new Date();
-			start = new Date();
+			start = new Date(end.getTime());
 			start.setTime(start.getTime() - 7 * 24 * 60 * 60 * 1000);
 		} else {
 			try {
@@ -96,7 +96,7 @@ public class AlarmController {
 				e.printStackTrace();
 			}
 		}
-
+		System.out.println(ids.length+"  "+types.length);
 		AlarmFilterVO filtervo = alarmservicebo.findByFilter(ids, types, start, end);
 		Result result = Result.getSuccessInstance(filtervo);
 		response.setContentType("text/html;charset=utf-8");
