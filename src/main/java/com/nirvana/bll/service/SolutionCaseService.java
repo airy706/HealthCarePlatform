@@ -2,6 +2,7 @@ package com.nirvana.bll.service;
 
 import java.util.List;
 
+import com.nirvana.app.vo.SolutionCaseVO;
 import com.nirvana.dal.po.SolutionCase;
 
 public interface SolutionCaseService {
@@ -10,4 +11,6 @@ public interface SolutionCaseService {
 	void delById(Integer id);
 	
 	List<SolutionCase> findAll();
+
+	List<SolutionCaseVO> findShowSolutionCase();
 }

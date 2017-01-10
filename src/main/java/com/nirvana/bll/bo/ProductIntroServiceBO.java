@@ -2,6 +2,7 @@ package com.nirvana.bll.bo;
 
 import java.util.List;
 
+import com.nirvana.app.vo.ProductIntroVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,4 +31,10 @@ public class ProductIntroServiceBO implements ProductIntroService{
 	public List<ProductIntro> findAll() {
 		return productintrodao.findAll();
 	}
+
+	@Override
+	public List<ProductIntroVO> findShowProductIntro() {
+		return ProductIntroVO.toListVO(productintrodao.findShowProductIntro());
+	}
+
 }
