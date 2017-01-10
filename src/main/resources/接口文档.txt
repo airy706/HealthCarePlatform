@@ -412,6 +412,52 @@ request jsonstr 格式：
 |--------------------------------------------------------------------------------------------------|
 +--------------------------------------------------------------------------------------------------+
 
+## 首页模块 ##
+1. 注册
+	request:
+		username
+		password
+		name
+		idcard
+	response:
+	
+2. 登录
+	request:
+		username
+		password
+	response:
+		userid
+		usertype
+		name
+
+3. 获取应当显示在首页的产品介绍
+	request
+	response:
+		[{
+			title
+			image
+			content
+		}]
+		
+4. 获取应当显示在首页的解决方案
+	request
+	response:
+		[{
+			title
+			image
+			content
+		}]
+		
+5. 获取应当在首页显示的公告
+	request:
+	response:
+		[{
+			title
+			type
+			id
+			content
+		}]	
+
 
 ## 咨询服务模块 ##
 0.获取所有服务类型
@@ -475,4 +521,6 @@ request jsonstr 格式：
 		consultId
 	response:
 		
+		
+
 
