@@ -15,6 +15,7 @@ public class UserVO {
 	private Integer state;
 	private Integer valid;
 	private Integer frequency;
+	private Integer typeid;
 
 	private List<NodeVO> nodes;
 
@@ -43,6 +44,14 @@ public class UserVO {
 			this.valid = user.getValid();
 			this.frequency = user.getFrequency();
 		}
+	}
+
+	public Integer getTypeid() {
+		return typeid;
+	}
+
+	public void setTypeid(Integer typeid) {
+		this.typeid = typeid;
 	}
 
 	public String getUsertel() {

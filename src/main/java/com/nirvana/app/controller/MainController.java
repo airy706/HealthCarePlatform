@@ -44,52 +44,51 @@ public class MainController extends BaseController {
 
 	@Autowired
 	private NodeDataDao nodeDataDao;
-	
+
 	@Autowired
 	private ConsultService consultbo;
-	
+
 	@Autowired
 	private AlarmDataService alarmbo;
-	
+
 	@RequestMapping({ "/test" })
 	public void test(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// User u = new User();
-		// u.setUsername("test");
-		// u.setPassword("123");
-		// userbo.save(u);
-		// response.setContentType("text/html;charset=utf-8");
-		// response.getWriter().print("Congratulations!");
-		// userbo.test(null);
-//		Date start = null;
-//		Date end = null;
-//		end = new Date();
-//		start = new Date(end.getTime());
-//		start.setTime(start.getTime() - 7 * 24 * 60 * 60 * 1000);
-		//List<NodeHomePageVO> vo = userbo.findNodeDataByUid(1);
-		//NodeData vo = nodeDataDao.findLatestByDidAndType("420105198311234245", 7, new PageRequest(0, 1,null)).getContent().get(0);
-//		String[] ids={};
-//		String[] types={};
-//		AlarmFilterVO vo = alarmbo.findByFilter(ids, types, start, end);
-		//AlarmData vo = alarmDataDao.findLatest(6,"111111",new PageRequest(0, 1, null)).getContent().get(0);
 		List<UserVO> vo = consultbo.findAskByCid(1);
 		Result result = Result.getSuccessInstance(vo);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
 
+	@RequestMapping("/regist")
+	public void regist(HttpServletRequest request, HttpServletResponse response, User user) throws IOException {
+		userbo.regist(user);
+		Result result = Result.getSuccessInstance(null);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+
 	@RequestMapping("/login")
 	public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String username = request.getParameter("username");
+		String account = request.getParameter("account");
 		String password = request.getParameter("password");
 		Result result = null;
-		User user = userbo.login(username, password);
-		if (user != null) {
-			result = Result.getSuccessInstance(user);
+		UserVO vo = userbo.login(account, password);
+		if (vo != null) {
+			result = Result.getSuccessInstance(vo);
 		} else {
-			result = Result.getFailInstance("用户名或密码错误", user);
+			result = Result.getFailInstance("用户名或密码错误", null);
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
 
+	@RequestMapping("/productintro")
+	public void productintro(HttpServletRequest request, HttpServletResponse response) {
+
+	}
+
+	@RequestMapping("/casesolution")
+	public void casesolution(HttpServletRequest request, HttpServletResponse response) {
+
+	}
 }

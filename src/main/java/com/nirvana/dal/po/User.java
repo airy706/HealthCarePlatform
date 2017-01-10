@@ -31,6 +31,7 @@ public class User {
 	private String longtitude;
 	private String latitude;
 	private Integer valid;
+	private String account;
 	private Integer frequency;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date logintime;
@@ -59,6 +60,14 @@ public class User {
 
 	public Set<Notice> getNotices() {
 		return notices;
+	}
+
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
 	}
 
 	public void setNotices(Set<Notice> notices) {
@@ -246,10 +255,12 @@ public class User {
 		return "User [userid=" + userid + ", username=" + username + ", usertel=" + usertel + ", useremail=" + useremail
 				+ ", useraddress=" + useraddress + ", userapartment=" + userapartment + ", useridentity=" + useridentity
 				+ ", typeid=" + typeid + ", longtitude=" + longtitude + ", latitude=" + latitude + ", valid=" + valid
-				+ ", frequency=" + frequency + ", logintime=" + logintime + ", logouttime=" + logouttime
-				+ ", registtime=" + registtime + ", ipaddress=" + ipaddress + ", state=" + state + ", lastupdatetime="
-				+ lastupdatetime + ", community=" + community + ", password=" + password + ", relationships="
-				+ relationships + ", nodes=" + nodes + ", notices=" + notices + "]";
+				+ ", account=" + account + ", frequency=" + frequency + ", logintime=" + logintime + ", logouttime="
+				+ logouttime + ", registtime=" + registtime + ", ipaddress=" + ipaddress + ", state=" + state
+				+ ", lastupdatetime=" + lastupdatetime + ", community=" + community + ", password=" + password
+				+ ", relationships=" + relationships + ", nodes=" + nodes + ", notices=" + notices + "]";
 	}
+
+	
 
 }

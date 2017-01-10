@@ -34,9 +34,16 @@ public class UserServiceBO implements UserService {
 	private NodeDataDao nodedatadao;
 
 	@Override
-	public User login(String username, String password) {
-		User user = userdao.findByUsernameandPsd(username, password);
-		return user;
+	public UserVO login(String account, String password) {
+		User user = userdao.findByUsernameandPsd(account, password);
+		if(user==null){
+			return null;
+		}
+		UserVO vo = new UserVO();
+		vo.setUserid(user.getUserid());
+		vo.setUsername(user.getUsername());
+		vo.setTypeid(user.getTypeid());
+		return vo;
 	}
 
 	@Override
@@ -176,6 +183,12 @@ public class UserServiceBO implements UserService {
 		vo.setState(user.getState());
 		vo.setUsertel(user.getUsertel());
 		return vo;
+	}
+
+	@Override
+	public void regist(User user) {
+		user.setTypeid(3);
+		userdao.save(user);
 	}
 
 }

@@ -426,24 +426,24 @@ request jsonstr 格式：
 +--------------------------------------------------------------------------------------------------+
 
 ## 首页模块 ##
-1. 注册
+1. 注册/regist
 	request:
 		username
 		password
-		name
-		idcard
+		account
+		useridentity
 	response:
 	
-2. 登录
+2. 登录/login
 	request:
-		username
+		account
 		password
 	response:
 		userid
-		usertype
-		name
+		typeid
+		username
 
-3. 获取应当显示在首页的产品介绍
+3. 获取应当显示在首页的产品介绍/productintro
 	request
 	response:
 		[{
@@ -452,7 +452,7 @@ request jsonstr 格式：
 			content
 		}]
 		
-4. 获取应当显示在首页的解决方案
+4. 获取应当显示在首页的解决方案/casesolution
 	request
 	response:
 		[{
@@ -461,7 +461,7 @@ request jsonstr 格式：
 			content
 		}]
 		
-5. 获取应当在首页显示的公告
+5. 获取应当在首页显示的公告/broadcast
 	request:
 	response:
 		[{

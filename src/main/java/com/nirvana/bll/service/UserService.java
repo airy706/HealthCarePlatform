@@ -10,7 +10,7 @@ import com.nirvana.app.vo.UserVO;
 import com.nirvana.dal.po.User;
 
 public interface UserService {
-	 User login(String username,String password);
+	 UserVO login(String username,String password);
 	 
 	 void add(User user);
 	 
@@ -27,4 +27,6 @@ public interface UserService {
 	List<NodeHomePageVO> findNodeDataByUid(Integer userid);
 
 	UserVO getDetailByUid(Integer userid);
+
+	void regist(User user);
 }
