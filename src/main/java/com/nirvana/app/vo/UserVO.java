@@ -9,6 +9,7 @@ public class UserVO {
 	private String username;
 	private Integer communityid;
 	private String communityname;
+	private String usertel;
 	private String latitude;
 	private String longitude;
 	private Integer state;
@@ -41,6 +42,14 @@ public class UserVO {
 			this.valid = user.getValid();
 			this.frequency = user.getFrequency();
 		}
+	}
+
+	public String getUsertel() {
+		return usertel;
+	}
+
+	public void setUsertel(String usertel) {
+		this.usertel = usertel;
 	}
 
 	public Integer getValid() {

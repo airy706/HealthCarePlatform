@@ -89,7 +89,10 @@ public class UserServiceBO implements UserService {
 
 	@Override
 	public void setFrequency(User user) {
-		userdao.updatefrequency(user.getUserid(), user.getValid(), user.getFrequency());
+		User u = userdao.findOne(user.getUserid());
+		u.setFrequency(user.getFrequency());
+		u.setValid(user.getValid());
+		userdao.save(u);
 	}
 
 	@Override
@@ -158,6 +161,21 @@ public class UserServiceBO implements UserService {
 			volist.add(vo);
 		}
 		return volist;
+	}
+
+	@Override
+	public UserVO getDetailByUid(Integer userid) {
+		User user = userdao.findOne(userid);
+		UserVO vo = new UserVO();
+		vo.setUserid(user.getUserid());
+		vo.setUsername(user.getUsername());
+		vo.setCommunityid(user.getCommunity().getCommunityid());
+		vo.setCommunityname(user.getCommunity().getCommunityname());
+		vo.setLatitude(user.getLatitude());
+		vo.setLongitude(user.getLongtitude());
+		vo.setState(user.getState());
+		vo.setUsertel(user.getUsertel());
+		return vo;
 	}
 
 }
