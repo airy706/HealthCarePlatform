@@ -41,7 +41,7 @@ public interface AlarmDataDao extends JpaRepository<AlarmData, Integer> {
 	@Query("SELECT a FROM AlarmData a WHERE a.hasresloved=0 AND a.did IN :dids ORDER BY status_change_time DESC")
 	List<AlarmData> findUnreslovedByCid(@Param("dids") List<String> dids);
 
-	@Query("SELECT a FROM AlarmData a WHERE a.status_change_time>:time AND a.did IN dids ORDER BY status_change_time DESC")
+	@Query("SELECT a FROM AlarmData a WHERE a.status_change_time>:time AND a.did IN :dids ORDER BY status_change_time DESC")
 	List<AlarmData> findAfterByCid(@Param("time") Date time, @Param("dids") List<String> dids);
 
 }

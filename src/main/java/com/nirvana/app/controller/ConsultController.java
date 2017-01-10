@@ -59,7 +59,7 @@ public class ConsultController {
 		response.getWriter().print(new Gson().toJson(result));
 	}
 
-	@RequestMapping("del")
+	@RequestMapping("/del")
 	public void del(HttpServletRequest request, HttpServletResponse response, @RequestParam("consultId") Integer id) throws IOException {
 		consultbo.delById(id);
 		Result result = null;
