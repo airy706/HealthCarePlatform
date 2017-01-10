@@ -460,33 +460,33 @@ request jsonstr 格式：
 
 
 ## 咨询服务模块 ##
-0.获取所有服务类型
+0.获取所有服务类型/consult/type
 	request:
 		communityId
 	response:
-		consultType //类型id
-		consultValue //类型值
-0.5 获取所有可咨询人
+		typeid //类型id
+		typename //类型值
+0.5 获取所有可咨询的人（返回社区管理员）/consult/toask
 	request:
 		communityId
 	response:  //新建一张社区咨询人表
 		[{
-			userId,
-			userName
+			userid,
+			username
 		}]
 1.新增咨询服务
 	request:
 		consultUserId //咨询人id
-		consultType //咨询类型
+		Consulttype.type //咨询类型
 		content //咨询内容
-		userId //发出咨询用户的id
+		User.userid //发出咨询用户的id
 	response:
 		
 2.编辑咨询服务
 	request:
 		consultId
 		consultUserId //咨询人id
-		consultType //咨询类型
+		Consulttype.type //咨询类型
 		content //咨询内容
 	response:
 		
