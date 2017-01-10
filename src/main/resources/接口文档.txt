@@ -486,11 +486,11 @@ request jsonstr 格式：
 	request:
 		consultid
 		consultUserId //咨询人id
-		Consulttype.type //咨询类型
+		Consulttype.typeid //咨询类型
 		content //咨询内容
 	response:
 		
-3. 获取所有未完成咨询服务
+3. 获取所有未完成咨询服务/consult/undo
 	request:
 		userId
 	response:
@@ -500,7 +500,7 @@ request jsonstr 格式：
 			consultType //咨询类型
 			content //咨询内容
 		}]
-4. 获取所有已完成咨询服务
+4. 获取所有已完成咨询服务/consult/done
 	request:
 		userId
 	response:

@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nirvana.app.vo.ConsultVO;
 import com.nirvana.app.vo.UserVO;
 import com.nirvana.bll.service.ConsultService;
 import com.nirvana.dal.api.ConsultDao;
@@ -69,6 +70,45 @@ public class ConsultServiceBO implements ConsultService {
 		consult.setIsfinish(true);
 		consult.setFinishtime(new Date());
 		consultdao.save(consult);
+	}
+
+	//可能需要添加  提交人的更改 todo 
+	@Override
+	public void update(Consult consult) {
+		Consult old = consultdao.findOne(consult.getConsultid());
+		old.setConsulttype(consult.getConsulttype());
+		old.setContent(consult.getContent());
+		consultdao.save(old); 
+	}
+
+	@Override
+	public List<ConsultVO> findUndoByUid(Integer id) {
+		List<Consult> list = consultdao.findUndoByUid(id);
+		List<ConsultVO> volist = new ArrayList<ConsultVO>();
+		for(Consult consult:list){
+			ConsultVO vo = new ConsultVO();
+			vo.setConsultId(consult.getConsultid());
+			vo.setConsultType(consult.getConsulttype().getTypename());
+			vo.setContent(consult.getContent());
+			//todo commituserid
+			volist.add(vo);
+		}
+		return volist;
+	}
+
+	@Override
+	public List<ConsultVO> findDoneByUid(Integer id) {
+		List<Consult> list = consultdao.findDoneByUid(id);
+		List<ConsultVO> volist = new ArrayList<ConsultVO>();
+		for(Consult consult:list){
+			ConsultVO vo = new ConsultVO();
+			vo.setConsultId(consult.getConsultid());
+			vo.setConsultType(consult.getConsulttype().getTypename());
+			vo.setContent(consult.getContent());
+			//todo commituserid
+			volist.add(vo);
+		}
+		return volist;
 	}
 
 }

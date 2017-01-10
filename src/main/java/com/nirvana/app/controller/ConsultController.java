@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.nirvana.app.vo.ConsultVO;
 import com.nirvana.app.vo.Result;
 import com.nirvana.app.vo.UserVO;
 import com.nirvana.bll.service.ConsultService;
@@ -72,6 +73,33 @@ public class ConsultController {
 		consultbo.finishByCid(id);
 		Result result = null;
 		result = Result.getSuccessInstance(null);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+	
+	@RequestMapping("/edit")
+	public void edit(HttpServletRequest request,HttpServletResponse response,Consult consult) throws IOException{
+		consultbo.update(consult);
+		Result result = null;
+		result = Result.getSuccessInstance(null);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+	
+	@RequestMapping("/undo")
+	public void undo(HttpServletRequest request,HttpServletResponse response,@RequestParam("userId") Integer id) throws IOException{
+		List<ConsultVO> list = consultbo.findUndoByUid(id);
+		Result result = null;
+		result = Result.getSuccessInstance(list);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+	
+	@RequestMapping("/done")
+	public void done(HttpServletRequest request,HttpServletResponse response,@RequestParam("userId") Integer id) throws IOException{
+		List<ConsultVO> list = consultbo.findDoneByUid(id);
+		Result result = null;
+		result = Result.getSuccessInstance(list);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
