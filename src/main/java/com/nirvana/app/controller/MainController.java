@@ -48,7 +48,7 @@ public class MainController extends BaseController {
 
 	@RequestMapping({ "/test" })
 	public void test(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List<Consulttype> vo = consultbo.findAllTypeByCid(1);
+		List<ConsulttypeVO> vo = consultbo.findAllTypeByCid(1);
 		Result result = Result.getSuccessInstance(vo);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));

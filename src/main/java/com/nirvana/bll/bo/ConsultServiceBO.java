@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nirvana.app.vo.ConsultVO;
+import com.nirvana.app.vo.ConsulttypeVO;
 import com.nirvana.app.vo.UserVO;
 import com.nirvana.bll.service.ConsultService;
 import com.nirvana.dal.api.ConsultDao;
@@ -33,12 +34,16 @@ public class ConsultServiceBO implements ConsultService {
 	private ConsultDao consultdao;
 
 	@Override
-	public List<Consulttype> findAllTypeByCid(Integer communityId) {
+	public List<ConsulttypeVO> findAllTypeByCid(Integer communityId) {
 		List<Consulttype> list = typedao.findAllTypeByCid(communityId);
+		List<ConsulttypeVO> volist = new ArrayList<ConsulttypeVO>();
 		for (Consulttype type : list) {
-			type.setCommunity(null);
+			ConsulttypeVO vo = new ConsulttypeVO();
+			vo.setTypeid(type.getTypeid());
+			vo.setTypename(type.getTypename());
+			volist.add(vo);
 		}
-		return list;
+		return volist;
 	}
 
 	@Override

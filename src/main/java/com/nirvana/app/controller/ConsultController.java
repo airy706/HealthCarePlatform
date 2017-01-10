@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.nirvana.app.vo.ConsultVO;
+import com.nirvana.app.vo.ConsulttypeVO;
 import com.nirvana.app.vo.Result;
 import com.nirvana.app.vo.UserVO;
 import com.nirvana.bll.service.ConsultService;
@@ -30,7 +31,7 @@ public class ConsultController {
 	@RequestMapping("/type")
 	public void type(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("communityId") Integer communityId) throws IOException {
-		List<Consulttype> list = consultbo.findAllTypeByCid(communityId);
+		List<ConsulttypeVO> list = consultbo.findAllTypeByCid(communityId);
 		Result result = null;
 		result = Result.getSuccessInstance(list);
 		response.setContentType("text/html;charset=utf-8");
