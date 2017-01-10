@@ -29,8 +29,9 @@ public class AlarmController {
 	private AlarmDataService alarmservicebo;
 
 	@RequestMapping("/resolved")
-	public void resolved(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		List<ExceptionVO> list = alarmservicebo.findAllRedo();
+	public void resolved(HttpServletRequest request, HttpServletResponse response,Integer communityId) throws IOException {
+		//System.out.println(communityId);
+		List<ExceptionVO> list = alarmservicebo.findAllRedo(communityId);
 		Result result = Result.getSuccessInstance(list);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
@@ -38,12 +39,12 @@ public class AlarmController {
 
 	@RequestMapping("/detection")
 	public void detection(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam("exceptionId") Integer id) throws IOException {
+			@RequestParam("exceptionId") Integer id,Integer communityId) throws IOException {
 		List<ExceptionVO> list = null;
 		if (id == 0) {
-			list = alarmservicebo.findAllRedo();
+			list = alarmservicebo.findAllRedo(communityId);
 		} else {
-			list = alarmservicebo.detect(id);
+			list = alarmservicebo.detect(id,communityId);
 		}
 		Result result = Result.getSuccessInstance(list);
 		response.setContentType("text/html;charset=utf-8");

@@ -54,9 +54,18 @@ public class AlarmDataServiceBO implements AlarmDataService {
 	}
 
 	@Override
-	public List<ExceptionVO> findAllRedo() {
-		List<AlarmData> list = alarmdatadao.findUnresloved();
+	public List<ExceptionVO> findAllRedo(Integer id) {
+		List<AlarmData> list = null;
 		List<ExceptionVO> exs = new ArrayList<ExceptionVO>();
+		if (id == null) {
+			list = alarmdatadao.findUnresloved();
+		} else {
+			List<String> dids = userdao.findAlldid(id);
+			if (dids.size() == 0) {
+				return exs;
+			}
+			list = alarmdatadao.findUnreslovedByCid(dids);
+		}
 		for (AlarmData data : list) {
 			User user = userdao.findByDid(data.getDid());
 			exs.add(new ExceptionVO(data, user));
@@ -65,10 +74,19 @@ public class AlarmDataServiceBO implements AlarmDataService {
 	}
 
 	@Override
-	public List<ExceptionVO> detect(Integer id) {
-		AlarmData data = alarmdatadao.findOne(id);
-		List<AlarmData> list = alarmdatadao.findAfter(data.getStatus_change_time());
+	public List<ExceptionVO> detect(Integer aid, Integer cid) {
+		AlarmData data = alarmdatadao.findOne(aid);
 		List<ExceptionVO> exs = new ArrayList<ExceptionVO>();
+		List<AlarmData> list = null;
+		if (cid == null) {
+			list = alarmdatadao.findAfter(data.getStatus_change_time());
+		} else {
+			List<String> dids = userdao.findAlldid(cid);
+			if (dids.size() == 0) {
+				return exs;
+			}
+			list = alarmdatadao.findAfterByCid(data.getStatus_change_time(), dids);
+		}
 		for (AlarmData alarm : list) {
 			User user = userdao.findByDid(alarm.getDid());
 			exs.add(new ExceptionVO(alarm, user));

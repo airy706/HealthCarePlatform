@@ -27,8 +27,8 @@ public class UserController {
 	private UserService userservicebo;
 
 	@RequestMapping("/online")
-	public void online(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		List<UserVO> list = userservicebo.findOnline();
+	public void online(HttpServletRequest request, HttpServletResponse response,Integer communityId) throws IOException {
+		List<UserVO> list = userservicebo.findOnline(communityId);
 		Result result = Result.getSuccessInstance(list);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
@@ -44,8 +44,8 @@ public class UserController {
 
 	@RequestMapping("/getf")
 	public void getf(HttpServletRequest request, HttpServletResponse response, @RequestParam("key") String key,
-			@RequestParam("num") Integer num, @RequestParam("size") Integer size) throws IOException {
-		Page<User> pages = userservicebo.findBykeypage(key, num, size);
+			@RequestParam("num") Integer num, @RequestParam("size") Integer size,Integer communityId) throws IOException {
+		Page<User> pages = userservicebo.findBykeypage(key, num, size,communityId);
 		List<User> list = pages.getContent();
 		List<UserVO> polist = new ArrayList<UserVO>();
 		for (User user : list) {

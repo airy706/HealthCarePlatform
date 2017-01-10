@@ -11,9 +11,9 @@ public interface AlarmDataService {
 
 	void addData(AlarmData data);
 	
-	List<ExceptionVO> findAllRedo();
+	List<ExceptionVO> findAllRedo(Integer id);
 
-	List<ExceptionVO> detect(Integer id);
+	List<ExceptionVO> detect(Integer id,Integer communityid);
 
 	List<ExceptionVO> findAlltype();
 

@@ -16,11 +16,11 @@ public interface UserService {
 	 
 	 User findById(Integer id);
 	 
-	 Page<User> findBykeypage(String key,Integer num,Integer size);
+	 Page<User> findBykeypage(String key,Integer num,Integer size,Integer cid);
 
 	void updateloc(String did, String longtitude, String latitude,Date updatetime);
 
-	List<UserVO> findOnline();
+	List<UserVO> findOnline(Integer communityId);
 	
 	void setFrequency(User user);
 

@@ -25,8 +25,9 @@ public class NodeController extends BaseController {
 
 	@RequestMapping("/search")
 	public void search(HttpServletRequest request, HttpServletResponse response, @RequestParam("key") String key,
-			@RequestParam("num") Integer num, @RequestParam("size") Integer size) throws IOException {
-		Page<User> pages = userservicebo.findBykeypage(key, num, size);
+			@RequestParam("num") Integer num, @RequestParam("size") Integer size, Integer communityId)
+					throws IOException {
+		Page<User> pages = userservicebo.findBykeypage(key, num, size, communityId);
 		NodeListVO nodeListVO = new NodeListVO(pages);
 		Result result = null;
 		result = Result.getSuccessInstance(nodeListVO);

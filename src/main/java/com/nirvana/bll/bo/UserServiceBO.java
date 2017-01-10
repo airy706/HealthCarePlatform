@@ -36,7 +36,7 @@ public class UserServiceBO implements UserService {
 	@Override
 	public UserVO login(String account, String password) {
 		User user = userdao.findByUsernameandPsd(account, password);
-		if(user==null){
+		if (user == null) {
 			return null;
 		}
 		UserVO vo = new UserVO();
@@ -58,9 +58,14 @@ public class UserServiceBO implements UserService {
 	}
 
 	@Override
-	public Page<User> findBykeypage(String key, Integer num, Integer size) {
+	public Page<User> findBykeypage(String key, Integer num, Integer size, Integer cid) {
 		PageRequest request = this.buildPageRequest(num, size);
-		Page<User> pages = this.userdao.findByKey(key, request);
+		Page<User> pages = null;
+		if (cid == null) {
+			pages = this.userdao.findByKey(key, request);
+		} else {
+			pages = userdao.findByKeyAndCid(key, cid, request);
+		}
 		return pages;
 	}
 
@@ -78,15 +83,20 @@ public class UserServiceBO implements UserService {
 	}
 
 	@Override
-	public List<UserVO> findOnline() {
-		List<User> list = userdao.findAll();
+	public List<UserVO> findOnline(Integer cid) {
+		List<User> list = null;
+		if (cid == null) {
+			list = userdao.findAll();
+		} else {
+			list = userdao.findAllByCid(cid);
+		}
 		Date now = new Date();
 		List<UserVO> volist = new ArrayList<UserVO>();
 		for (User user : list) {
 			// if(user.getLastupdatetime().)
 			if (user.getLastupdatetime() != null) {
 				long between = now.getTime() - user.getLastupdatetime().getTime();
-				if (between < 60000*5) {
+				if (between < 60000 * 5) {
 					volist.add(new UserVO(user, 2));
 				}
 			}
@@ -114,13 +124,13 @@ public class UserServiceBO implements UserService {
 			System.out.println(type);
 			System.out.println(did);
 			PageRequest request = this.buildPageRequest(1, 1);
-			Page<NodeData> pages= nodedatadao.findLatestByDidAndType(did,type,request);
+			Page<NodeData> pages = nodedatadao.findLatestByDidAndType(did, type, request);
 			List<NodeData> list = pages.getContent();
 			System.out.println(list.size());
 			NodeHomePageVO vo = new NodeHomePageVO();
-			if(list.size()>0){
-			vo.setLatestData(list.get(0).getData());
-			}else{
+			if (list.size() > 0) {
+				vo.setLatestData(list.get(0).getData());
+			} else {
 				vo.setLatestData("");
 			}
 			vo.setNodeName(node.getNodename());

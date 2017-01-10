@@ -92,7 +92,7 @@ key
 		
 2. 搜索节点数据 /node/search
 	request:
-		keys
+		key
 		size
 		num
 	response:
@@ -647,7 +647,8 @@ request jsonstr 格式：
 		
 2. 搜索社区节点数据 /node/search
 	request:
-		keys //只根据用户名
+		communityId
+		key //只根据用户名
 		size
 		num
 	response:
