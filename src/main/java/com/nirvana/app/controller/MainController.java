@@ -18,13 +18,16 @@ import com.nirvana.app.vo.CommunityVO;
 import com.nirvana.app.vo.ExceptionVO;
 import com.nirvana.app.vo.NodeHomePageVO;
 import com.nirvana.app.vo.Result;
+import com.nirvana.app.vo.UserVO;
 import com.nirvana.bll.service.AlarmDataService;
 import com.nirvana.bll.service.CommunityService;
+import com.nirvana.bll.service.ConsultService;
 import com.nirvana.bll.service.UserService;
 import com.nirvana.dal.api.AlarmDataDao;
 import com.nirvana.dal.api.NodeDataDao;
 import com.nirvana.dal.api.UserDao;
 import com.nirvana.dal.po.AlarmData;
+import com.nirvana.dal.po.Consulttype;
 import com.nirvana.dal.po.NodeData;
 import com.nirvana.dal.po.User;
 
@@ -43,6 +46,9 @@ public class MainController extends BaseController {
 	private NodeDataDao nodeDataDao;
 	
 	@Autowired
+	private ConsultService consultbo;
+	
+	@Autowired
 	private AlarmDataService alarmbo;
 	
 	@RequestMapping({ "/test" })
@@ -54,17 +60,18 @@ public class MainController extends BaseController {
 		// response.setContentType("text/html;charset=utf-8");
 		// response.getWriter().print("Congratulations!");
 		// userbo.test(null);
-		Date start = null;
-		Date end = null;
-		end = new Date();
-		start = new Date(end.getTime());
-		start.setTime(start.getTime() - 7 * 24 * 60 * 60 * 1000);
+//		Date start = null;
+//		Date end = null;
+//		end = new Date();
+//		start = new Date(end.getTime());
+//		start.setTime(start.getTime() - 7 * 24 * 60 * 60 * 1000);
 		//List<NodeHomePageVO> vo = userbo.findNodeDataByUid(1);
 		//NodeData vo = nodeDataDao.findLatestByDidAndType("420105198311234245", 7, new PageRequest(0, 1,null)).getContent().get(0);
-		String[] ids={};
-		String[] types={};
-		AlarmFilterVO vo = alarmbo.findByFilter(ids, types, start, end);
+//		String[] ids={};
+//		String[] types={};
+//		AlarmFilterVO vo = alarmbo.findByFilter(ids, types, start, end);
 		//AlarmData vo = alarmDataDao.findLatest(6,"111111",new PageRequest(0, 1, null)).getContent().get(0);
+		List<UserVO> vo = consultbo.findAskByCid(1);
 		Result result = Result.getSuccessInstance(vo);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
