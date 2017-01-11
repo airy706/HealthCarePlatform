@@ -737,23 +737,25 @@ request jsonstr 格式：
 		}
 		
 ##咨询服务模块##
-1. 获取社区的咨询类型
+1. 获取社区的咨询类型 /consult/type
 	request:
+		communityid
 		key: '' //服务名称
 	response:
 		[{
-			consultTypeId,
-			consultTypeName	
+			typeid,
+			typename	
 		}]
 		
-2. 删除社区咨询
+2. 删除社区咨询 /consult/typedel
 	request:
-		consultTypeId
+		typeid
 	response:
 		
-3. 新增／修改社区服务
+3. 新增／修改社区服务   /consult/create
 	request:
-		consultTypeId, //
-		consultTypeName,
+		community.communityid
+		typeid, //
+		typename,
 	response
 	

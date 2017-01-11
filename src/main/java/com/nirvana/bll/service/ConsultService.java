@@ -9,7 +9,7 @@ import com.nirvana.dal.po.Consult;
 
 public interface ConsultService {
 
-	List<ConsulttypeVO> findAllTypeByCid(Integer communityId);
+	List<ConsulttypeVO> findAllTypeByCid(Integer communityId,String key);
 
 	List<UserVO> findAskByCid(Integer communityId);
 
