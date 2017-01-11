@@ -31,4 +31,6 @@ public interface UserService {
 	void regist(User user);
 
 	UserVO findInfoByUid(Integer userid);
+
+	boolean checkPassword(Integer userid, String oldPassword);
 }

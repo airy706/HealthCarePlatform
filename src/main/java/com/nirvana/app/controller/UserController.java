@@ -95,7 +95,20 @@ public class UserController {
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
-
+	
+	@RequestMapping("/psdcheck")
+	public void psdcheck(HttpServletRequest request, HttpServletResponse response,String oldPassword) throws IOException{
+		Integer userid = (Integer)request.getSession().getAttribute("userid");
+		Result result =null;
+		if(userid==null){
+			result = Result.getFailInstance("userid cannot been found", null);
+		}else{
+			boolean isTrue = userservicebo.checkPassword(userid,oldPassword);
+			result = Result.getSuccessInstance(isTrue);
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
 	@RequestMapping("/avatar")
 	public void avatar(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		//  创建一个通用的多部分解析器 ，用于解析SpringMVC的上下文  

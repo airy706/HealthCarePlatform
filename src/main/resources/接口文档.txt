@@ -567,7 +567,7 @@ request jsonstr 格式：
 		communityid
 		communityname
 		
-3. 密码校对
+3. 密码校对 /user/psdcheck
 	request:
 		oldPassword
 	response:		

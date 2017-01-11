@@ -217,4 +217,14 @@ public class UserServiceBO implements UserService {
 		return vo;
 	}
 
+	@Override
+	public boolean checkPassword(Integer userid, String oldPassword) {
+		User user = userdao.findOne(userid);
+		if(user.getPassword().equals(oldPassword)){
+			return true;
+		}else{
+			return false;	
+		}
+	}
+
 }
