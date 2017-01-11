@@ -81,6 +81,20 @@ public class UserController {
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
+	
+	@RequestMapping("/info")
+	public void info(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		Integer userid = (Integer)request.getSession().getAttribute("userid");
+		Result result =null;
+		if(userid==null){
+			result = Result.getFailInstance("userid cannot been found", null);
+		}else{
+			UserVO vo =userservicebo.findInfoByUid(userid);
+			result = Result.getSuccessInstance(vo);
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
 
 	@RequestMapping("/avatar")
 	public void avatar(HttpServletRequest request,HttpServletResponse response) throws IOException{

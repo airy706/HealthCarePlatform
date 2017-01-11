@@ -201,4 +201,20 @@ public class UserServiceBO implements UserService {
 		userdao.save(user);
 	}
 
+	@Override
+	public UserVO findInfoByUid(Integer userid) {
+		User user = userdao.findOne(userid);
+		UserVO vo = new UserVO();
+		vo.setUsername(user.getUsername());
+		vo.setIdentity(user.getUseridentity());
+		vo.setGender(user.getGender());
+		vo.setAvatar(user.getAvatar());
+		vo.setUseremail(user.getUseremail());
+		vo.setUsertel(user.getUsertel());
+		vo.setAddress(user.getUseraddress());
+		vo.setCommunityid(user.getCommunity().getCommunityid());
+		vo.setCommunityname(user.getCommunity().getCommunityname());
+		return vo;
+	}
+
 }

@@ -29,4 +29,6 @@ public interface UserService {
 	UserVO getDetailByUid(Integer userid);
 
 	void regist(User user);
+
+	UserVO findInfoByUid(Integer userid);
 }

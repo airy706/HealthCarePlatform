@@ -554,16 +554,18 @@ request jsonstr 格式：
 		file //头像文件
 	response
 		url
-2. 获取个人信息
+2. 获取个人信息   /user/info
 	request
 	response
+		username
+		identity
 		gender
 		avatar
-		email
-		phone
+		useremail
+		usertel
 		address
-		communityId
-		address
+		communityid
+		communityname
 		
 3. 密码校对
 	request:
