@@ -49,7 +49,7 @@ public class User {
 	@ManyToOne(cascade = { CascadeType.DETACH })
 	@JoinColumn(name = "communityid")
 	private Community community;
-
+	private String avatar;
 	private String password;
 
 	@OneToMany(cascade = CascadeType.DETACH, mappedBy = "user")
@@ -64,6 +64,20 @@ public class User {
 	public Set<Notice> getNotices() {
 		return notices;
 	}
+	
+	public String getAvatar() {
+		return avatar;
+	}
+
+
+
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
+
+
 
 	public String getAccount() {
 		return account;

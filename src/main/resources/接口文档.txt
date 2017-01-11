@@ -549,7 +549,7 @@ request jsonstr 格式：
 		
 		
 ##个人信息修改模块##
-1. 上传头像
+1. 上传头像               /user/avatar
 	request
 		file //头像文件
 	response
