@@ -585,35 +585,35 @@ request jsonstr 格式：
 
 5. 添加紧急联系人
 	request:
-		name //联系人姓名
-		phone //联系人电话
-		account
-		password
+		relationname //联系人姓名
+		relationtel //联系人电话
+		relationaccount
+		relationpassword
 	response
 
 6. 列出紧急联系人:
 	request:
 	response:
 		[{
-			id, //紧急联系人id
-			name,
-			phone,
-			account,
-			password	
+			relationid, //紧急联系人id
+			relationname //联系人姓名
+			relationtel //联系人电话
+			relationaccount
+			relationpassword	
 		}]
 		
 7. 编辑紧急联系人
 	request:
-		id, //紧急联系人id
-		name,
-		phone,
-		account,
-		password
+			relationid, //紧急联系人id
+			relationname //联系人姓名
+			relationtel //联系人电话
+			relationaccount
+			relationpassword
 	response
 	
 8. 删除紧急联系人
 	request:
-		id //紧急联系人id
+		relationid //紧急联系人id
 	response
 		
 		
