@@ -1,5 +1,7 @@
 package com.nirvana.app.vo;
 
+import java.util.Date;
+
 //获取所有未完成咨询服务/consult/undo
 //request:
 //	userId
@@ -18,8 +20,44 @@ public class ConsultVO {
 	private Integer typeId;
 	private String toaskName;
 	private Integer toaskId;
+	private String username;
+	private Date commintTime;
+	private boolean isFinish;
+	private Date finishTime;
 
 	public ConsultVO() {
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public Date getCommintTime() {
+		return commintTime;
+	}
+
+	public void setCommintTime(Date commintTime) {
+		this.commintTime = commintTime;
+	}
+
+	public boolean isFinish() {
+		return isFinish;
+	}
+
+	public void setFinish(boolean isFinish) {
+		this.isFinish = isFinish;
+	}
+
+	public Date getFinishTime() {
+		return finishTime;
+	}
+
+	public void setFinishTime(Date finishTime) {
+		this.finishTime = finishTime;
 	}
 
 	public String getToaskName() {

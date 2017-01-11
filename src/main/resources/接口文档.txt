@@ -759,11 +759,11 @@ request jsonstr 格式：
 		typename,
 	response
 	
-4. 列出社区咨询详细信息
+4. 列出社区咨询详细信息 /consult/list
 	request:
 		key, //用户名
-		communityId,
-		page,
+		communityid,
+		size,
 		num,
 	response: //按照时间顺序降序排列
 		msg://总记录条数
@@ -771,19 +771,19 @@ request jsonstr 格式：
 			consultId,
 			username,
 			consultType,
-			consultContent,
-			consultPerson,
+			content,
+			toaskName,//咨询人姓名
 			commitTime,
 			isFinish,
 			finishTime
 		}]
 		
-5. 完成咨询信息  
+5. 完成咨询信息  /consult/finish
 	request:
 		consultId
 	response: //后台填充完成时间
 	
-6. 删除咨询信息
+6. 删除咨询信息/consult/del
 	request:
 		consultId
 	response:
