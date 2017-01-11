@@ -135,7 +135,7 @@ public class UserServiceBO implements UserService {
 			}
 			vo.setNodeName(node.getNodename());
 			vo.setNodeType(type);
-			if (type == 12 || type == 6) {
+			if (type == 12 || type == 4) {
 				Integer h1 = 0, h2 = 0;
 				Integer l1 = 0, l2 = 0;
 				Date end = new Date();
@@ -144,7 +144,7 @@ public class UserServiceBO implements UserService {
 				List<NodeData> datas = nodedatadao.findByDidAndTypeinWeek(did, type, start, end);
 				for (int i = 0; i < datas.size(); i++) {
 					String value = datas.get(i).getData();
-					if (type == 6) {
+					if (type == 4) {
 						String v[] = value.split(",");
 						if (Integer.parseInt(v[0]) > h1) {
 							h1 = Integer.parseInt(v[0]);
@@ -167,7 +167,7 @@ public class UserServiceBO implements UserService {
 						}
 					}
 				}
-				if (type == 6) {
+				if (type == 4) {
 					vo.setHigh(h1 + "," + h2);
 					vo.setLow(l1 + "," + l2);
 				} else {
@@ -225,6 +225,21 @@ public class UserServiceBO implements UserService {
 		}else{
 			return false;	
 		}
+	}
+
+	@Override
+	public void updateinfo(Integer userid, User user) {
+		User u = userdao.findOne(userid);
+		if(!"".equals(user.getPassword())){
+			u.setPassword(user.getPassword());
+		}
+		u.setAvatar(user.getAvatar());
+		u.setGender(user.getGender());
+		u.setUseremail(user.getUseremail());
+		u.setUsertel(user.getUsertel());
+		u.setUseraddress(user.getUseraddress());
+		u.setCommunity(user.getCommunity());
+		userdao.save(u);
 	}
 
 }

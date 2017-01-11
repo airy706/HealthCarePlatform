@@ -13,14 +13,14 @@ import javax.persistence.Table;
 @Table(name = "relationship")
 public class Relationship {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer relationid;
 	private String relationname;
 	private String relationtel;
-	private String relationtype;
-	private String relationaddress;
-	@ManyToOne(cascade=CascadeType.DETACH)
-	@JoinColumn(name="userid")
+	private String relationaccount;
+	private String relationpassword;
+	@ManyToOne(cascade = CascadeType.DETACH)
+	@JoinColumn(name = "userid")
 	private User user;
 
 	public Integer getRelationid() {
@@ -47,20 +47,20 @@ public class Relationship {
 		this.relationtel = relationtel;
 	}
 
-	public String getRelationtype() {
-		return relationtype;
+	public String getRelationaccount() {
+		return relationaccount;
 	}
 
-	public void setRelationtype(String relationtype) {
-		this.relationtype = relationtype;
+	public void setRelationaccount(String relationaccount) {
+		this.relationaccount = relationaccount;
 	}
 
-	public String getRelationaddress() {
-		return relationaddress;
+	public String getRelationpassword() {
+		return relationpassword;
 	}
 
-	public void setRelationaddress(String relationaddress) {
-		this.relationaddress = relationaddress;
+	public void setRelationpassword(String relationpassword) {
+		this.relationpassword = relationpassword;
 	}
 
 	public User getUser() {
@@ -74,8 +74,8 @@ public class Relationship {
 	@Override
 	public String toString() {
 		return "Relationship [relationid=" + relationid + ", relationname=" + relationname + ", relationtel="
-				+ relationtel + ", relationtype=" + relationtype + ", relationaddress=" + relationaddress + ", user="
-				+ user + "]";
+				+ relationtel + ", relationaccount=" + relationaccount + ", relationpassword=" + relationpassword
+				+ ", user=" + user + "]";
 	}
 
 }

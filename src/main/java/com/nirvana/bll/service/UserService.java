@@ -33,4 +33,6 @@ public interface UserService {
 	UserVO findInfoByUid(Integer userid);
 
 	boolean checkPassword(Integer userid, String oldPassword);
+
+	void updateinfo(Integer userid, User user);
 }

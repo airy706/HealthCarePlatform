@@ -229,7 +229,7 @@ request jsonstr 格式：
     {"cardiotach":{"senortype":"12","current_cardiotach":"xxx"}}
 
 5.轮椅状态
-    {"wheelchar":{"senortype":"7","wheelchar_statue":["111","正常"，"222":"右翻,"333":"前翻","444":"后翻","555":"左翻"]}}
+    {"wheelchair":{"senortype":"7","wheelchar_statue":["111","正常"，"222":"右翻,"333":"前翻","444":"后翻","555":"左翻"]}}
 
 
 6.GPS
@@ -572,16 +572,15 @@ request jsonstr 格式：
 		oldPassword
 	response:		
 
-4. 修改个人信息
+4. 修改个人信息/user/edit
 	request
 		gender
 		avatar
-		email
-		phone
-		address
-		communityId
-		address
-		password
+		useremail
+		usertel
+		useraddress
+		community.communityid
+		password //不修改传空字符串
 	response
 
 5. 添加紧急联系人
