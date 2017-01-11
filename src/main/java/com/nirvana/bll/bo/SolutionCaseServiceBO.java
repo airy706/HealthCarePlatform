@@ -2,6 +2,7 @@ package com.nirvana.bll.bo;
 
 import java.util.List;
 
+import com.nirvana.app.vo.SolutionCaseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,9 @@ public class SolutionCaseServiceBO implements SolutionCaseService {
 	public List<SolutionCase> findAll() {
 		return solutioncasedao.findAll();
 	}
-	
-	
+
+	@Override
+	public List<SolutionCaseVO> findShowSolutionCase() {
+		return SolutionCaseVO.toListVO(solutioncasedao.findShowSolutionCase());
+	}
 }

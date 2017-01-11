@@ -19,7 +19,7 @@ public class Relationship {
 	private String relationtel;
 	private String relationtype;
 	private String relationaddress;
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(name="userid")
 	private User user;
 

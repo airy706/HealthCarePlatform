@@ -2,6 +2,7 @@ package com.nirvana.bll.service;
 
 import java.util.List;
 
+import com.nirvana.app.vo.ProductIntroVO;
 import com.nirvana.dal.po.ProductIntro;
 
 public interface ProductIntroService {
@@ -10,4 +11,6 @@ public interface ProductIntroService {
 	void delById(Integer id);
 	
 	List<ProductIntro> findAll();
+
+	List<ProductIntroVO> findShowProductIntro();
 }

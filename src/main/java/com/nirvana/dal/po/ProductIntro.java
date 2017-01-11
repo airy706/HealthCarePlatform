@@ -14,11 +14,20 @@ public class ProductIntro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer productid;
+	private String producttitle;
 	private String productimg;
 	@Length(max = 1000)
 	private String productcontent;
 
 	private boolean isshow;
+
+	public String getProducttitle() {
+		return producttitle;
+	}
+
+	public void setProducttitle(String producttitle) {
+		this.producttitle = producttitle;
+	}
 
 	public boolean isIsshow() {
 		return isshow;
@@ -54,8 +63,12 @@ public class ProductIntro {
 
 	@Override
 	public String toString() {
-		return "ProductIntro [productid=" + productid + ", productimg=" + productimg + ", productcontent="
-				+ productcontent + ", isshow=" + isshow + "]";
+		return "ProductIntro{" +
+				"productid=" + productid +
+				", producttitle='" + producttitle + '\'' +
+				", productimg='" + productimg + '\'' +
+				", productcontent='" + productcontent + '\'' +
+				", isshow=" + isshow +
+				'}';
 	}
-
 }

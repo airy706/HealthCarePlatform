@@ -3,13 +3,14 @@ package com.nirvana.bll.service;
 import java.util.List;
 
 import com.nirvana.app.vo.ConsultVO;
+import com.nirvana.app.vo.ConsulttypeVO;
 import com.nirvana.app.vo.UserVO;
 import com.nirvana.dal.po.Consult;
 import com.nirvana.dal.po.Consulttype;
 
 public interface ConsultService {
 
-	List<Consulttype> findAllTypeByCid(Integer communityId);
+	List<ConsulttypeVO> findAllTypeByCid(Integer communityId);
 
 	List<UserVO> findAskByCid(Integer communityId);
 
