@@ -501,17 +501,17 @@ request jsonstr 格式：
 		}]
 1.新增咨询服务/consult/create
 	request:
-		consultUserId //咨询人id
-		Consulttype.typeid //咨询类型
+		toaks.userid //咨询人id
+		consulttype.typeid //咨询类型
 		content //咨询内容
-		User.userid //发出咨询用户的id
+		user.userid //发出咨询用户的id
 	response:
 		
 2.编辑咨询服务/consult/edit
 	request:
 		consultid
-		consultUserId //咨询人id
-		Consulttype.typeid //咨询类型
+		toask.userid //咨询人id
+		consulttype.typeid //咨询类型
 		content //咨询内容
 	response:
 		
@@ -522,6 +522,7 @@ request jsonstr 格式：
 		[{
 			consultId
 			consultUserId //咨询人id
+			typeId
 			consultType //咨询类型
 			content //咨询内容
 		}]

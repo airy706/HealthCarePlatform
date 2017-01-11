@@ -32,10 +32,10 @@ public class Notice {
 	private boolean isurl;
 	private String url;
 
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "userid")
 	private User user;
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "communityid")
 	private Community community;
 

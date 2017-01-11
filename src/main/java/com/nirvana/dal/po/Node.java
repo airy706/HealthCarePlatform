@@ -28,7 +28,7 @@ public class Node {
 	private Integer nodestatus;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date nodeaddtime;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "userid")
 	private User user;
 

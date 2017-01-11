@@ -12,6 +12,9 @@ public class AjaxInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		
 		//request.setAttribute("userid", 1);
+		Integer userId=(Integer)request.getSession().getAttribute("userid");
+		System.out.println("userId:"+userId);
+		request.setAttribute("userId", userId);
 		response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");

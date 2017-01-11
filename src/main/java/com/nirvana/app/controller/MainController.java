@@ -3,6 +3,7 @@ package com.nirvana.app.controller;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,13 +27,7 @@ public class MainController extends BaseController {
 	private UserService userbo;
 
 	@Autowired
-	private AlarmDataDao alarmDataDao;
-
-	@Autowired
 	private CommunityService communitybo;
-
-	@Autowired
-	private NodeDataDao nodeDataDao;
 
 	@Autowired
 	private ConsultService consultbo;
@@ -46,6 +41,9 @@ public class MainController extends BaseController {
 	@Autowired
 	private SolutionCaseService solutionCase;
 
+	@Autowired
+	private NoticeService noticebo;
+
 	@RequestMapping({ "/test" })
 	public void test(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<ConsulttypeVO> vo = consultbo.findAllTypeByCid(1);
@@ -54,8 +52,8 @@ public class MainController extends BaseController {
 		response.getWriter().print(new Gson().toJson(result));
 	}
 
-	@RequestMapping("/regist")
-	public void regist(HttpServletRequest request, HttpServletResponse response, User user) throws IOException {
+	@RequestMapping("/register")
+	public void register(HttpServletRequest request, HttpServletResponse response, User user) throws IOException {
 		userbo.regist(user);
 		Result result = Result.getSuccessInstance(null);
 		response.setContentType("text/html;charset=utf-8");
@@ -69,6 +67,7 @@ public class MainController extends BaseController {
 		Result result = null;
 		UserVO vo = userbo.login(account, password);
 		if (vo != null) {
+			request.getSession().setAttribute("userid",vo.getUserid());
 			result = Result.getSuccessInstance(vo);
 		} else {
 			result = Result.getFailInstance("用户名或密码错误", null);
@@ -95,6 +94,9 @@ public class MainController extends BaseController {
 
 	@RequestMapping("/broadcast")
 	public void broadcast(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+		List<NoticeVO> list = noticebo.findAdmin();
+		Result result = Result.getSuccessInstance(list);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
 	}
 }

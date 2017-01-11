@@ -16,6 +16,7 @@ public class UserVO {
 	private Integer valid;
 	private Integer frequency;
 	private Integer typeid;
+	private String token;
 
 	private List<NodeVO> nodes;
 
@@ -44,6 +45,14 @@ public class UserVO {
 			this.valid = user.getValid();
 			this.frequency = user.getFrequency();
 		}
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	public Integer getTypeid() {

@@ -35,7 +35,7 @@ public class UserServiceBO implements UserService {
 
 	@Override
 	public UserVO login(String account, String password) {
-		User user = userdao.findByUsernameandPsd(account, password);
+		User user = userdao.findByAccountandPsd(account, password);
 		if (user == null) {
 			return null;
 		}

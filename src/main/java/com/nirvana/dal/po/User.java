@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,11 +27,13 @@ public class User {
 	private String useremail;
 	private String useraddress;
 	private String userapartment;
+	@Column(unique=true)
 	private String useridentity;
 	private Integer typeid;
 	private String longtitude;
 	private String latitude;
 	private Integer valid;
+	@Column(unique=true)
 	private String account;
 	private Integer frequency;
 	@Temporal(TemporalType.TIMESTAMP)
@@ -43,19 +46,19 @@ public class User {
 	private Integer state;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastupdatetime;
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne(cascade = { CascadeType.DETACH })
 	@JoinColumn(name = "communityid")
 	private Community community;
 
 	private String password;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.DETACH, mappedBy = "user")
 	private Set<Relationship> relationships;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.DETACH, mappedBy = "user")
 	private Set<Node> nodes;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.DETACH, mappedBy = "user")
 	private Set<Notice> notices;
 
 	public Set<Notice> getNotices() {

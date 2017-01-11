@@ -15,8 +15,35 @@ public class ConsultVO {
 	private Integer consultUserId;
 	private String consultType;
 	private String content;
+	private Integer typeId;
+	private String toaskName;
+	private Integer toaskId;
 
 	public ConsultVO() {
+	}
+
+	public String getToaskName() {
+		return toaskName;
+	}
+
+	public void setToaskName(String toaskName) {
+		this.toaskName = toaskName;
+	}
+
+	public Integer getToaskId() {
+		return toaskId;
+	}
+
+	public void setToaskId(Integer toaskId) {
+		this.toaskId = toaskId;
+	}
+
+	public Integer getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(Integer typeId) {
+		this.typeId = typeId;
 	}
 
 	public Integer getConsultId() {

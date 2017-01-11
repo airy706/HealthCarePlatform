@@ -12,17 +12,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 @Entity
-@Table(name="consult")
+@Table(name = "consult")
 public class Consult {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer consultid;
-	
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne(cascade = { CascadeType.DETACH })
 	@JoinColumn(name = "typeid")
 	private Consulttype consulttype;
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne(cascade = { CascadeType.DETACH})
 	@JoinColumn(name = "userid")
 	private User user;
 	private String content;
@@ -31,6 +31,18 @@ public class Consult {
 	private boolean isfinish;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date finishtime;
+
+	@ManyToOne(cascade = { CascadeType.DETACH})
+	@JoinColumn(name = "toaskid")
+	private User toask;
+
+	public User getToask() {
+		return toask;
+	}
+
+	public void setToask(User toask) {
+		this.toask = toask;
+	}
 
 	public Integer getConsultid() {
 		return consultid;
@@ -94,8 +106,5 @@ public class Consult {
 				+ content + ", committime=" + committime + ", isfinish=" + isfinish + ", finishtime=" + finishtime
 				+ "]";
 	}
-
-	
-
 
 }

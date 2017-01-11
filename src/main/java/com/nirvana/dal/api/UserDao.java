@@ -14,8 +14,8 @@ import com.nirvana.dal.po.User;
 
 @Repository
 public interface UserDao extends JpaRepository<User, Integer> {
-	@Query("SELECT u FROM User u WHERE u.username=:username and u.password=:password")
-	User findByUsernameandPsd(@Param("username") String username, @Param("password") String password);
+	@Query("SELECT u FROM User u WHERE u.account=:account and u.password=:password")
+	User findByAccountandPsd(@Param("account") String account, @Param("password") String password);
 
 	@Query("SELECT u FROM User u WHERE u.username LIKE %:key% OR u.community.communityname LIKE %:key%")
 	Page<User> findByKey(@Param("key") String key, Pageable pageable);

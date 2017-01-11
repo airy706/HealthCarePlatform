@@ -17,7 +17,7 @@ public class Consulttype {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer typeid;
 	private String typename;
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne(cascade = { CascadeType.DETACH})
 	@JoinColumn(name = "communityid")
 	private Community community;
 
