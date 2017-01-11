@@ -547,6 +547,72 @@ request jsonstr 格式：
 	response:
 		
 		
+##个人信息修改模块##
+1. 上传头像
+	request
+		file //头像文件
+	response
+		url
+2. 获取个人信息
+	request
+	response
+		gender
+		avatar
+		email
+		phone
+		address
+		communityId
+		address
+		
+3. 密码校对
+	request:
+		oldPassword
+	response:		
+
+4. 修改个人信息
+	request
+		gender
+		avatar
+		email
+		phone
+		address
+		communityId
+		address
+		password
+	response
+
+5. 添加紧急联系人
+	request:
+		name //联系人姓名
+		phone //联系人电话
+		account
+		password
+	response
+
+6. 列出紧急联系人:
+	request:
+	response:
+		[{
+			id, //紧急联系人id
+			name,
+			phone,
+			account,
+			password	
+		}]
+		
+7. 编辑紧急联系人
+	request:
+		id, //紧急联系人id
+		name,
+		phone,
+		account,
+		password
+	response
+	
+8. 删除紧急联系人
+	request:
+		id //紧急联系人id
+	response
 		
 		
 		
