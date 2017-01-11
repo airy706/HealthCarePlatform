@@ -51,7 +51,8 @@ public class User {
 	private Community community;
 	private String avatar;
 	private String password;
-
+	private Integer gender;
+	
 	@OneToMany(cascade = CascadeType.DETACH, mappedBy = "user")
 	private Set<Relationship> relationships;
 
@@ -60,6 +61,15 @@ public class User {
 
 	@OneToMany(cascade = CascadeType.DETACH, mappedBy = "user")
 	private Set<Notice> notices;
+
+	
+	public Integer getGender() {
+		return gender;
+	}
+
+	public void setGender(Integer gender) {
+		this.gender = gender;
+	}
 
 	public Set<Notice> getNotices() {
 		return notices;
@@ -274,10 +284,10 @@ public class User {
 				+ ", typeid=" + typeid + ", longtitude=" + longtitude + ", latitude=" + latitude + ", valid=" + valid
 				+ ", account=" + account + ", frequency=" + frequency + ", logintime=" + logintime + ", logouttime="
 				+ logouttime + ", registtime=" + registtime + ", ipaddress=" + ipaddress + ", state=" + state
-				+ ", lastupdatetime=" + lastupdatetime + ", community=" + community + ", password=" + password
-				+ ", relationships=" + relationships + ", nodes=" + nodes + ", notices=" + notices + "]";
+				+ ", lastupdatetime=" + lastupdatetime + ", community=" + community + ", avatar=" + avatar
+				+ ", password=" + password + ", gender=" + gender + ", relationships=" + relationships + ", nodes="
+				+ nodes + ", notices=" + notices + "]";
 	}
-
 	
 
 }

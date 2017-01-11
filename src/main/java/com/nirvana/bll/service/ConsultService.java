@@ -6,11 +6,10 @@ import com.nirvana.app.vo.ConsultVO;
 import com.nirvana.app.vo.ConsulttypeVO;
 import com.nirvana.app.vo.UserVO;
 import com.nirvana.dal.po.Consult;
-import com.nirvana.dal.po.Consulttype;
 
 public interface ConsultService {
 
-	List<ConsulttypeVO> findAllTypeByCid(Integer communityId);
+	List<ConsulttypeVO> findAllTypeByCid(Integer communityId,String key);
 
 	List<UserVO> findAskByCid(Integer communityId);
 

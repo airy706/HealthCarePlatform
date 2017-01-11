@@ -14,9 +14,14 @@ public class UserVO {
 	private String longitude;
 	private Integer state;
 	private Integer valid;
+	private String address;
 	private Integer frequency;
 	private Integer typeid;
 	private String token;
+	private String avatar;
+	private Integer gender;
+	private String useremail;
+	private String identity;
 
 	private List<NodeVO> nodes;
 
@@ -45,6 +50,47 @@ public class UserVO {
 			this.valid = user.getValid();
 			this.frequency = user.getFrequency();
 		}
+	}
+
+	
+	public String getUseremail() {
+		return useremail;
+	}
+
+	public void setUseremail(String useremail) {
+		this.useremail = useremail;
+	}
+
+	public String getIdentity() {
+		return identity;
+	}
+
+	public void setIdentity(String identity) {
+		this.identity = identity;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
+	public Integer getGender() {
+		return gender;
+	}
+
+	public void setGender(Integer gender) {
+		this.gender = gender;
 	}
 
 	public String getToken() {

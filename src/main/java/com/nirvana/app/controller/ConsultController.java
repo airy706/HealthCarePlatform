@@ -18,6 +18,7 @@ import com.nirvana.app.vo.ConsulttypeVO;
 import com.nirvana.app.vo.Result;
 import com.nirvana.app.vo.UserVO;
 import com.nirvana.bll.service.ConsultService;
+import com.nirvana.bll.service.ConsulttypeService;
 import com.nirvana.dal.po.Consult;
 import com.nirvana.dal.po.Consulttype;
 
@@ -27,13 +28,35 @@ public class ConsultController {
 
 	@Autowired
 	private ConsultService consultbo;
+	
+	@Autowired
+	private ConsulttypeService typebo;
 
 	@RequestMapping("/type")
 	public void type(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam("communityId") Integer communityId) throws IOException {
-		List<ConsulttypeVO> list = consultbo.findAllTypeByCid(communityId);
+			@RequestParam("communityId") Integer communityId, String key) throws IOException {
+		List<ConsulttypeVO> list = consultbo.findAllTypeByCid(communityId, key);
 		Result result = null;
 		result = Result.getSuccessInstance(list);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+
+	@RequestMapping("/typedel")
+	public void typedel(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("typeid") Integer typeid) throws IOException {
+		typebo.delById(typeid);
+		Result result = null;
+		result = Result.getSuccessInstance(null);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+	
+	@RequestMapping("/typecreate")
+	public void create(HttpServletRequest request, HttpServletResponse response,Consulttype consulttype) throws IOException{
+		typebo.add(consulttype);
+		Result result = null;
+		result = Result.getSuccessInstance(null);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
@@ -61,43 +84,47 @@ public class ConsultController {
 	}
 
 	@RequestMapping("/del")
-	public void del(HttpServletRequest request, HttpServletResponse response, @RequestParam("consultId") Integer id) throws IOException {
+	public void del(HttpServletRequest request, HttpServletResponse response, @RequestParam("consultId") Integer id)
+			throws IOException {
 		consultbo.delById(id);
 		Result result = null;
 		result = Result.getSuccessInstance(null);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
-	
+
 	@RequestMapping("/finish")
-	public void finish(HttpServletRequest request, HttpServletResponse response, @RequestParam("consultId") Integer id) throws IOException{
+	public void finish(HttpServletRequest request, HttpServletResponse response, @RequestParam("consultId") Integer id)
+			throws IOException {
 		consultbo.finishByCid(id);
 		Result result = null;
 		result = Result.getSuccessInstance(null);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
-	
+
 	@RequestMapping("/edit")
-	public void edit(HttpServletRequest request,HttpServletResponse response,Consult consult) throws IOException{
+	public void edit(HttpServletRequest request, HttpServletResponse response, Consult consult) throws IOException {
 		consultbo.update(consult);
 		Result result = null;
 		result = Result.getSuccessInstance(null);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
-	
+
 	@RequestMapping("/undo")
-	public void undo(HttpServletRequest request,HttpServletResponse response,@RequestParam("userId") Integer id) throws IOException{
+	public void undo(HttpServletRequest request, HttpServletResponse response, @RequestParam("userId") Integer id)
+			throws IOException {
 		List<ConsultVO> list = consultbo.findUndoByUid(id);
 		Result result = null;
 		result = Result.getSuccessInstance(list);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
-	
+
 	@RequestMapping("/done")
-	public void done(HttpServletRequest request,HttpServletResponse response,@RequestParam("userId") Integer id) throws IOException{
+	public void done(HttpServletRequest request, HttpServletResponse response, @RequestParam("userId") Integer id)
+			throws IOException {
 		List<ConsultVO> list = consultbo.findDoneByUid(id);
 		Result result = null;
 		result = Result.getSuccessInstance(list);

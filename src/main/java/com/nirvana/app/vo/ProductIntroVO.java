@@ -1,6 +1,5 @@
 package com.nirvana.app.vo;
 
-import com.nirvana.dal.po.Community;
 import com.nirvana.dal.po.ProductIntro;
 
 import java.util.ArrayList;

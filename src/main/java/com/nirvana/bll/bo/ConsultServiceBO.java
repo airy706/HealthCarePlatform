@@ -34,8 +34,13 @@ public class ConsultServiceBO implements ConsultService {
 	private ConsultDao consultdao;
 
 	@Override
-	public List<ConsulttypeVO> findAllTypeByCid(Integer communityId) {
-		List<Consulttype> list = typedao.findAllTypeByCid(communityId);
+	public List<ConsulttypeVO> findAllTypeByCid(Integer communityId, String key) {
+		List<Consulttype> list = null;
+		if (key == null || "".equals(key)) {
+			list = typedao.findAllTypeByCid(communityId);
+		} else {
+			list = typedao.findTypeByCidAndKey(communityId,key);
+		}
 		List<ConsulttypeVO> volist = new ArrayList<ConsulttypeVO>();
 		for (Consulttype type : list) {
 			ConsulttypeVO vo = new ConsulttypeVO();
