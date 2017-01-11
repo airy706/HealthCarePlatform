@@ -736,5 +736,23 @@ request jsonstr 格式：
 		}
 		
 ##咨询服务模块##
-
+1. 获取社区的咨询类型
+	request:
+		key: '' //服务名称
+	response:
+		[{
+			consultTypeId,
+			consultTypeName	
+		}]
 		
+2. 删除社区咨询
+	request:
+		consultTypeId
+	response:
+		
+3. 新增／修改社区服务
+	request:
+		consultTypeId, //
+		consultTypeName,
+	response
+	
