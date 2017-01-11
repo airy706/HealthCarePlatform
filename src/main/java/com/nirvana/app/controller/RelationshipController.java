@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
@@ -58,5 +59,34 @@ public class RelationshipController {
 		response.getWriter().print(new Gson().toJson(result));
 	}
 	
+	@RequestMapping("/edit")
+	public void edit(HttpServletRequest request,HttpServletResponse response,Relationship ship) throws IOException{
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			User user = userservicebo.findById(userid);
+			ship.setUser(user);
+			shipservicebo.add(ship);
+			result = Result.getSuccessInstance(null);
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+	
+	@RequestMapping("/del")
+	public void del(HttpServletRequest request,HttpServletResponse response,@RequestParam("relationid") Integer relationid) throws IOException{
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			shipservicebo.delById(relationid);
+			result = Result.getSuccessInstance(null);
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
 	
 }
