@@ -12,7 +12,7 @@ import com.nirvana.dal.po.Relationship;
 @Repository
 public interface RelationshipDao extends JpaRepository<Relationship, Integer>{
 
-	@Query("SELECT r FROM Relationship WHERE r.user.userid=:userid")
+	@Query("SELECT r FROM Relationship r WHERE r.user.userid=:userid")
 	List<Relationship> findALLByUid(@Param("userid") Integer userid);
 
 }

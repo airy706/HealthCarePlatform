@@ -84,15 +84,20 @@ public class AlarmController {
 		String[] types = type.split(",");
 		Date start = null;
 		Date end = null;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		if (startTime == null || "".equals(startTime)) {
 			end = new Date();
 			start = new Date(end.getTime());
 			start.setTime(start.getTime() - 7 * 24 * 60 * 60 * 1000);
 		} else {
 			try {
+				//2017/01/11 00:00:00
+				//2017/01/12 24:00:00
+				startTime+=" 00:00:00";
+				endTime+=" 00:00:00";
 				start = sdf.parse(startTime);
 				end = sdf.parse(endTime);
+				end.setTime(end.getTime()+24*60*60*1000);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
