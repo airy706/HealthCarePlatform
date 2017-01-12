@@ -1,6 +1,7 @@
 package com.nirvana.app.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +30,7 @@ public class ConsultController {
 
 	@Autowired
 	private ConsultService consultbo;
-	
+
 	@Autowired
 	private ConsulttypeService typebo;
 
@@ -51,9 +53,10 @@ public class ConsultController {
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
-	
+
 	@RequestMapping("/typecreate")
-	public void create(HttpServletRequest request, HttpServletResponse response,Consulttype consulttype) throws IOException{
+	public void create(HttpServletRequest request, HttpServletResponse response, Consulttype consulttype)
+			throws IOException {
 		typebo.add(consulttype);
 		Result result = null;
 		result = Result.getSuccessInstance(null);
@@ -128,6 +131,34 @@ public class ConsultController {
 		List<ConsultVO> list = consultbo.findDoneByUid(id);
 		Result result = null;
 		result = Result.getSuccessInstance(list);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+
+	@RequestMapping("/list")
+	public void list(HttpServletRequest request, HttpServletResponse response, @RequestParam("key") String key,
+			@RequestParam("size") Integer size, @RequestParam("num") Integer num,
+			@RequestParam("communityid") Integer communityid) throws IOException {
+		Page<Consult> pages = consultbo.findByKey(communityid, key, num, size);
+		List<ConsultVO> volist = new ArrayList<ConsultVO>();
+		List<Consult> list = pages.getContent();
+		for (Consult consult : list) {
+			ConsultVO vo = new ConsultVO();
+			vo.setConsultId(consult.getConsultid());
+			vo.setUsername(consult.getUser().getUsername());
+			vo.setConsultType(consult.getConsulttype().getTypename());
+			vo.setContent(consult.getContent());
+			vo.setToaskName(consult.getToask().getUsername());
+			vo.setCommintTime(consult.getCommittime());
+			vo.setFinish(consult.isIsfinish());
+			if (consult.isIsfinish() == true) {
+				vo.setFinishTime(consult.getFinishtime());
+			}
+			volist.add(vo);
+		}
+		Result result = null;
+		result = Result.getSuccessInstance(volist);
+		result.setMsg(pages.getTotalElements() + "");
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}

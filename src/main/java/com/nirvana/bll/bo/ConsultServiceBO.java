@@ -7,6 +7,8 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.nirvana.app.vo.ConsultVO;
@@ -39,7 +41,7 @@ public class ConsultServiceBO implements ConsultService {
 		if (key == null || "".equals(key)) {
 			list = typedao.findAllTypeByCid(communityId);
 		} else {
-			list = typedao.findTypeByCidAndKey(communityId,key);
+			list = typedao.findTypeByCidAndKey(communityId, key);
 		}
 		List<ConsulttypeVO> volist = new ArrayList<ConsulttypeVO>();
 		for (Consulttype type : list) {
@@ -126,6 +128,17 @@ public class ConsultServiceBO implements ConsultService {
 			volist.add(vo);
 		}
 		return volist;
+	}
+
+	private PageRequest buildPageRequest(int pageNumber, int pagzSize) {
+		return new PageRequest(pageNumber - 1, pagzSize, null);
+	}
+
+	@Override
+	public Page<Consult> findByKey(Integer communityid, String key, Integer num, Integer size) {
+		PageRequest request = this.buildPageRequest(num, size);
+		Page<Consult> pages = consultdao.findPageByKeyAndCid(communityid, key, request);
+		return pages;
 	}
 
 }
