@@ -18,7 +18,8 @@ public interface NodeDataDao extends JpaRepository<NodeData, Integer> {
 	@Query(value = "SELECT n FROM NodeData n WHERE n.did=:did AND n.sensortype=:type ORDER BY n.status_change_time DESC")
 	Page<NodeData> findLatestByDidAndType(@Param("did") String did, @Param("type") Integer type, Pageable pageable);
 
-	@Query("SELECT n FROM NodeData n WHERE n.did=:did AND n.sensortype=:type AND n.status_change_time>=:start AND n.status_change_time<=:end")
+	@Query("SELECT n FROM NodeData n WHERE n.did=:did AND n.sensortype=:type AND n.status_change_time>=:start AND n.status_change_time<=:end ORDER BY n.status_change_time")
 	List<NodeData> findByDidAndTypeinWeek(@Param("did") String did, @Param("type") Integer type,
 			@Param("start") Date start, @Param("end") Date end);
+
 }

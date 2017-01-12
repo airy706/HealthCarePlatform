@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.nirvana.app.vo.*;
 import com.nirvana.bll.service.*;
 import com.nirvana.dal.po.*;
+
+import org.dom4j.io.STAXEventReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,9 +46,15 @@ public class MainController extends BaseController {
 	@Autowired
 	private NoticeService noticebo;
 
+	@Autowired
+	private NodeDataService dataservicebo;
+
 	@RequestMapping({ "/test" })
 	public void test(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List<ConsulttypeVO> vo = consultbo.findAllTypeByCid(1,null);
+		Date end = new Date();
+		Date start = new Date(end.getTime());
+		start.setTime(start.getTime() - 7 * 24 * 60 * 60 * 1000);
+		NodeDataVO vo = dataservicebo.findByUidAndType(1, 99, start, end);
 		Result result = Result.getSuccessInstance(vo);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
@@ -67,7 +75,7 @@ public class MainController extends BaseController {
 		Result result = null;
 		UserVO vo = userbo.login(account, password);
 		if (vo != null) {
-			request.getSession().setAttribute("userid",vo.getUserid());
+			request.getSession().setAttribute("userid", vo.getUserid());
 			result = Result.getSuccessInstance(vo);
 		} else {
 			result = Result.getFailInstance("用户名或密码错误", null);
