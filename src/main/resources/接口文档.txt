@@ -112,30 +112,31 @@ key
 			}]
 		}
 	
-3. 查看节点数据 /node/data
-	request
-		nodeid
-	reponse
-		[{
-			status_change_time
-			data
-		}]
+# 3. 查看节点数据 /node/data
+	# request
+		# nodeid
+	# reponse
+		# [{
+			# status_change_time
+			# data
+		# }]
 	
-4. 节点数据查看
+4. 节点数据查看/node/data
 	request:
-		nodeid
+		userid
+		sensortype
 		startTime
 		endTime	
 	response:
 		msg: 1 数值型 2 文字型
-		[{
+		{
 			name, //如心率，坐姿
 			valueset, //为文字型时所有可能值
 			data:[{
 				time: //2016/02/02 12:00:00
-				value: //具体值，文字型时返回相应文字
+				value://具体值，文字型时返回相应文字
 			}]
-		}]
+		}
 
 	
 解决方案模块
