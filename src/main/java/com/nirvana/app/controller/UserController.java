@@ -35,21 +35,22 @@ import com.nirvana.dal.po.User;
 public class UserController {
 	@Autowired
 	private UserService userservicebo;
-	
+
 	@Autowired
 	private NodeService nodeservicebo;
 
 	@RequestMapping("/frequency")
-	public void frequency(HttpServletRequest request, HttpServletResponse response,@RequestParam("did") String did) throws IOException{
+	public void frequency(HttpServletRequest request, HttpServletResponse response, @RequestParam("did") String did)
+			throws IOException {
 		Integer f = userservicebo.getFrequencyByDid(did);
 		Result result = Result.getSuccessInstance(null);
-		result.setMsg(f+"");
+		result.setMsg(f + "");
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
-	
+
 	@RequestMapping("/node")
-	public void node(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	public void node(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
 		if (userid == null) {
@@ -61,7 +62,7 @@ public class UserController {
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
-	
+
 	@RequestMapping("/online")
 	public void online(HttpServletRequest request, HttpServletResponse response, Integer communityId)
 			throws IOException {
@@ -129,15 +130,25 @@ public class UserController {
 	}
 
 	@RequestMapping("/psdcheck")
-	public void psdcheck(HttpServletRequest request, HttpServletResponse response, String oldPassword)
-			throws IOException {
+	public void psdcheck(HttpServletRequest request, HttpServletResponse response, String oldPassword,
+			String newPassword) throws IOException {
 		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
 		if (userid == null) {
 			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
-			boolean isTrue = userservicebo.checkPassword(userid, oldPassword);
-			result = Result.getSuccessInstance(isTrue);
+			User user = userservicebo.findById(userid);
+			if (user.getPassword().equals(oldPassword)) {
+				if("".equals(newPassword)||newPassword==null){
+					result = Result.getFailInstance("新密码为空", null);
+				}
+				userservicebo.updatePassword(userid, newPassword);
+				result = Result.getSuccessInstance(null);
+				result.setMsg("密码修改成功");
+			}else{
+				result = Result.getFailInstance("旧密码错误", null);
+			}
+			
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));

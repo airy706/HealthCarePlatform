@@ -579,6 +579,7 @@ request jsonstr 格式：
 3. 密码校对 /user/psdcheck
 	request:
 		oldPassword
+		newPassword
 	response:		
 
 4. 修改个人信息/user/edit

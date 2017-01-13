@@ -202,6 +202,7 @@ public class UserServiceBO implements UserService {
 
 	@Override
 	public void regist(User user) {
+		user.setRegisttime(new Date());
 		user.setTypeid(3);
 		user.setFrequency(5);
 		user.setValid(0);
@@ -219,25 +220,27 @@ public class UserServiceBO implements UserService {
 		vo.setUseremail(user.getUseremail());
 		vo.setUsertel(user.getUsertel());
 		vo.setAddress(user.getUseraddress());
-		vo.setCommunityid(user.getCommunity().getCommunityid());
-		vo.setCommunityname(user.getCommunity().getCommunityname());
+		if (user.getCommunity() != null) {
+			vo.setCommunityid(user.getCommunity().getCommunityid());
+			vo.setCommunityname(user.getCommunity().getCommunityname());
+		}
 		return vo;
 	}
 
-	@Override
+	/*@Override
 	public boolean checkPassword(Integer userid, String oldPassword) {
 		User user = userdao.findOne(userid);
-		if(user.getPassword().equals(oldPassword)){
+		if (user.getPassword().equals(oldPassword)) {
 			return true;
-		}else{
-			return false;	
+		} else {
+			return false;
 		}
-	}
+	}*/
 
 	@Override
 	public void updateinfo(Integer userid, User user) {
 		User u = userdao.findOne(userid);
-		if(!"".equals(user.getPassword())){
+		if (!"".equals(user.getPassword())&&user.getPassword()!=null) {
 			u.setPassword(user.getPassword());
 		}
 		u.setAvatar(user.getAvatar());
@@ -253,6 +256,13 @@ public class UserServiceBO implements UserService {
 	public Integer getFrequencyByDid(String did) {
 		User user = userdao.findByDid(did);
 		return user.getFrequency();
+	}
+
+	@Override
+	public void updatePassword(Integer userid, String newPassword) {
+		User user = userdao.findOne(userid);
+		user.setPassword(newPassword);
+		userdao.save(user);
 	}
 
 }
