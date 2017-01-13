@@ -35,4 +35,6 @@ public interface UserService {
 	boolean checkPassword(Integer userid, String oldPassword);
 
 	void updateinfo(Integer userid, User user);
+
+	Integer getFrequencyByDid(String did);
 }

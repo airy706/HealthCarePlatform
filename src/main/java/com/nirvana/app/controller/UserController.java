@@ -39,6 +39,15 @@ public class UserController {
 	@Autowired
 	private NodeService nodeservicebo;
 
+	@RequestMapping("/frequency")
+	public void frequency(HttpServletRequest request, HttpServletResponse response,@RequestParam("did") String did) throws IOException{
+		Integer f = userservicebo.getFrequencyByDid(did);
+		Result result = Result.getSuccessInstance(null);
+		result.setMsg(f+"");
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+	
 	@RequestMapping("/node")
 	public void node(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		Integer userid = (Integer) request.getSession().getAttribute("userid");

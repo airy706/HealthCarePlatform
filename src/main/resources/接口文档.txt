@@ -816,6 +816,16 @@ request jsonstr 格式：
 		did:
 	response：	
 
+2.手机获取频率/user/frequency
+	request:
+		did
+	respone:
+		{
+		state:"",  //success || failed
+		msg:frequency,    //信息
+	}
+
+
 	
 =======
 		

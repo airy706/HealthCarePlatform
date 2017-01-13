@@ -247,4 +247,10 @@ public class UserServiceBO implements UserService {
 		userdao.save(u);
 	}
 
+	@Override
+	public Integer getFrequencyByDid(String did) {
+		User user = userdao.findByDid(did);
+		return user.getFrequency();
+	}
+
 }
