@@ -26,10 +26,10 @@ public class NodeDataServiceBO implements NodeDataService {
 	@Autowired
 	private UserDao userdao;
 
-	private String[] posture = { "normal", "long_stop", "fall" };
-	private String[] help = { "normal", "abnormal" };
+	private String[] posture = { "正常", "长期不动", "跌倒" };
+	private String[] help = { "正常", "求救" };
 	private String[] wheelchair = { "正常", "右翻", "前翻", "后翻", "左翻" };
-	private String[] cushion = { "人体直坐", "人体左倾", "人体右倾", "人体前倾", "人体后倾" };
+	private String[] cushion = { "直坐", "左倾", "右倾", "前倾", "后倾" };
 
 	@Override
 	public void addData(NodeData data) {
@@ -66,7 +66,7 @@ public class NodeDataServiceBO implements NodeDataService {
 		} else if (sensortype == 12) {
 			name = "心率";
 		} else if (sensortype == 6) {
-			name = "人体坐姿";
+			name = "人体状态";
 			valueset = Arrays.asList(posture);
 		} else if (sensortype == 99) {
 			name = "一键求救";
@@ -78,7 +78,7 @@ public class NodeDataServiceBO implements NodeDataService {
 			name = "压力坐垫";
 			valueset = Arrays.asList(cushion);
 		} else {
-
+			name="其他";
 		}
 		vo.setName(name);
 		vo.setValueset(valueset);

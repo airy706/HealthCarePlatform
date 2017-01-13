@@ -269,13 +269,12 @@ request jsonstr 格式：
   {"blood":{ "senortype":"4","blood_data":["suo":"xxx","zhang":"xxx"]}}
 
  
-2.人体坐姿
-
-    {"posture":{"senortype":"6","posture_statue":["normal":"111","long_stop":"222","fall":"333"]}}
+2.人体状态
+    {"posture":{"senortype":"6","posture_statue":["正常":"111","长期不动":"222","跌倒":"333","长期剧烈运动":444]}}
 
 
 3.一键求救
-   {"help":{"senortype":"99","help_statue":["normal":"111","abnormal":"222"]}}
+   {"help":{"senortype":"99","help_statue":["正常":"111","求救":"222"]}}
 
 
 4.心率
@@ -291,7 +290,7 @@ request jsonstr 格式：
 
 
 7.压力坐垫
-{"cushion":{"senortype":"3","cushion_statue":["111","人体直坐"，"222":"人体左倾,"333":"人体右倾","444":"人体前倾","555":"左人体后倾"]}}
+{"cushion":{"senortype":"3","cushion_statue":["111","直坐"，"222":"左倾,"333":"右倾","444":"前倾","555":"后倾"]}}
 
 超级管理员首页端接口
 1. 获取所有在线用户信息/user/online

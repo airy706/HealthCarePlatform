@@ -38,7 +38,7 @@ public class DataController extends BaseController {
 	public void uploadnode(HttpServletRequest request, HttpServletResponse response, @RequestParam("nodedata") String d)
 			throws IOException {
 		String dd = URLDecoder.decode(d);
-		System.out.println("json:   " + dd);
+		//System.out.println("json:   " + dd);
 		NodeData data = new Gson().fromJson(dd, NodeData.class);
 		nodedatabo.addData(data);
 		Result result = null;
@@ -48,8 +48,11 @@ public class DataController extends BaseController {
 	}
 
 	@RequestMapping(value = "/uploadloc")
-	public void uploadloc(HttpServletRequest request, HttpServletResponse response, @RequestBody LocationData data)
+	public void uploadloc(HttpServletRequest request, HttpServletResponse response, @RequestParam("nodedata") String d)
 			throws IOException {
+		String dd = URLDecoder.decode(d);
+		System.out.println("json:   " + dd);
+		LocationData data = new Gson().fromJson(dd, LocationData.class);
 		userservicebo.updateloc(data.getDid(), data.getLongtitude(), data.getLatitude(), data.getStatus_change_time());
 		locdatabo.addData(data);
 		Result result = null;
@@ -62,7 +65,7 @@ public class DataController extends BaseController {
 	public void uploadalarm(HttpServletRequest request, HttpServletResponse response, @RequestParam("nodedata") String d)
 			throws IOException {
 		String dd = URLDecoder.decode(d);
-		System.out.println("json:   " + dd);
+		//System.out.println("json:   " + dd);
 		AlarmData data = new Gson().fromJson(dd, AlarmData.class);
 		alarmdatabo.addData(data);
 		Result result = null;
