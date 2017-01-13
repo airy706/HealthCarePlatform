@@ -1,6 +1,7 @@
 package com.nirvana.dal.po;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,9 +16,13 @@ public class Relationship {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer relationid;
+	@Column(nullable=false,unique=true)
 	private String relationname;
+	@Column(nullable=false)
 	private String relationtel;
+	@Column(nullable=false)
 	private String relationaccount;
+	@Column(nullable=false)
 	private String relationpassword;
 	@ManyToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "userid")

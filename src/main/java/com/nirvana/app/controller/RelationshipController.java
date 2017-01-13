@@ -21,7 +21,7 @@ import com.nirvana.dal.po.User;
 
 @RestController
 @RequestMapping("/linkman")
-public class RelationshipController {
+public class RelationshipController extends BaseController{
 
 	@Autowired
 	private RelationshipService shipservicebo;

@@ -203,6 +203,8 @@ public class UserServiceBO implements UserService {
 	@Override
 	public void regist(User user) {
 		user.setTypeid(3);
+		user.setFrequency(5);
+		user.setValid(0);
 		userdao.save(user);
 	}
 
