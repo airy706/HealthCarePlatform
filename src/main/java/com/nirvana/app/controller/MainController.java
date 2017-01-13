@@ -1,6 +1,7 @@
 package com.nirvana.app.controller;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -48,11 +49,22 @@ public class MainController extends BaseController {
 
 	@Autowired
 	private NodeDataService dataservicebo;
+	
+	@Autowired
+	private AlarmDataDao alarmdao;
 
 	@RequestMapping({ "/test" })
 	public void test(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List<UserVO> list = userbo.findManagersByKey("");
-		Result result = Result.getSuccessInstance(list);
+		Date end = new Date();
+		Date start = new Date(end.getTime());
+		start.setTime(start.getTime() - 7 * 24 * 60 * 60 * 1000);
+//		Integer[] types = {6,12,99,7};
+//		String[] dids={"111111"};
+//		List<AlarmData> list = alarmdao.findFilter(Arrays.asList(types), Arrays.asList(dids), start, end);
+		String[] ids={};
+		String[] types={};
+		AlarmFilterVO vo = alarmbo.findByFilter(ids, types, start, end);
+		Result result = Result.getSuccessInstance(vo);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}

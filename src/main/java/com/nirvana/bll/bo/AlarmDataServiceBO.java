@@ -65,7 +65,7 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		if (id == null) {
 			list = alarmdatadao.findUnresloved();
 		} else {
-			List<String> dids = userdao.findAlldid(id);
+			List<String> dids = userdao.findAllCommondid(id);
 			if (dids.size() == 0) {
 				return exs;
 			}
@@ -86,7 +86,7 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		if (cid == null) {
 			list = alarmdatadao.findAfter(data.getStatus_change_time());
 		} else {
-			List<String> dids = userdao.findAlldid(cid);
+			List<String> dids = userdao.findAllCommondid(cid);
 			if (dids.size() == 0) {
 				return exs;
 			}
@@ -136,7 +136,6 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		if (typesint.size() == 0) {
 			List<Integer> tps = alarmdatadao.findAlltype();
 			for (Integer t : tps) {
-				System.out.println(t);
 				typesint.add(t);
 			}
 		}
@@ -155,7 +154,7 @@ public class AlarmDataServiceBO implements AlarmDataService {
 			names.add(community.getCommunityname());
 			AlarmCommunityVO datavo = new AlarmCommunityVO();
 			datavo.setName(community.getCommunityname());
-			List<String> dids = userdao.findAlldid(id);
+			List<String> dids = userdao.findAllCommondid(id);
 			List<Integer> times = null;
 			if (dids.size() == 0) {
 				times = analyseTimes(null, start.getTime(), end.getTime());
