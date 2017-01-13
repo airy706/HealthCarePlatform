@@ -68,7 +68,7 @@ response:
 key
 
 
-节点模块
+##节点模块##
 1. 获取节点 /node/list
 	request:
 		size
@@ -139,7 +139,7 @@ key
 		}
 
 	
-解决方案模块
+##解决方案模块##
 1. 添加解决方案 /case/create
 	request:
 		casetitle
@@ -168,7 +168,7 @@ key
 			isshow
 		}]
 
-产品介绍模块
+##产品介绍模块##
 1. 添加产品介绍/product/create
 	request:
 		productid
@@ -196,8 +196,44 @@ key
 			casecontent
 			isshow
 		}]
-		
 
+##社区管理员管理模块##
+1. 列出所有社区管理员
+	request:
+		key //根据用户名或者社区名来筛选
+	response:
+	[{
+		id
+		name
+		communityName
+		communityId	
+		account
+		addTime
+	}]
+	
+2. 编辑社区管理员
+	request:
+		userId,
+		name,
+		communityId,
+		account,
+		password,
+	response:
+	
+3. 增加社区管理员
+	request:
+		name,
+		communityId,
+		account,
+		password,
+	response:
+	
+4. 删除社区管理员
+	request:
+		id
+	response:
+		
+	
 ---------------------------------------------------------------------------------------------
 
 NodeData访问url   http://139.199.76.64:8080/MavenJpaDemo/data/uploadnode
@@ -627,8 +663,8 @@ request jsonstr 格式：
 	response
 		
 
-节点数据部分
-1.列出个人用户所有节点/node
+##节点数据部分##
+1.列出个人用户所有节点/user/node
 	request：	
 	response：
 		[{
