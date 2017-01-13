@@ -93,7 +93,7 @@ public class UserController {
 		List<NodeHomePageVO> list = userservicebo.findNodeDataByUid(userid);
 		Result result = Result.getSuccessInstance(list);
 		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print(new Gson().toJson(result));
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 	@RequestMapping("/detail")
