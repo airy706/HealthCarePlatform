@@ -19,7 +19,9 @@ import com.nirvana.app.vo.NodeDataVO;
 import com.nirvana.app.vo.NodeListVO;
 import com.nirvana.app.vo.Result;
 import com.nirvana.bll.service.NodeDataService;
+import com.nirvana.bll.service.NodeService;
 import com.nirvana.bll.service.UserService;
+import com.nirvana.dal.po.Node;
 import com.nirvana.dal.po.User;
 
 @RestController
@@ -30,7 +32,20 @@ public class NodeController extends BaseController {
 	
 	@Autowired
 	private NodeDataService dataservicebo;
+	
+	@Autowired
+	private NodeService nodeservice;
 
+	@RequestMapping("/add")
+	public void add(HttpServletRequest request, HttpServletResponse response,@RequestParam("did") String did,@RequestParam("nodetype") Integer nodetype) throws IOException{
+			nodeservice.add(did,nodetype);
+			Result result = null;
+			result = Result.getSuccessInstance(null);
+			result.setMsg("节点添加成功");
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
+	
 	@RequestMapping("/search")
 	public void search(HttpServletRequest request, HttpServletResponse response, @RequestParam("key") String key,
 			@RequestParam("num") Integer num, @RequestParam("size") Integer size, Integer communityId)
