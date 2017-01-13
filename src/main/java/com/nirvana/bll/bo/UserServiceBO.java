@@ -130,8 +130,9 @@ public class UserServiceBO implements UserService {
 			NodeHomePageVO vo = new NodeHomePageVO();
 			if (list.size() > 0) {
 				vo.setLatestData(list.get(0).getData());
+				vo.setLastestTime(list.get(0).getStatus_change_time());
 			} else {
-				vo.setLatestData("");
+				vo.setLatestData("NaN");
 			}
 			vo.setNodeName(node.getNodename());
 			vo.setNodeType(type);
@@ -148,6 +149,7 @@ public class UserServiceBO implements UserService {
 						String v[] = value.split(",");
 						if (Integer.parseInt(v[0]) > h1) {
 							h1 = Integer.parseInt(v[0]);
+							vo.setHighTime(datas.get(i).getStatus_change_time());
 						}
 						if (Integer.parseInt(v[1]) > h2) {
 							h2 = Integer.parseInt(v[1]);
@@ -157,13 +159,16 @@ public class UserServiceBO implements UserService {
 						}
 						if (Integer.parseInt(v[1]) < l2) {
 							l2 = Integer.parseInt(v[1]);
+							vo.setLowTime(datas.get(i).getStatus_change_time());
 						}
 					} else {
 						if (Integer.parseInt(value) > h1) {
 							h1 = Integer.parseInt(value);
+							vo.setHighTime(datas.get(i).getStatus_change_time());
 						}
 						if (Integer.parseInt(value) < l1) {
 							l1 = Integer.parseInt(value);
+							vo.setLowTime(datas.get(i).getStatus_change_time());
 						}
 					}
 				}

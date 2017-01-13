@@ -41,7 +41,12 @@ public class AlarmDataServiceBO implements AlarmDataService {
 	public void addData(AlarmData data) {
 		data.setHasresloved(0);
 		PageRequest request = this.buildPageRequest(1, 1);
-		AlarmData latest = alarmdatadao.findLatest(data.getReasontype(), data.getDid(), request).getContent().get(0);
+		List<AlarmData> list  = alarmdatadao.findLatest(data.getReasontype(), data.getDid(), request).getContent();
+		if(list.size()==0){
+			alarmdatadao.save(data);
+			return;
+		}
+		AlarmData latest =list.get(0);
 		// 时间间隔设为 30min;
 		if (latest == null) {
 			alarmdatadao.save(data);

@@ -1,5 +1,7 @@
 package com.nirvana.app.vo;
 
+import java.util.Date;
+
 public class NodeHomePageVO {
 
 	private Integer nodeType;
@@ -11,6 +13,36 @@ public class NodeHomePageVO {
 	private String high;
 
 	private String low;
+
+	private Date lastestTime;
+
+	private Date highTime;
+
+	private Date lowTime;
+
+	public Date getLastestTime() {
+		return lastestTime;
+	}
+
+	public void setLastestTime(Date lastestTime) {
+		this.lastestTime = lastestTime;
+	}
+
+	public Date getHighTime() {
+		return highTime;
+	}
+
+	public void setHighTime(Date highTime) {
+		this.highTime = highTime;
+	}
+
+	public Date getLowTime() {
+		return lowTime;
+	}
+
+	public void setLowTime(Date lowTime) {
+		this.lowTime = lowTime;
+	}
 
 	public String getHigh() {
 		return high;

@@ -59,8 +59,11 @@ public class DataController extends BaseController {
 	}
 
 	@RequestMapping(value = "/uploadalarm")
-	public void uploadalarm(HttpServletRequest request, HttpServletResponse response, @RequestBody AlarmData data)
+	public void uploadalarm(HttpServletRequest request, HttpServletResponse response, @RequestParam("nodedata") String d)
 			throws IOException {
+		String dd = URLDecoder.decode(d);
+		System.out.println("json:   " + dd);
+		AlarmData data = new Gson().fromJson(dd, AlarmData.class);
 		alarmdatabo.addData(data);
 		Result result = null;
 		result = Result.getSuccessInstance(null);
