@@ -265,4 +265,20 @@ public class UserServiceBO implements UserService {
 		userdao.save(user);
 	}
 
+	@Override
+	public List<UserVO> findManagersBy(String key) {
+		List<User> list = userdao.findManagerByKey(key);
+		List<UserVO> volist = new ArrayList<UserVO>();
+		for(User user:list){
+			UserVO vo = new UserVO();
+			vo.setUserid(user.getUserid());
+			vo.setUsername(user.getUsername());
+			vo.setCommunityname(user.getCommunity().getCommunityname());
+			vo.setCommunityid(user.getCommunity().getCommunityid());
+			vo.setAccount(user.getAccount());
+			vo.setRegisttime(user.getRegisttime());
+		}
+		return volist;
+	}
+
 }

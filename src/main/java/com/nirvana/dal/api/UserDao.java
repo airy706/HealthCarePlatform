@@ -33,4 +33,7 @@ public interface UserDao extends JpaRepository<User, Integer> {
 
 	@Query("SELECT u FROM User u WHERE u.username LIKE %:key% AND u.community.communityid=:cid")
 	Page<User> findByKeyAndCid(@Param("key") String key, @Param("cid") Integer cid, Pageable pageable);
+
+	@Query("SELECT u FROM User u WHERE (u.username LIKE %:key% OR u.community.communityname LIKE %:key%) AND u.typeid=2")
+	List<User> findManagerByKey(@Param("key") String key);
 }

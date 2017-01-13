@@ -39,4 +39,6 @@ public interface UserService {
 	Integer getFrequencyByDid(String did);
 
 	void updatePassword(Integer userid, String newPassword);
+
+	List<UserVO> findManagersBy(String key);
 }

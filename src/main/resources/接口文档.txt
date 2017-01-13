@@ -65,7 +65,28 @@ response:
 /notice/admin
 
 搜索 url：/notice/search
-key
+request:
+		key //title or username
+		size
+		num
+response:
+		msg:count
+		{
+		[
+			noticeid;
+			noticedate;
+	 		noticetitle;
+			noticecontent;
+	 		noticetype;
+			attachurl;
+	 		userid;
+	 		communityid;
+	 		username;
+	 		communityname;
+			url;
+	 		isurl;
+		]
+		}
 
 
 ##节点模块##
@@ -198,39 +219,38 @@ key
 		}]
 
 ##社区管理员管理模块##
-1. 列出所有社区管理员
+1. 列出所有社区管理员 /community/manager
 	request:
 		key //根据用户名或者社区名来筛选
 	response:
 	[{
-		id
-		name
-		communityName
+		userid
+		username
+		communityname
 		communityId	
 		account
-		addTime
+		registtime
 	}]
 	
-2. 编辑社区管理员
+2. 编辑社区管理员/user/editmanager
 	request:
-		userId,
-		name,
-		communityId,
+		userid,
+		username,
+		communityid,
+		account,
+	response:
+	
+3. 增加社区管理员/user/createmanager
+	request:
+		username,
+		communityid,
 		account,
 		password,
 	response:
 	
-3. 增加社区管理员
+4. 删除社区管理员/user/delmanager
 	request:
-		name,
-		communityId,
-		account,
-		password,
-	response:
-	
-4. 删除社区管理员
-	request:
-		id
+		userid
 	response:
 		
 	
