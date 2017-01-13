@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,7 +18,8 @@ import javax.persistence.TemporalType;
 @Table(name = "node")
 public class Node {
 	@Id
-	private String nodeid;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer nodeid;
 	private String nodename;
 	private Integer nodetype;
 	private Integer nodestatus;
@@ -26,11 +29,11 @@ public class Node {
 	@JoinColumn(name = "userid")
 	private User user;
 
-	public String getNodeid() {
+	public Integer getNodeid() {
 		return nodeid;
 	}
 
-	public void setNodeid(String nodeid) {
+	public void setNodeid(Integer nodeid) {
 		this.nodeid = nodeid;
 	}
 

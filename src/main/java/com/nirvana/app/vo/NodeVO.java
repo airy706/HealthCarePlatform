@@ -5,7 +5,7 @@ import java.util.Date;
 import com.nirvana.dal.po.Node;
 
 public class NodeVO {
-	private String nodeid;
+	private Integer nodeid;
 	private String nodename;
 	private Integer nodetype;
 	private Date nodeaddtime;
@@ -23,11 +23,11 @@ public class NodeVO {
 		this.nodeaddtime = node.getNodeaddtime();
 	}
 
-	public String getNodeid() {
+	public Integer getNodeid() {
 		return nodeid;
 	}
 
-	public void setNodeid(String nodeid) {
+	public void setNodeid(Integer nodeid) {
 		this.nodeid = nodeid;
 	}
 

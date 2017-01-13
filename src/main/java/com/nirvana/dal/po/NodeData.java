@@ -20,7 +20,7 @@ public class NodeData {
 	private Integer sensortype;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date status_change_time;
-	private String nodeid;
+	private Integer nodeid;
 	private String data;
 
 	public Integer getDataid() {
@@ -55,11 +55,11 @@ public class NodeData {
 		this.status_change_time = status_change_time;
 	}
 
-	public String getNodeid() {
+	public Integer getNodeid() {
 		return nodeid;
 	}
 
-	public void setNodeid(String nodeid) {
+	public void setNodeid(Integer nodeid) {
 		this.nodeid = nodeid;
 	}
 
