@@ -170,6 +170,7 @@ public class UserController {
 
 	@RequestMapping("/avatar")
 	public void avatar(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Result result = null;
 		//  创建一个通用的多部分解析器 ，用于解析SpringMVC的上下文  
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
 				request.getSession().getServletContext());
@@ -195,13 +196,17 @@ public class UserController {
 						 *  file.transferTo(localFile);
 						 */
 						// 如果用的是Tomcat服务器，则文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\WEB-INF\\upload\\文件夹中  
+						if(file.getSize()>200*1000){
+							result = Result.getFailInstance("文件过大", null);
+						}else{
 						String realPath = request.getSession().getServletContext().getRealPath("/upload/avatar");
 						File uploadfile = new File(realPath, fileName);
 						//  不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉  
 						FileUtils.copyInputStreamToFile(file.getInputStream(), uploadfile);
 						String url = request.getServletContext().getContextPath() + "/upload/avatar/" + fileName;
 						System.out.println(url);
-						Result result = Result.getSuccessInstance(url);
+						result = Result.getSuccessInstance(url);
+						}
 						response.setContentType("text/html;charset=utf-8");
 						response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 					}
