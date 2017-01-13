@@ -15,4 +15,7 @@ public interface RelationshipDao extends JpaRepository<Relationship, Integer>{
 	@Query("SELECT r FROM Relationship r WHERE r.user.userid=:userid")
 	List<Relationship> findALLByUid(@Param("userid") Integer userid);
 
+	@Query("SELECT r FROM Relationship r WHERE r.relationaccount=:account AND r.relationpassword=:password")
+	Relationship findOneByAccountAndPsd(@Param("account") String account,@Param("password") String password);
+
 }

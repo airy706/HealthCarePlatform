@@ -6,6 +6,17 @@ public class LinkManVO {
 	private String relationtel;
 	private String relationaccount;
 	private String relationpassword;
+	private Integer userid;
+
+	
+	
+	public Integer getUserid() {
+		return userid;
+	}
+
+	public void setUserid(Integer userid) {
+		this.userid = userid;
+	}
 
 	public Integer getRelationid() {
 		return relationid;

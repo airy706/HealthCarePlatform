@@ -11,4 +11,6 @@ public interface RelationshipService {
 	void delById(Integer id);
 
 	List<LinkManVO> findAllByUid(Integer userid);
+
+	LinkManVO findOneByAccountAndPsd(String account, String password);
 }

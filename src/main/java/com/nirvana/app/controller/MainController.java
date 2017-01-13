@@ -17,6 +17,7 @@ import org.dom4j.io.STAXEventReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
@@ -52,6 +53,9 @@ public class MainController extends BaseController {
 	
 	@Autowired
 	private AlarmDataDao alarmdao;
+	
+	@Autowired
+	private RelationshipService shipservicebo;
 
 	@RequestMapping({ "/test" })
 	public void test(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -78,16 +82,23 @@ public class MainController extends BaseController {
 	}
 
 	@RequestMapping("/login")
-	public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String account = request.getParameter("account");
-		String password = request.getParameter("password");
+	public void login(HttpServletRequest request, HttpServletResponse response,@RequestParam("account") String account,@RequestParam("password") String password) throws IOException {
 		Result result = null;
 		UserVO vo = userbo.login(account, password);
 		if (vo != null) {
 			request.getSession().setAttribute("userid", vo.getUserid());
 			result = Result.getSuccessInstance(vo);
+			result.setMsg("common");
 		} else {
+			LinkManVO linkman= shipservicebo.findOneByAccountAndPsd(account,password);
+			if(linkman==null){
 			result = Result.getFailInstance("用户名或密码错误", null);
+			}else{
+				//将联系人的主人userid直接放入session中
+				request.getSession().setAttribute("userid", linkman.getUserid());
+				result = Result.getSuccessInstance(linkman);
+				result.setMsg("link");
+			}
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
