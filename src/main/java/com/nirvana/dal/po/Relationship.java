@@ -20,7 +20,7 @@ public class Relationship {
 	private String relationname;
 	@Column(nullable=false)
 	private String relationtel;
-	@Column(nullable=false)
+	@Column(nullable=false,unique=true)
 	private String relationaccount;
 	@Column(nullable=false)
 	private String relationpassword;
