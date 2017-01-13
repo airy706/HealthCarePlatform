@@ -1,5 +1,6 @@
 package com.nirvana.app.vo;
 
+import java.util.Date;
 import java.util.List;
 
 import com.nirvana.dal.po.User;
@@ -22,6 +23,8 @@ public class UserVO {
 	private Integer gender;
 	private String useremail;
 	private String identity;
+	private String account;
+	private Date registtime;
 
 	private List<NodeVO> nodes;
 
@@ -52,7 +55,22 @@ public class UserVO {
 		}
 	}
 
-	
+	public Date getRegisttime() {
+		return registtime;
+	}
+
+	public void setRegisttime(Date registtime) {
+		this.registtime = registtime;
+	}
+
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
 	public String getUseremail() {
 		return useremail;
 	}

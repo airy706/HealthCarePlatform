@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,10 +53,15 @@ public class NoticeServiceBO implements NoticeService {
 		return NoticeVO.toVoList(polist);
 	}
 
+	private PageRequest buildPageRequest(int pageNumber, int pagzSize) {
+		return new PageRequest(pageNumber - 1, pagzSize, null);
+	}
+	
 	@Override
-	public List<NoticeVO> findByTitleOrUn(String key) {
-		List<Notice> polist = noticedao.fuzzyQuery(key);
-		return NoticeVO.toVoList(polist);
+	public Page<Notice> findByTitleOrUn(String key,Integer num,Integer size) {
+		PageRequest request = this.buildPageRequest(num, size);
+		Page<Notice> polist = noticedao.fuzzyQuery(key,request);
+		return polist;
 	}
 
 	@Override

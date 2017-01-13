@@ -32,7 +32,15 @@ public interface UserService {
 
 	UserVO findInfoByUid(Integer userid);
 
-	boolean checkPassword(Integer userid, String oldPassword);
+	//boolean checkPassword(Integer userid, String oldPassword);
 
 	void updateinfo(Integer userid, User user);
+
+	Integer getFrequencyByDid(String did);
+
+	void updatePassword(Integer userid, String newPassword);
+
+	List<UserVO> findManagersBy(String key);
+
+	void delByUid(Integer userid);
 }

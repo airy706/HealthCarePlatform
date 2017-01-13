@@ -35,12 +35,53 @@ import com.nirvana.dal.po.User;
 public class UserController {
 	@Autowired
 	private UserService userservicebo;
-	
+
 	@Autowired
 	private NodeService nodeservicebo;
 
+	@RequestMapping("/delmanager")
+	public void delmanager(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("userid") Integer userid) throws IOException {
+		userservicebo.delByUid(userid);
+		Result result = Result.getSuccessInstance(null);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+
+	@RequestMapping("/createmanager")
+	public void createmanager(HttpServletRequest request, HttpServletResponse response, User user) throws IOException {
+		user.setTypeid(2);
+		user.setRegisttime(new Date());
+		userservicebo.add(user);
+		Result result = Result.getSuccessInstance(null);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+
+	@RequestMapping("/editmanager")
+	public void editmanager(HttpServletRequest request, HttpServletResponse response, User user) throws IOException {
+		User newuser = userservicebo.findById(user.getUserid());
+		newuser.setAccount(user.getAccount());
+		newuser.setCommunity(user.getCommunity());
+		newuser.setUsername(user.getUsername());
+		userservicebo.add(newuser);
+		Result result = Result.getSuccessInstance(null);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+
+	@RequestMapping("/frequency")
+	public void frequency(HttpServletRequest request, HttpServletResponse response, @RequestParam("did") String did)
+			throws IOException {
+		Integer f = userservicebo.getFrequencyByDid(did);
+		Result result = Result.getSuccessInstance(null);
+		result.setMsg(f + "");
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+
 	@RequestMapping("/node")
-	public void node(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	public void node(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
 		if (userid == null) {
@@ -52,7 +93,7 @@ public class UserController {
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
-	
+
 	@RequestMapping("/online")
 	public void online(HttpServletRequest request, HttpServletResponse response, Integer communityId)
 			throws IOException {
@@ -120,15 +161,25 @@ public class UserController {
 	}
 
 	@RequestMapping("/psdcheck")
-	public void psdcheck(HttpServletRequest request, HttpServletResponse response, String oldPassword)
-			throws IOException {
+	public void psdcheck(HttpServletRequest request, HttpServletResponse response, String oldPassword,
+			String newPassword) throws IOException {
 		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
 		if (userid == null) {
 			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
-			boolean isTrue = userservicebo.checkPassword(userid, oldPassword);
-			result = Result.getSuccessInstance(isTrue);
+			User user = userservicebo.findById(userid);
+			if (user.getPassword().equals(oldPassword)) {
+				if ("".equals(newPassword) || newPassword == null) {
+					result = Result.getFailInstance("新密码为空", null);
+				}
+				userservicebo.updatePassword(userid, newPassword);
+				result = Result.getSuccessInstance(null);
+				result.setMsg("密码修改成功");
+			} else {
+				result = Result.getFailInstance("旧密码错误", null);
+			}
+
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
@@ -150,6 +201,7 @@ public class UserController {
 
 	@RequestMapping("/avatar")
 	public void avatar(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Result result = null;
 		//  创建一个通用的多部分解析器 ，用于解析SpringMVC的上下文  
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
 				request.getSession().getServletContext());
@@ -175,13 +227,17 @@ public class UserController {
 						 *  file.transferTo(localFile);
 						 */
 						// 如果用的是Tomcat服务器，则文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\WEB-INF\\upload\\文件夹中  
-						String realPath = request.getSession().getServletContext().getRealPath("/upload/avatar");
-						File uploadfile = new File(realPath, fileName);
-						//  不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉  
-						FileUtils.copyInputStreamToFile(file.getInputStream(), uploadfile);
-						String url = request.getServletContext().getContextPath() + "/upload/avatar/" + fileName;
-						System.out.println(url);
-						Result result = Result.getSuccessInstance(url);
+						if (file.getSize() > 200 * 1000) {
+							result = Result.getFailInstance("文件过大", null);
+						} else {
+							String realPath = request.getSession().getServletContext().getRealPath("/upload/avatar");
+							File uploadfile = new File(realPath, fileName);
+							//  不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉  
+							FileUtils.copyInputStreamToFile(file.getInputStream(), uploadfile);
+							String url = request.getServletContext().getContextPath() + "/upload/avatar/" + fileName;
+							System.out.println(url);
+							result = Result.getSuccessInstance(url);
+						}
 						response.setContentType("text/html;charset=utf-8");
 						response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 					}

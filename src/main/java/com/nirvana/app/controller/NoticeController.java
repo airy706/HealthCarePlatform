@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -81,11 +82,13 @@ public class NoticeController extends BaseController {
 	}
 
 	@RequestMapping("/search")
-	public void search(HttpServletRequest request, HttpServletResponse response, @RequestParam("key") String key)
-			throws IOException {
-		List<NoticeVO> list = noticeservicebo.findByTitleOrUn(key);
+	public void search(HttpServletRequest request, HttpServletResponse response, @RequestParam("key") String key,
+			@RequestParam("num") Integer num, @RequestParam("size") Integer size) throws IOException {
+		Page<Notice> list = noticeservicebo.findByTitleOrUn(key,num,size);
+		List<NoticeVO> volist = NoticeVO.toVoList(list.getContent());
 		Result result = null;
-		result = Result.getSuccessInstance(list);
+		result = Result.getSuccessInstance(volist);
+		result.setMsg(list.getTotalElements()+"");
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}

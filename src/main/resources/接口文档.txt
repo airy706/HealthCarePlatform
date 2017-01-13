@@ -65,7 +65,28 @@ response:
 /notice/admin
 
 搜索 url：/notice/search
-key
+request:
+		key //title or username
+		size
+		num
+response:
+		msg:count
+		{
+		[
+			noticeid;
+			noticedate;
+	 		noticetitle;
+			noticecontent;
+	 		noticetype;
+			attachurl;
+	 		userid;
+	 		communityid;
+	 		username;
+	 		communityname;
+			url;
+	 		isurl;
+		]
+		}
 
 
 ##节点模块##
@@ -198,38 +219,38 @@ key
 		}]
 
 ##社区管理员管理模块##
-1. 列出所有社区管理员
+1. 列出所有社区管理员 /community/manager
 	request:
 		key //根据用户名或者社区名来筛选
 	response:
 	[{
-		id
-		name
-		communityName
+		userid
+		username
+		communityname
 		communityId	
 		account
-		addTime
+		registtime
 	}]
 	
-2. 编辑社区管理员
+2. 编辑社区管理员/user/editmanager
 	request:
-		userId,
-		name,
-		communityId,
+		userid,
+		username,
+		community.communityid,
 		account,
 	response:
 	
-3. 增加社区管理员
+3. 增加社区管理员/user/createmanager
 	request:
-		name,
-		communityId,
+		username,
+		community.communityid,
 		account,
 		password,
 	response:
 	
-4. 删除社区管理员
+4. 删除社区管理员/user/delmanager
 	request:
-		id
+		userid
 	response:
 		
 	
@@ -614,6 +635,7 @@ request jsonstr 格式：
 3. 密码校对 /user/psdcheck
 	request:
 		oldPassword
+		newPassword
 	response:		
 
 4. 修改个人信息/user/edit
@@ -643,7 +665,7 @@ request jsonstr 格式：
 			relationname //联系人姓名
 			relationtel //联系人电话
 			relationaccount
-			relationpassword	
+			# relationpassword	
 		}]
 		
 7. 编辑紧急联系人 /linkman/edit
@@ -860,9 +882,16 @@ request jsonstr 格式：
 		did:
 	response：	
 
-	
+2.手机获取频率/user/frequency
+	request:
+		did
+	respone:
+		{
+		state:"",  //success || failed
+		msg:frequency,    //信息
+	}
 
-		
+
 +--------------------------------------------------------------------------------------------------+
 |--------------------------------------------------------------------------------------------------|
 |--------------------------------------------------------------------------------------------------|
@@ -874,7 +903,6 @@ request jsonstr 格式：
 |--------------------------------------------------------------------------------------------------|
 |--------------------------------------------------------------------------------------------------|
 +--------------------------------------------------------------------------------------------------+
-
 
 1. 获取最新一次的数据
 	request:

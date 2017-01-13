@@ -47,32 +47,26 @@ public class ExceptionVO {
 		Integer type = data.getReasontype();
 		if (type == 4) {
 			this.exceptionName = "血压异常";
-			this.exceptionContent = user.getCommunity().getCommunityname() + "的" + user.getUsername()
-					+ "血压异常，请立即查看并采取措施！";
 		} else if (type == 6) {
-			this.exceptionName = "坐姿异常";
-			this.exceptionContent = user.getCommunity().getCommunityname() + "的" + user.getUsername()
-					+ "坐姿异常，请立即查看并采取措施！";
+			this.exceptionName = "坐姿异常";		
 		} else if (type == 99) {
-			this.exceptionName = "一键急救";
-			this.exceptionContent = user.getCommunity().getCommunityname() + "的" + user.getUsername()
-					+ "一键求救，请立即查看并采取措施！";
+			this.exceptionName = "一键急救";	
 		} else if (type == 12) {
-			this.exceptionName = "心率异常";
-			this.exceptionContent = user.getCommunity().getCommunityname() + "的" + user.getUsername()
-					+ "心率异常，请立即查看并采取措施！";
+			this.exceptionName = "心率异常";		
 		} else if (type == 7) {
-			this.exceptionName = "轮椅异常";
-			this.exceptionContent = user.getCommunity().getCommunityname() + "的" + user.getUsername()
-					+ "轮椅异常，请立即查看并采取措施！";
+			this.exceptionName = "轮椅异常";			
 		} else if (type == 3) {
 			this.exceptionName = "坐垫异常";
-			this.exceptionContent = user.getCommunity().getCommunityname() + "的" + user.getUsername()
-					+ "坐垫异常，请立即查看并采取措施！";
 		} else {
 
 		}
-
+		if(user.getCommunity()!=null){
+		this.exceptionContent = user.getCommunity().getCommunityname() + "的" + user.getUsername()
+		+ this.exceptionName+"，请立即查看并采取措施！";
+		}else{
+			this.exceptionContent = "个体用户" + user.getUsername()
+			+ this.exceptionName+"，请立即查看并采取措施！";
+		}
 	}
 
 	public Integer getAlarmTimes() {

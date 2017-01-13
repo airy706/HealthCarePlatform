@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.nirvana.app.vo.CommunityVO;
 import com.nirvana.app.vo.Result;
+import com.nirvana.app.vo.UserVO;
 import com.nirvana.bll.service.CommunityService;
+import com.nirvana.bll.service.UserService;
 import com.nirvana.dal.po.Community;
 
 @RestController
@@ -23,6 +25,18 @@ public class CommunityController {
 	@Autowired
 	private CommunityService communityservicebo;
 
+	@Autowired
+	private UserService userservicebo;
+	
+	@RequestMapping("/manager")
+	public void manager(HttpServletRequest request, HttpServletResponse response,@RequestParam("key") String key) throws IOException{
+		List<UserVO> list = userservicebo.findManagersBy(key);
+		Result result = null;
+		result = Result.getSuccessInstance(list);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+	
 	@RequestMapping({ "/create", "/update" })
 	public void create(HttpServletRequest request, HttpServletResponse response, Community community)
 			throws IOException {
