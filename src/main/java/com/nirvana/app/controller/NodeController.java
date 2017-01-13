@@ -52,7 +52,7 @@ public class NodeController extends BaseController {
 		if (startTime == null || "".equals(startTime)) {
 			end = new Date();
 			start = new Date(end.getTime());
-			start.setTime(start.getTime() - 7 * 24 * 60 * 60 * 1000);
+			start.setTime(start.getTime() - 24 * 60 * 60 * 1000);
 		} else {
 			try {
 				//2017/01/11 00:00:00
