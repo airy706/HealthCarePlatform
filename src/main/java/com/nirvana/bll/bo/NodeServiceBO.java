@@ -35,7 +35,7 @@ public class NodeServiceBO implements NodeService {
 		if (nodetype == 4) {
 			node.setNodename("血压");
 		} else if (nodetype == 6) {
-			node.setNodename("人体坐姿");
+			node.setNodename("人体状态");
 		} else if (nodetype == 3) {
 			node.setNodename("压力坐垫");
 		} else if (nodetype == 9) {
