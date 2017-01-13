@@ -609,7 +609,7 @@ request jsonstr 格式：
 			relationname //联系人姓名
 			relationtel //联系人电话
 			relationaccount
-			relationpassword	
+			# relationpassword	
 		}]
 		
 7. 编辑紧急联系人 /linkman/edit

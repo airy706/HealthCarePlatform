@@ -37,7 +37,7 @@ public class RelationshipServiceBO implements RelationshipService {
 			vo.setRelationid(ship.getRelationid());
 			vo.setRelationname(ship.getRelationname());
 			vo.setRelationaccount(ship.getRelationaccount());
-			vo.setRelationpassword(ship.getRelationpassword());
+			//vo.setRelationpassword(ship.getRelationpassword());
 			vo.setRelationtel(ship.getRelationtel());
 			volist.add(vo);
 		}

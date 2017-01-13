@@ -66,10 +66,15 @@ public class RelationshipController extends BaseController{
 		if (userid == null) {
 			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
+			if(ship.getRelationpassword()==null||"".equals(ship.getRelationpassword())){
+				result = Result.getFailInstance("密码不得为空", null); 
+			}else{
 			User user = userservicebo.findById(userid);
 			ship.setUser(user);
 			shipservicebo.add(ship);
 			result = Result.getSuccessInstance(null);
+			result.setMsg("修改联系人成功");
+			}
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
