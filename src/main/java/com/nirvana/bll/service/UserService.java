@@ -41,4 +41,6 @@ public interface UserService {
 	void updatePassword(Integer userid, String newPassword);
 
 	List<UserVO> findManagersBy(String key);
+
+	void delByUid(Integer userid);
 }

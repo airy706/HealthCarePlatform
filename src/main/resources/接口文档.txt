@@ -236,14 +236,14 @@ response:
 	request:
 		userid,
 		username,
-		communityid,
+		community.communityid,
 		account,
 	response:
 	
 3. 增加社区管理员/user/createmanager
 	request:
 		username,
-		communityid,
+		community.communityid,
 		account,
 		password,
 	response:

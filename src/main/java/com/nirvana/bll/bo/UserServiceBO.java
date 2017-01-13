@@ -281,4 +281,10 @@ public class UserServiceBO implements UserService {
 		return volist;
 	}
 
+	@Override
+	public void delByUid(Integer userid) {
+		userdao.delete(userid);
+	}
+
+
 }
