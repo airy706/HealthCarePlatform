@@ -11,6 +11,7 @@ public class AjaxInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
+		request.getSession().setAttribute("userid", 1);
 		//request.setAttribute("userid", 1);
 		Integer userId=(Integer)request.getSession().getAttribute("userid");
 		System.out.println("userId:"+userId);
