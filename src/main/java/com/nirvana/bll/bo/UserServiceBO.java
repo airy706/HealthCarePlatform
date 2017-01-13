@@ -266,8 +266,9 @@ public class UserServiceBO implements UserService {
 	}
 
 	@Override
-	public List<UserVO> findManagersBy(String key) {
+	public List<UserVO> findManagersByKey(String key) {
 		List<User> list = userdao.findManagerByKey(key);
+		System.out.println(list.size());
 		List<UserVO> volist = new ArrayList<UserVO>();
 		for(User user:list){
 			UserVO vo = new UserVO();
@@ -277,6 +278,7 @@ public class UserServiceBO implements UserService {
 			vo.setCommunityid(user.getCommunity().getCommunityid());
 			vo.setAccount(user.getAccount());
 			vo.setRegisttime(user.getRegisttime());
+			volist.add(vo);
 		}
 		return volist;
 	}

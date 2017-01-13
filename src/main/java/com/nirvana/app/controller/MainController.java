@@ -51,11 +51,8 @@ public class MainController extends BaseController {
 
 	@RequestMapping({ "/test" })
 	public void test(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Date end = new Date();
-		Date start = new Date(end.getTime());
-		start.setTime(start.getTime() - 7 * 24 * 60 * 60 * 1000);
-		NodeDataVO vo = dataservicebo.findByUidAndType(1, 99, start, end);
-		Result result = Result.getSuccessInstance(vo);
+		List<UserVO> list = userbo.findManagersByKey("");
+		Result result = Result.getSuccessInstance(list);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}

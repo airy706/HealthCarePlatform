@@ -40,7 +40,7 @@ public interface UserService {
 
 	void updatePassword(Integer userid, String newPassword);
 
-	List<UserVO> findManagersBy(String key);
+	List<UserVO> findManagersByKey(String key);
 
 	void delByUid(Integer userid);
 }

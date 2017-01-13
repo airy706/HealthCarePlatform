@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.nirvana.app.util.GsonUtils;
 import com.nirvana.app.vo.CommunityVO;
 import com.nirvana.app.vo.Result;
 import com.nirvana.app.vo.UserVO;
@@ -30,11 +31,11 @@ public class CommunityController {
 	
 	@RequestMapping("/manager")
 	public void manager(HttpServletRequest request, HttpServletResponse response,@RequestParam("key") String key) throws IOException{
-		List<UserVO> list = userservicebo.findManagersBy(key);
+		List<UserVO> list = userservicebo.findManagersByKey(key);
 		Result result = null;
 		result = Result.getSuccessInstance(list);
 		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print(new Gson().toJson(result));
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 	
 	@RequestMapping({ "/create", "/update" })
