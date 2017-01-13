@@ -14,4 +14,5 @@ public interface NodeDao extends JpaRepository<Node, String> {
 
 	@Query("SELECT n FROM Node n WHERE n.user.userid=:userid")
 	List<Node> findAllTypeByUid(@Param("userid") Integer userid);
+
 }

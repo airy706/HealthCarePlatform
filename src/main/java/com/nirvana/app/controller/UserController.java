@@ -23,8 +23,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import com.google.gson.Gson;
 import com.nirvana.app.util.GsonUtils;
 import com.nirvana.app.vo.NodeHomePageVO;
+import com.nirvana.app.vo.NodeVO;
 import com.nirvana.app.vo.Result;
 import com.nirvana.app.vo.UserVO;
+import com.nirvana.bll.service.NodeService;
 import com.nirvana.bll.service.UserService;
 import com.nirvana.dal.po.User;
 
@@ -33,7 +35,24 @@ import com.nirvana.dal.po.User;
 public class UserController {
 	@Autowired
 	private UserService userservicebo;
+	
+	@Autowired
+	private NodeService nodeservicebo;
 
+	@RequestMapping("/node")
+	public void node(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			List<NodeVO> list = nodeservicebo.findAllByUid(userid);
+			result = Result.getSuccessInstance(list);
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+	
 	@RequestMapping("/online")
 	public void online(HttpServletRequest request, HttpServletResponse response, Integer communityId)
 			throws IOException {
