@@ -43,6 +43,8 @@ public class UserServiceBO implements UserService {
 		vo.setUserid(user.getUserid());
 		vo.setUsername(user.getUsername());
 		vo.setTypeid(user.getTypeid());
+		vo.setCommunityid(user.getCommunity().getCommunityid());
+		vo.setCommunityname(user.getCommunity().getCommunityname());
 		return vo;
 	}
 
