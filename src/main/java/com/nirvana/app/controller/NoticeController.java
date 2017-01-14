@@ -94,11 +94,15 @@ public class NoticeController extends BaseController {
 	}
 
 	@RequestMapping("/user")
-	public void user(HttpServletRequest request, HttpServletResponse response, @RequestParam("userid") Integer userid)
+	public void user(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
-		List<NoticeVO> list = noticeservicebo.findNoticeByUid(userid);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		result = Result.getSuccessInstance(list);
+		if(userid==null){
+			result = Result.getFailInstance("userid cannot been found", null);
+		}else{
+		List<NoticeVO> list = noticeservicebo.findNoticeByUid(userid);
+		result = Result.getSuccessInstance(list);}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}

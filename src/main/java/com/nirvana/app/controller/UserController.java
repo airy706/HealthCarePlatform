@@ -157,10 +157,16 @@ public class UserController {
 	}
 
 	@RequestMapping("/home")
-	public void home(HttpServletRequest request, HttpServletResponse response, @RequestParam("userid") Integer userid)
+	public void home(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if(userid==null){
+			result = Result.getFailInstance("userid cannot been found", null);
+		}else{
 		List<NodeHomePageVO> list = userservicebo.findNodeDataByUid(userid);
-		Result result = Result.getSuccessInstance(list);
+		 	result = Result.getSuccessInstance(list);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}

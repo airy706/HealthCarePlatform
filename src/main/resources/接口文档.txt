@@ -448,7 +448,6 @@ request jsonstr 格式：
 普通用户模块
 1. 获取节点首页数据/user/home
 	request:
-		userid
 	response:
 		[{
 			nodeType,
@@ -463,7 +462,6 @@ request jsonstr 格式：
 
 2. 获取用户公告/notice/user
 	request:
-		userid
 	response:
 		[{
 			noticeid,
