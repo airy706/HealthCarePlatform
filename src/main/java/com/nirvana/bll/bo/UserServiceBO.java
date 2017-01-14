@@ -140,7 +140,7 @@ public class UserServiceBO implements UserService {
 			vo.setNodeType(type);
 			if (type == 12 || type == 4) {
 				Integer h1 = 0, h2 = 0;
-				Integer l1 = 0, l2 = 0;
+				Integer l1 = 10000, l2 = 10000;
 				Date end = new Date();
 				Date start = new Date();
 				start.setTime(end.getTime() - 7 * 24 * 60 * 60 * 1000);
