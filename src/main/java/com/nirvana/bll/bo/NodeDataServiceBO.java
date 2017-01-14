@@ -39,10 +39,7 @@ public class NodeDataServiceBO implements NodeDataService {
 
 	@Override
 	public NodeDataVO findByUidAndType(Integer userid, Integer sensortype, Date start, Date end) {
-		// TODO Auto-generated method stub
 		// 需要返回的vo
-		System.out.println(start.toLocaleString());
-		System.out.println(end.toLocaleString());
 		NodeDataVO vo = new NodeDataVO();
 		// 准备数据data
 		String did = userdao.findOne(userid).getUseridentity();

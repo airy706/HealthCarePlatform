@@ -21,7 +21,6 @@ import com.nirvana.app.vo.Result;
 import com.nirvana.bll.service.NodeDataService;
 import com.nirvana.bll.service.NodeService;
 import com.nirvana.bll.service.UserService;
-import com.nirvana.dal.po.Node;
 import com.nirvana.dal.po.User;
 
 @RestController
