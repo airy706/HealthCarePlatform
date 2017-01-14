@@ -580,7 +580,6 @@ request jsonstr 格式：
 		
 3. 获取所有未完成咨询服务/consult/undo
 	request:
-		userId
 	response:
 		[{
 			consultId
@@ -591,7 +590,6 @@ request jsonstr 格式：
 		}]
 4. 获取所有已完成咨询服务/consult/done
 	request:
-		userId
 	response:
 		[{
 			consultId

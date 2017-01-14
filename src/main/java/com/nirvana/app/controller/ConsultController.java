@@ -21,8 +21,10 @@ import com.nirvana.app.vo.Result;
 import com.nirvana.app.vo.UserVO;
 import com.nirvana.bll.service.ConsultService;
 import com.nirvana.bll.service.ConsulttypeService;
+import com.nirvana.bll.service.UserService;
 import com.nirvana.dal.po.Consult;
 import com.nirvana.dal.po.Consulttype;
+import com.nirvana.dal.po.User;
 
 @RestController
 @RequestMapping("/consult")
@@ -33,6 +35,9 @@ public class ConsultController {
 
 	@Autowired
 	private ConsulttypeService typebo;
+
+	@Autowired
+	private UserService userservicebo;
 
 	@RequestMapping("/type")
 	public void type(HttpServletRequest request, HttpServletResponse response,
@@ -76,12 +81,19 @@ public class ConsultController {
 
 	@RequestMapping("/create")
 	public void create(HttpServletRequest request, HttpServletResponse response, Consult consult) throws IOException {
-		Date now = new Date();
-		consult.setCommittime(now);
-		consult.setIsfinish(false);
-		consultbo.addOne(consult);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		result = Result.getSuccessInstance(null);
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			Date now = new Date();
+			User user = userservicebo.findById(userid);
+			consult.setCommittime(now);
+			consult.setIsfinish(false);
+			consult.setUser(user);
+			consultbo.addOne(consult);
+			result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
@@ -89,9 +101,14 @@ public class ConsultController {
 	@RequestMapping("/del")
 	public void del(HttpServletRequest request, HttpServletResponse response, @RequestParam("consultId") Integer id)
 			throws IOException {
-		consultbo.delById(id);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		result = Result.getSuccessInstance(null);
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			consultbo.delById(id);
+			result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
@@ -99,38 +116,56 @@ public class ConsultController {
 	@RequestMapping("/finish")
 	public void finish(HttpServletRequest request, HttpServletResponse response, @RequestParam("consultId") Integer id)
 			throws IOException {
-		consultbo.finishByCid(id);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		result = Result.getSuccessInstance(null);
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			consultbo.finishByCid(id);
+			result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
 
 	@RequestMapping("/edit")
 	public void edit(HttpServletRequest request, HttpServletResponse response, Consult consult) throws IOException {
-		consultbo.update(consult);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		result = Result.getSuccessInstance(null);
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			consultbo.update(consult);
+			result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
 
 	@RequestMapping("/undo")
-	public void undo(HttpServletRequest request, HttpServletResponse response, @RequestParam("userId") Integer id)
-			throws IOException {
-		List<ConsultVO> list = consultbo.findUndoByUid(id);
+	public void undo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		result = Result.getSuccessInstance(list);
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			List<ConsultVO> list = consultbo.findUndoByUid(userid);
+			result = Result.getSuccessInstance(list);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
 
 	@RequestMapping("/done")
-	public void done(HttpServletRequest request, HttpServletResponse response, @RequestParam("userId") Integer id)
-			throws IOException {
-		List<ConsultVO> list = consultbo.findDoneByUid(id);
+	public void done(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		result = Result.getSuccessInstance(list);
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			List<ConsultVO> list = consultbo.findDoneByUid(userid);
+			result = Result.getSuccessInstance(list);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
