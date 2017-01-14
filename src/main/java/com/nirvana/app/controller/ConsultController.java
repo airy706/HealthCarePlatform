@@ -158,28 +158,54 @@ public class ConsultController {
 	}
 
 	@RequestMapping("/undo")
-	public void undo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void undo(HttpServletRequest request, HttpServletResponse response,@RequestParam("num") Integer num,@RequestParam("size") Integer size) throws IOException {
 		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
 		if (userid == null) {
 			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
-			List<ConsultVO> list = consultbo.findUndoByUid(userid);
-			result = Result.getSuccessInstance(list);
+			Page<Consult> page = consultbo.findUndoByUid(userid,num,size);
+			List<Consult> list = page.getContent();
+			List<ConsultVO> volist = new ArrayList<ConsultVO>();
+			for (Consult consult : list) {
+				ConsultVO vo = new ConsultVO();
+				vo.setConsultId(consult.getConsultid());
+				vo.setConsultType(consult.getConsulttype().getTypename());
+				vo.setContent(consult.getContent());
+				vo.setTypeId(consult.getConsulttype().getTypeid());
+				vo.setToaskId(consult.getToask().getUserid());
+				vo.setToaskName(consult.getUser().getUsername());
+				volist.add(vo);
+			}
+			result = Result.getSuccessInstance(volist);
+			result.setMsg(page.getTotalElements()+"");
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
 
 	@RequestMapping("/done")
-	public void done(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void done(HttpServletRequest request, HttpServletResponse response,@RequestParam("num") Integer num,@RequestParam("size") Integer size) throws IOException {
 		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
 		if (userid == null) {
 			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
-			List<ConsultVO> list = consultbo.findDoneByUid(userid);
-			result = Result.getSuccessInstance(list);
+			Page<Consult> page = consultbo.findDoneByUid(userid,num,size);
+			List<Consult> list = page.getContent();
+			List<ConsultVO> volist = new ArrayList<ConsultVO>();
+			for (Consult consult : list) {
+				ConsultVO vo = new ConsultVO();
+				vo.setConsultId(consult.getConsultid());
+				vo.setConsultType(consult.getConsulttype().getTypename());
+				vo.setContent(consult.getContent());
+				vo.setTypeId(consult.getConsulttype().getTypeid());
+				vo.setToaskId(consult.getToask().getUserid());
+				vo.setToaskName(consult.getUser().getUsername());
+				volist.add(vo);
+			}
+			result = Result.getSuccessInstance(volist);
+			result.setMsg(page.getTotalElements()+"");
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));

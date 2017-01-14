@@ -95,39 +95,17 @@ public class ConsultServiceBO implements ConsultService {
 	}
 
 	@Override
-	public List<ConsultVO> findUndoByUid(Integer id) {
-		List<Consult> list = consultdao.findUndoByUid(id);
-		List<ConsultVO> volist = new ArrayList<ConsultVO>();
-		for (Consult consult : list) {
-			ConsultVO vo = new ConsultVO();
-			vo.setConsultId(consult.getConsultid());
-			vo.setConsultType(consult.getConsulttype().getTypename());
-			vo.setContent(consult.getContent());
-			vo.setTypeId(consult.getConsulttype().getTypeid());
-			vo.setToaskId(consult.getToask().getUserid());
-			vo.setToaskName(consult.getUser().getUsername());
-			// todo commituserid
-			volist.add(vo);
-		}
-		return volist;
+	public Page<Consult> findUndoByUid(Integer id,Integer num,Integer size) {
+		PageRequest request = this.buildPageRequest(num, size);
+		Page<Consult> page = consultdao.findUndoByUid(id,request);
+		return page;
 	}
 
 	@Override
-	public List<ConsultVO> findDoneByUid(Integer id) {
-		List<Consult> list = consultdao.findDoneByUid(id);
-		List<ConsultVO> volist = new ArrayList<ConsultVO>();
-		for (Consult consult : list) {
-			ConsultVO vo = new ConsultVO();
-			vo.setConsultId(consult.getConsultid());
-			vo.setConsultType(consult.getConsulttype().getTypename());
-			vo.setContent(consult.getContent());
-			// todo commituserid
-			vo.setTypeId(consult.getConsulttype().getTypeid());
-			vo.setToaskId(consult.getToask().getUserid());
-			vo.setToaskName(consult.getUser().getUsername());
-			volist.add(vo);
-		}
-		return volist;
+	public Page<Consult> findDoneByUid(Integer id,Integer num,Integer size) {
+		PageRequest request = this.buildPageRequest(num, size);
+		Page<Consult> page = consultdao.findDoneByUid(id,request);
+		return page;
 	}
 
 	private PageRequest buildPageRequest(int pageNumber, int pagzSize) {

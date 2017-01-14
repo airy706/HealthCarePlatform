@@ -15,10 +15,10 @@ import com.nirvana.dal.po.Consult;
 public interface ConsultDao extends JpaRepository<Consult, Integer> {
 
 	@Query("SELECT c FROM Consult c WHERE c.user.userid=:userid AND c.isfinish=0")
-	List<Consult> findUndoByUid(@Param("userid") Integer userid);
+	Page<Consult> findUndoByUid(@Param("userid") Integer userid,Pageable pageable);
 
 	@Query("SELECT c FROM Consult c WHERE c.user.userid=:userid AND c.isfinish=1")
-	List<Consult> findDoneByUid(@Param("userid") Integer userid);
+	Page<Consult> findDoneByUid(@Param("userid") Integer userid,Pageable pageable);
 	
 	@Query("SELECT c FROM Consult c WHERE c.user.community.communityid=:communityid AND c.user.username LIKE %:key% ORDER BY c.committime")
 	Page<Consult> findPageByKeyAndCid(@Param("communityid") Integer communityid,@Param("key") String key,Pageable pageable);

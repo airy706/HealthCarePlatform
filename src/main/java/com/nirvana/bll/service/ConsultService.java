@@ -23,9 +23,9 @@ public interface ConsultService {
 
 	void update(Consult consult);
 
-	List<ConsultVO> findUndoByUid(Integer id);
+	Page<Consult> findUndoByUid(Integer id,Integer num,Integer size);
 
-	List<ConsultVO> findDoneByUid(Integer id);
+	Page<Consult> findDoneByUid(Integer id,Integer num,Integer size);
 	
 	Page<Consult> findByKey(Integer communityid,String key,Integer num,Integer size);
 
