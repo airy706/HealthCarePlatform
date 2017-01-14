@@ -23,7 +23,7 @@ import com.nirvana.bll.service.AlarmDataService;
 
 @RestController
 @RequestMapping("/alarm")
-public class AlarmController {
+public class AlarmController extends BaseController{
 
 	@Autowired
 	private AlarmDataService alarmservicebo;

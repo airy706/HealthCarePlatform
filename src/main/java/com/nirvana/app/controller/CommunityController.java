@@ -22,7 +22,7 @@ import com.nirvana.dal.po.Community;
 
 @RestController
 @RequestMapping("/community")
-public class CommunityController {
+public class CommunityController extends BaseController{
 	@Autowired
 	private CommunityService communityservicebo;
 

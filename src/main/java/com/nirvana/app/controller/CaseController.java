@@ -26,7 +26,7 @@ import com.nirvana.dal.po.SolutionCase;
 
 @RestController
 @RequestMapping("/case")
-public class CaseController {
+public class CaseController extends BaseController{
 	@Autowired
 	private SolutionCaseService caseservicebo;
 

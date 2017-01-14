@@ -26,7 +26,7 @@ import com.nirvana.dal.po.ProductIntro;
 
 @RestController
 @RequestMapping("/product")
-public class ProductIntroController {
+public class ProductIntroController extends BaseController{
 	@Autowired
 	private ProductIntroService introservicebo;
 

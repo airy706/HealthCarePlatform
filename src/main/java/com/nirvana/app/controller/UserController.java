@@ -35,7 +35,7 @@ import com.nirvana.dal.po.User;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController{
 	@Autowired
 	private UserService userservicebo;
 

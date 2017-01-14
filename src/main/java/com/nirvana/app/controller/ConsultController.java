@@ -29,7 +29,7 @@ import com.nirvana.dal.po.User;
 
 @RestController
 @RequestMapping("/consult")
-public class ConsultController {
+public class ConsultController extends BaseController{
 
 	@Autowired
 	private ConsultService consultbo;
