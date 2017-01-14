@@ -14,18 +14,18 @@ public class NodeHomePageVO {
 
 	private String low;
 
-	private Date lastestTime;
+	private Date latestTime;
 
 	private Date highTime;
 
 	private Date lowTime;
 
 	public Date getLastestTime() {
-		return lastestTime;
+		return latestTime;
 	}
 
 	public void setLastestTime(Date lastestTime) {
-		this.lastestTime = lastestTime;
+		this.latestTime = lastestTime;
 	}
 
 	public Date getHighTime() {
