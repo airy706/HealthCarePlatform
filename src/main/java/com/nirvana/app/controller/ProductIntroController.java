@@ -33,8 +33,14 @@ public class ProductIntroController {
 	@RequestMapping("/create")
 	public void create(HttpServletRequest request, HttpServletResponse response, ProductIntro intro)
 			throws IOException {
-		introservicebo.add(intro);
-		Result result = Result.getSuccessInstance(null);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			introservicebo.add(intro);
+			result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
@@ -42,16 +48,28 @@ public class ProductIntroController {
 	@RequestMapping("/del")
 	public void del(HttpServletRequest request, HttpServletResponse response, @RequestParam("id") Integer id)
 			throws IOException {
-		introservicebo.delById(id);
-		Result result = Result.getSuccessInstance(null);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			introservicebo.delById(id);
+			result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
 
 	@RequestMapping("/list")
 	public void list(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		List<ProductIntro> list = introservicebo.findAll();
-		Result result = Result.getSuccessInstance(list);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			List<ProductIntro> list = introservicebo.findAll();
+			result = Result.getSuccessInstance(list);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}

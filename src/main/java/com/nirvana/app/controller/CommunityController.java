@@ -28,25 +28,36 @@ public class CommunityController {
 
 	@Autowired
 	private UserService userservicebo;
-	
+
 	@RequestMapping("/manager")
-	public void manager(HttpServletRequest request, HttpServletResponse response,@RequestParam("key") String key) throws IOException{
-		List<UserVO> list = userservicebo.findManagersByKey(key);
+	public void manager(HttpServletRequest request, HttpServletResponse response, @RequestParam("key") String key)
+			throws IOException {
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		result = Result.getSuccessInstance(list);
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			List<UserVO> list = userservicebo.findManagersByKey(key);
+			result = Result.getSuccessInstance(list);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
-	
+
 	@RequestMapping({ "/create", "/update" })
 	public void create(HttpServletRequest request, HttpServletResponse response, Community community)
 			throws IOException {
-		boolean isSuc = communityservicebo.add(community);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		if (isSuc) {
-			result = Result.getSuccessInstance(isSuc);
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
-			result = Result.getFailInstance("社区添加失败", isSuc);
+			boolean isSuc = communityservicebo.add(community);
+			if (isSuc) {
+				result = Result.getSuccessInstance(isSuc);
+			} else {
+				result = Result.getFailInstance("社区添加失败", isSuc);
+			}
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
@@ -55,8 +66,14 @@ public class CommunityController {
 	@RequestMapping({ "/del" })
 	public void del(HttpServletRequest request, HttpServletResponse response, @RequestParam("id") Integer id)
 			throws IOException {
-		communityservicebo.delById(id);
-		Result result = Result.getSuccessInstance(null);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			communityservicebo.delById(id);
+			result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
@@ -64,16 +81,28 @@ public class CommunityController {
 	@RequestMapping({ "/search" })
 	public void search(HttpServletRequest request, HttpServletResponse response, @RequestParam("key") String key)
 			throws IOException {
-		List<CommunityVO> list = communityservicebo.findFuzzy(key);
-		Result result = Result.getSuccessInstance(list);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			List<CommunityVO> list = communityservicebo.findFuzzy(key);
+			result = Result.getSuccessInstance(list);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
 
 	@RequestMapping("/all")
 	public void all(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		List<CommunityVO> list = communityservicebo.findAll();
-		Result result = Result.getSuccessInstance(list);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			List<CommunityVO> list = communityservicebo.findAll();
+			result = Result.getSuccessInstance(list);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}

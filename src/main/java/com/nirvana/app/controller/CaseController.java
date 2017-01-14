@@ -33,8 +33,14 @@ public class CaseController {
 	@RequestMapping("/create")
 	public void create(HttpServletRequest request, HttpServletResponse response, SolutionCase solutionCase)
 			throws IOException {
-		caseservicebo.add(solutionCase);
-		Result result = Result.getSuccessInstance(null);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			caseservicebo.add(solutionCase);
+			result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
@@ -42,16 +48,28 @@ public class CaseController {
 	@RequestMapping("/del")
 	public void del(HttpServletRequest request, HttpServletResponse response, @RequestParam("id") Integer id)
 			throws IOException {
-		caseservicebo.delById(id);
-		Result result = Result.getSuccessInstance(null);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			caseservicebo.delById(id);
+			result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
 
 	@RequestMapping("/list")
 	public void list(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		List<SolutionCase> list = caseservicebo.findAll();
-		Result result = Result.getSuccessInstance(list);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			List<SolutionCase> list = caseservicebo.findAll();
+			result = Result.getSuccessInstance(list);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}

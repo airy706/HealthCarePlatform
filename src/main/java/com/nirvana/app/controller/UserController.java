@@ -43,30 +43,32 @@ public class UserController {
 
 	@Autowired
 	private AlarmDataService alarmservice;
-	
+
 	@RequestMapping("/undoalarm")
-	public void undoalarm(HttpServletRequest request, HttpServletResponse response,@RequestParam("did") String did) throws IOException{
+	public void undoalarm(HttpServletRequest request, HttpServletResponse response, @RequestParam("did") String did)
+			throws IOException {
 		List<AlarmData> volist = alarmservice.findUndoByDid(did);
 		Result result = null;
 		result = Result.getSuccessInstance(volist);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
-	
+
 	@RequestMapping("/mobilelogin")
-	public void mobilelogin(HttpServletRequest request, HttpServletResponse response,@RequestParam("account") String account,@RequestParam("password") String password) throws IOException{
-		UserVO vo= userservicebo.commonlogin(account, password);
+	public void mobilelogin(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("account") String account, @RequestParam("password") String password) throws IOException {
+		UserVO vo = userservicebo.commonlogin(account, password);
 		Result result = null;
-		if(vo==null){
-			result=Result.getFailInstance("用户名或密码错误", null);
-		}else{
-			result=Result.getSuccessInstance(vo);
+		if (vo == null) {
+			result = Result.getFailInstance("用户名或密码错误", null);
+		} else {
+			result = Result.getSuccessInstance(vo);
 			result.setMsg("登陆成功");
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
-	
+
 	@RequestMapping("/delmanager")
 	public void delmanager(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("userid") Integer userid) throws IOException {
@@ -125,16 +127,28 @@ public class UserController {
 	@RequestMapping("/online")
 	public void online(HttpServletRequest request, HttpServletResponse response, Integer communityId)
 			throws IOException {
-		List<UserVO> list = userservicebo.findOnline(communityId);
-		Result result = Result.getSuccessInstance(list);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			List<UserVO> list = userservicebo.findOnline(communityId);
+			result = Result.getSuccessInstance(list);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
 
 	@RequestMapping("/setf")
 	public void setf(HttpServletRequest request, HttpServletResponse response, User user) throws IOException {
-		userservicebo.setFrequency(user);
-		Result result = Result.getSuccessInstance(null);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			userservicebo.setFrequency(user);
+			result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
@@ -143,29 +157,34 @@ public class UserController {
 	public void getf(HttpServletRequest request, HttpServletResponse response, @RequestParam("key") String key,
 			@RequestParam("num") Integer num, @RequestParam("size") Integer size, Integer communityId)
 					throws IOException {
-		Page<User> pages = userservicebo.findBykeypage(key, num, size, communityId);
-		List<User> list = pages.getContent();
-		List<UserVO> polist = new ArrayList<UserVO>();
-		for (User user : list) {
-			polist.add(new UserVO(user, 3));
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			Page<User> pages = userservicebo.findBykeypage(key, num, size, communityId);
+			List<User> list = pages.getContent();
+			List<UserVO> polist = new ArrayList<UserVO>();
+			for (User user : list) {
+				polist.add(new UserVO(user, 3));
+			}
+			// 通过message传递总条数
+			result = Result.getSuccessInstance(polist);
+			result.setMsg(pages.getTotalElements() + "");
 		}
-		// 通过message传递总条数
-		Result result = Result.getSuccessInstance(polist);
-		result.setMsg(pages.getTotalElements() + "");
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
 
 	@RequestMapping("/home")
-	public void home(HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
+	public void home(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		if(userid==null){
+		if (userid == null) {
 			result = Result.getFailInstance("userid cannot been found", null);
-		}else{
-		List<NodeHomePageVO> list = userservicebo.findNodeDataByUid(userid);
-		 	result = Result.getSuccessInstance(list);
+		} else {
+			List<NodeHomePageVO> list = userservicebo.findNodeDataByUid(userid);
+			result = Result.getSuccessInstance(list);
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));

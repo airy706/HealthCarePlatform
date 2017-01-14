@@ -24,8 +24,9 @@ import com.nirvana.app.util.GsonUtils;
 import com.nirvana.app.vo.NoticeVO;
 import com.nirvana.app.vo.Result;
 import com.nirvana.bll.service.NoticeService;
-
+import com.nirvana.bll.service.UserService;
 import com.nirvana.dal.po.Notice;
+import com.nirvana.dal.po.User;
 
 @RestController
 @RequestMapping("/notice")
@@ -33,12 +34,31 @@ public class NoticeController extends BaseController {
 	@Autowired
 	private NoticeService noticeservicebo;
 
+	@Autowired
+	private UserService userservicebo;
+
 	@RequestMapping("/create")
 	public void create(HttpServletRequest request, HttpServletResponse response, Notice notice) throws IOException {
-		notice.setNoticedate(new Date());
-		noticeservicebo.add(notice);
+		//TODO
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		result = Result.getSuccessInstance(null);
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			User user = userservicebo.findById(userid);
+			if(user.getTypeid()==1){
+				notice.setNoticetype(1);
+			}else if(user.getTypeid()==2){
+				notice.setNoticetype(2);
+				notice.setCommunity(user.getCommunity());
+			}else{
+				
+			}
+			notice.setNoticedate(new Date());
+			notice.setUser(user);
+			noticeservicebo.add(notice);
+			result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
@@ -46,27 +66,42 @@ public class NoticeController extends BaseController {
 	@RequestMapping("/del")
 	public void del(HttpServletRequest request, HttpServletResponse response, @RequestParam("id") Integer id)
 			throws IOException {
-		noticeservicebo.delById(id);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		result = Result.getSuccessInstance(null);
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			noticeservicebo.delById(id);
+			result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
 
 	@RequestMapping("/all")
 	public void listall(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		List<NoticeVO> list = noticeservicebo.findAllList();
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		result = Result.getSuccessInstance(list);
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			List<NoticeVO> list = noticeservicebo.findAllList();
+			result = Result.getSuccessInstance(list);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 	@RequestMapping("/admin")
 	public void listadmin(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		List<NoticeVO> list = noticeservicebo.findAdmin();
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		result = Result.getSuccessInstance(list);
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			List<NoticeVO> list = noticeservicebo.findAdmin();
+			result = Result.getSuccessInstance(list);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
@@ -74,9 +109,14 @@ public class NoticeController extends BaseController {
 	@RequestMapping("/community")
 	public void listadmin(HttpServletRequest request, HttpServletResponse response, @RequestParam("id") Integer id)
 			throws IOException {
-		List<NoticeVO> list = noticeservicebo.findByCommunityId(id);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		result = Result.getSuccessInstance(list);
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			List<NoticeVO> list = noticeservicebo.findByCommunityId(id);
+			result = Result.getSuccessInstance(list);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
@@ -84,25 +124,30 @@ public class NoticeController extends BaseController {
 	@RequestMapping("/search")
 	public void search(HttpServletRequest request, HttpServletResponse response, @RequestParam("key") String key,
 			@RequestParam("num") Integer num, @RequestParam("size") Integer size) throws IOException {
-		Page<Notice> list = noticeservicebo.findByTitleOrUn(key,num,size);
-		List<NoticeVO> volist = NoticeVO.toVoList(list.getContent());
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		result = Result.getSuccessInstance(volist);
-		result.setMsg(list.getTotalElements()+"");
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			Page<Notice> list = noticeservicebo.findByTitleOrUn(key, num, size);
+			List<NoticeVO> volist = NoticeVO.toVoList(list.getContent());
+			result = Result.getSuccessInstance(volist);
+			result.setMsg(list.getTotalElements() + "");
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 	@RequestMapping("/user")
-	public void user(HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
+	public void user(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		if(userid==null){
+		if (userid == null) {
 			result = Result.getFailInstance("userid cannot been found", null);
-		}else{
-		List<NoticeVO> list = noticeservicebo.findNoticeByUid(userid);
-		result = Result.getSuccessInstance(list);}
+		} else {
+			List<NoticeVO> list = noticeservicebo.findNoticeByUid(userid);
+			result = Result.getSuccessInstance(list);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}

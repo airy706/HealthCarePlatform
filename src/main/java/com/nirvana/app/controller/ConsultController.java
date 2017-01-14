@@ -42,9 +42,14 @@ public class ConsultController {
 	@RequestMapping("/type")
 	public void type(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("communityId") Integer communityId, String key) throws IOException {
-		List<ConsulttypeVO> list = consultbo.findAllTypeByCid(communityId, key);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		result = Result.getSuccessInstance(list);
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			List<ConsulttypeVO> list = consultbo.findAllTypeByCid(communityId, key);
+			result = Result.getSuccessInstance(list);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
@@ -52,9 +57,14 @@ public class ConsultController {
 	@RequestMapping("/typedel")
 	public void typedel(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("typeid") Integer typeid) throws IOException {
-		typebo.delById(typeid);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		result = Result.getSuccessInstance(null);
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			typebo.delById(typeid);
+			result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
@@ -62,9 +72,14 @@ public class ConsultController {
 	@RequestMapping("/typecreate")
 	public void create(HttpServletRequest request, HttpServletResponse response, Consulttype consulttype)
 			throws IOException {
-		typebo.add(consulttype);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		result = Result.getSuccessInstance(null);
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			typebo.add(consulttype);
+			result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}

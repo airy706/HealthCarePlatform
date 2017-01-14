@@ -28,38 +28,45 @@ import com.nirvana.dal.po.User;
 public class NodeController extends BaseController {
 	@Autowired
 	private UserService userservicebo;
-	
+
 	@Autowired
 	private NodeDataService dataservicebo;
-	
+
 	@Autowired
 	private NodeService nodeservice;
 
 	@RequestMapping("/add")
-	public void add(HttpServletRequest request, HttpServletResponse response,@RequestParam("did") String did,@RequestParam("nodetype") Integer nodetype) throws IOException{
-			nodeservice.add(did,nodetype);
-			Result result = null;
-			result = Result.getSuccessInstance(null);
-			result.setMsg("节点添加成功");
-			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	public void add(HttpServletRequest request, HttpServletResponse response, @RequestParam("did") String did,
+			@RequestParam("nodetype") Integer nodetype) throws IOException {
+		nodeservice.add(did, nodetype);
+		Result result = null;
+		result = Result.getSuccessInstance(null);
+		result.setMsg("节点添加成功");
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
-	
+
 	@RequestMapping("/search")
 	public void search(HttpServletRequest request, HttpServletResponse response, @RequestParam("key") String key,
 			@RequestParam("num") Integer num, @RequestParam("size") Integer size, Integer communityId)
 					throws IOException {
-		Page<User> pages = userservicebo.findBykeypage(key, num, size, communityId);
-		NodeListVO nodeListVO = new NodeListVO(pages);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		result = Result.getSuccessInstance(nodeListVO);
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			Page<User> pages = userservicebo.findBykeypage(key, num, size, communityId);
+			NodeListVO nodeListVO = new NodeListVO(pages);
+			result = Result.getSuccessInstance(nodeListVO);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 	@RequestMapping("/data")
 	public void data(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam("sensortype") Integer sensortype, Integer userid,@RequestParam("startTime") String startTime,@RequestParam("endTime") String endTime) throws IOException {
+			@RequestParam("sensortype") Integer sensortype, Integer userid, @RequestParam("startTime") String startTime,
+			@RequestParam("endTime") String endTime) throws IOException {
 		Date start = null;
 		Date end = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -69,26 +76,26 @@ public class NodeController extends BaseController {
 			start.setTime(start.getTime() - 24 * 60 * 60 * 1000);
 		} else {
 			try {
-				//2017/01/11 00:00:00
-				//2017/01/12 24:00:00
-				startTime+=" 00:00:00";
-				endTime+=" 00:00:00";
+				// 2017/01/11 00:00:00
+				// 2017/01/12 24:00:00
+				startTime += " 00:00:00";
+				endTime += " 00:00:00";
 				start = sdf.parse(startTime);
 				end = sdf.parse(endTime);
-				end.setTime(end.getTime()+24*60*60*1000);
+				end.setTime(end.getTime() + 24 * 60 * 60 * 1000);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 		}
 		Result result = null;
-		if(userid==null){
+		if (userid == null) {
 			userid = (Integer) request.getSession().getAttribute("userid");
 		}
-		if(userid==null){
-			result =Result.getFailInstance("can not found userid", null);
-		}else{
-		NodeDataVO vo = dataservicebo.findByUidAndType(userid,sensortype,start,end);
-		result = Result.getSuccessInstance(vo);
+		if (userid == null) {
+			result = Result.getFailInstance("can not found userid", null);
+		} else {
+			NodeDataVO vo = dataservicebo.findByUidAndType(userid, sensortype, start, end);
+			result = Result.getSuccessInstance(vo);
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));

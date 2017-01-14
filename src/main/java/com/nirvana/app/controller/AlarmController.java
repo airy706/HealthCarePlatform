@@ -29,24 +29,37 @@ public class AlarmController {
 	private AlarmDataService alarmservicebo;
 
 	@RequestMapping("/resolved")
-	public void resolved(HttpServletRequest request, HttpServletResponse response,Integer communityId) throws IOException {
-		//System.out.println(communityId);
-		List<ExceptionVO> list = alarmservicebo.findAllRedo(communityId);
-		Result result = Result.getSuccessInstance(list);
+	public void resolved(HttpServletRequest request, HttpServletResponse response, Integer communityId)
+			throws IOException {
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			// System.out.println(communityId);
+			List<ExceptionVO> list = alarmservicebo.findAllRedo(communityId);
+			result = Result.getSuccessInstance(list);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 	@RequestMapping("/detection")
 	public void detection(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam("exceptionId") Integer id,Integer communityId) throws IOException {
-		List<ExceptionVO> list = null;
-		if (id == 0) {
-			list = alarmservicebo.findAllRedo(communityId);
+			@RequestParam("exceptionId") Integer id, Integer communityId) throws IOException {
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
-			list = alarmservicebo.detect(id,communityId);
+			List<ExceptionVO> list = null;
+			if (id == 0) {
+				list = alarmservicebo.findAllRedo(communityId);
+			} else {
+				list = alarmservicebo.detect(id, communityId);
+			}
+			result = Result.getSuccessInstance(list);
 		}
-		Result result = Result.getSuccessInstance(list);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
@@ -60,8 +73,8 @@ public class AlarmController {
 	}
 
 	@RequestMapping("/solve")
-	public void solve(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam("exceptionId") Integer id) throws IOException {
+	public void solve(HttpServletRequest request, HttpServletResponse response, @RequestParam("exceptionId") Integer id)
+			throws IOException {
 		alarmservicebo.sloveByAid(id);
 		Result result = Result.getSuccessInstance(null);
 		response.setContentType("text/html;charset=utf-8");
@@ -91,18 +104,18 @@ public class AlarmController {
 			start.setTime(start.getTime() - 7 * 24 * 60 * 60 * 1000);
 		} else {
 			try {
-				//2017/01/11 00:00:00
-				//2017/01/12 24:00:00
-				startTime+=" 00:00:00";
-				endTime+=" 00:00:00";
+				// 2017/01/11 00:00:00
+				// 2017/01/12 24:00:00
+				startTime += " 00:00:00";
+				endTime += " 00:00:00";
 				start = sdf.parse(startTime);
 				end = sdf.parse(endTime);
-				end.setTime(end.getTime()+24*60*60*1000);
+				end.setTime(end.getTime() + 24 * 60 * 60 * 1000);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 		}
-		System.out.println(ids.length+"  "+types.length);
+		System.out.println(ids.length + "  " + types.length);
 		AlarmFilterVO filtervo = alarmservicebo.findByFilter(ids, types, start, end);
 		Result result = Result.getSuccessInstance(filtervo);
 		response.setContentType("text/html;charset=utf-8");
