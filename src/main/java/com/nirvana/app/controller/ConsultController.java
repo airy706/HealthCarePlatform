@@ -189,26 +189,31 @@ public class ConsultController {
 	public void list(HttpServletRequest request, HttpServletResponse response, @RequestParam("key") String key,
 			@RequestParam("size") Integer size, @RequestParam("num") Integer num,
 			@RequestParam("communityid") Integer communityid) throws IOException {
-		Page<Consult> pages = consultbo.findByKey(communityid, key, num, size);
-		List<ConsultVO> volist = new ArrayList<ConsultVO>();
-		List<Consult> list = pages.getContent();
-		for (Consult consult : list) {
-			ConsultVO vo = new ConsultVO();
-			vo.setConsultId(consult.getConsultid());
-			vo.setUsername(consult.getUser().getUsername());
-			vo.setConsultType(consult.getConsulttype().getTypename());
-			vo.setContent(consult.getContent());
-			vo.setToaskName(consult.getToask().getUsername());
-			vo.setCommintTime(consult.getCommittime());
-			vo.setFinish(consult.isIsfinish());
-			if (consult.isIsfinish() == true) {
-				vo.setFinishTime(consult.getFinishtime());
-			}
-			volist.add(vo);
-		}
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		result = Result.getSuccessInstance(volist);
-		result.setMsg(pages.getTotalElements() + "");
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			Page<Consult> pages = consultbo.findByKey(communityid, key, num, size);
+			List<ConsultVO> volist = new ArrayList<ConsultVO>();
+			List<Consult> list = pages.getContent();
+			for (Consult consult : list) {
+				ConsultVO vo = new ConsultVO();
+				vo.setConsultId(consult.getConsultid());
+				vo.setUsername(consult.getUser().getUsername());
+				vo.setConsultType(consult.getConsulttype().getTypename());
+				vo.setContent(consult.getContent());
+				vo.setToaskName(consult.getToask().getUsername());
+				vo.setCommintTime(consult.getCommittime());
+				vo.setFinish(consult.isIsfinish());
+				if (consult.isIsfinish() == true) {
+					vo.setFinishTime(consult.getFinishtime());
+				}
+				volist.add(vo);
+			}
+			result = Result.getSuccessInstance(volist);
+			result.setMsg(pages.getTotalElements() + "");
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}

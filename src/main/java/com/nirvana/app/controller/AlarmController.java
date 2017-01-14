@@ -66,8 +66,14 @@ public class AlarmController {
 
 	@RequestMapping("/type")
 	public void type(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		List<ExceptionVO> list = alarmservicebo.findAlltype();
-		Result result = Result.getSuccessInstance(list);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			List<ExceptionVO> list = alarmservicebo.findAlltype();
+			result = Result.getSuccessInstance(list);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
@@ -83,8 +89,14 @@ public class AlarmController {
 
 	@RequestMapping("/times")
 	public void times(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		List<ExceptionVO> list = alarmservicebo.findAllTimes();
-		Result result = Result.getSuccessInstance(list);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			List<ExceptionVO> list = alarmservicebo.findAllTimes();
+			result = Result.getSuccessInstance(list);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
@@ -93,31 +105,37 @@ public class AlarmController {
 	public void filter(HttpServletRequest request, HttpServletResponse response, @RequestParam("communityId") String id,
 			@RequestParam("alarmType") String type, @RequestParam("startTime") String startTime,
 			@RequestParam("endTime") String endTime) throws IOException {
-		String[] ids = id.split(",");
-		String[] types = type.split(",");
-		Date start = null;
-		Date end = null;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		if (startTime == null || "".equals(startTime)) {
-			end = new Date();
-			start = new Date(end.getTime());
-			start.setTime(start.getTime() - 7 * 24 * 60 * 60 * 1000);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
-			try {
-				// 2017/01/11 00:00:00
-				// 2017/01/12 24:00:00
-				startTime += " 00:00:00";
-				endTime += " 00:00:00";
-				start = sdf.parse(startTime);
-				end = sdf.parse(endTime);
-				end.setTime(end.getTime() + 24 * 60 * 60 * 1000);
-			} catch (ParseException e) {
-				e.printStackTrace();
+			String[] ids = id.split(",");
+			String[] types = type.split(",");
+			Date start = null;
+			Date end = null;
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			if (startTime == null || "".equals(startTime)) {
+				end = new Date();
+				start = new Date(end.getTime());
+				start.setTime(start.getTime() - 7 * 24 * 60 * 60 * 1000);
+			} else {
+				try {
+					// 2017/01/11 00:00:00
+					// 2017/01/12 24:00:00
+					startTime += " 00:00:00";
+					endTime += " 00:00:00";
+					start = sdf.parse(startTime);
+					end = sdf.parse(endTime);
+					end.setTime(end.getTime() + 24 * 60 * 60 * 1000);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
 			}
+			System.out.println(ids.length + "  " + types.length);
+			AlarmFilterVO filtervo = alarmservicebo.findByFilter(ids, types, start, end);
+			result = Result.getSuccessInstance(filtervo);
 		}
-		System.out.println(ids.length + "  " + types.length);
-		AlarmFilterVO filtervo = alarmservicebo.findByFilter(ids, types, start, end);
-		Result result = Result.getSuccessInstance(filtervo);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}

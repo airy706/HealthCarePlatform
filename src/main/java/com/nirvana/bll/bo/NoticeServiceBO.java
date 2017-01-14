@@ -56,11 +56,16 @@ public class NoticeServiceBO implements NoticeService {
 	private PageRequest buildPageRequest(int pageNumber, int pagzSize) {
 		return new PageRequest(pageNumber - 1, pagzSize, null);
 	}
-	
+
 	@Override
-	public Page<Notice> findByTitleOrUn(String key,Integer num,Integer size) {
+	public Page<Notice> findByTitleOrUn(String key, Integer num, Integer size, Integer communityid) {
 		PageRequest request = this.buildPageRequest(num, size);
-		Page<Notice> polist = noticedao.fuzzyQuery(key,request);
+		Page<Notice> polist = null;
+		if (communityid == null) {
+			polist = noticedao.fuzzyQuery(key, request);
+		} else {
+			polist = noticedao.fuzzyQueryByCid(key, request,communityid);
+		}
 		return polist;
 	}
 

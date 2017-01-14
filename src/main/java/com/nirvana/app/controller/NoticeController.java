@@ -2,6 +2,7 @@ package com.nirvana.app.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -123,13 +124,13 @@ public class NoticeController extends BaseController {
 
 	@RequestMapping("/search")
 	public void search(HttpServletRequest request, HttpServletResponse response, @RequestParam("key") String key,
-			@RequestParam("num") Integer num, @RequestParam("size") Integer size) throws IOException {
+			@RequestParam("num") Integer num, @RequestParam("size") Integer size,Integer communityId) throws IOException {
 		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
 		if (userid == null) {
 			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
-			Page<Notice> list = noticeservicebo.findByTitleOrUn(key, num, size);
+			Page<Notice> list = noticeservicebo.findByTitleOrUn(key, num, size,communityId);
 			List<NoticeVO> volist = NoticeVO.toVoList(list.getContent());
 			result = Result.getSuccessInstance(volist);
 			result.setMsg(list.getTotalElements() + "");

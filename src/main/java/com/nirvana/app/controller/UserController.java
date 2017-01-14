@@ -2,6 +2,7 @@ package com.nirvana.app.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -72,30 +73,48 @@ public class UserController {
 	@RequestMapping("/delmanager")
 	public void delmanager(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("userid") Integer userid) throws IOException {
-		userservicebo.delByUid(userid);
-		Result result = Result.getSuccessInstance(null);
+		Integer u = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (u == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			userservicebo.delByUid(userid);
+			result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
 
 	@RequestMapping("/createmanager")
 	public void createmanager(HttpServletRequest request, HttpServletResponse response, User user) throws IOException {
-		user.setTypeid(2);
-		user.setRegisttime(new Date());
-		userservicebo.add(user);
-		Result result = Result.getSuccessInstance(null);
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			user.setTypeid(2);
+			user.setRegisttime(new Date());
+			userservicebo.add(user);
+			result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
 
 	@RequestMapping("/editmanager")
 	public void editmanager(HttpServletRequest request, HttpServletResponse response, User user) throws IOException {
-		User newuser = userservicebo.findById(user.getUserid());
-		newuser.setAccount(user.getAccount());
-		newuser.setCommunity(user.getCommunity());
-		newuser.setUsername(user.getUsername());
-		userservicebo.add(newuser);
-		Result result = Result.getSuccessInstance(null);
+		Integer u = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (u == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			User newuser = userservicebo.findById(user.getUserid());
+			newuser.setAccount(user.getAccount());
+			newuser.setCommunity(user.getCommunity());
+			newuser.setUsername(user.getUsername());
+			userservicebo.add(newuser);
+			result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
@@ -287,6 +306,7 @@ public class UserController {
 							File uploadfile = new File(realPath, fileName);
 							//  不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉  
 							FileUtils.copyInputStreamToFile(file.getInputStream(), uploadfile);
+
 							String url = request.getServletContext().getContextPath() + "/upload/avatar/" + fileName;
 							System.out.println(url);
 							result = Result.getSuccessInstance(url);

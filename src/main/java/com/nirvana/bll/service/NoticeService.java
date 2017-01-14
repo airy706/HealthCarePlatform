@@ -18,7 +18,7 @@ public interface NoticeService {
 	
 	List<NoticeVO> findByCommunityId(Integer id);
 	
-	Page<Notice> findByTitleOrUn(String key,Integer num,Integer size);
+	Page<Notice> findByTitleOrUn(String key,Integer num,Integer size,Integer communityid);
 	
 	List<NoticeVO> findNoticeByUid(Integer userid);
 }
