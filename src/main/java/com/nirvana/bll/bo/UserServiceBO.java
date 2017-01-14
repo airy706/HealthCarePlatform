@@ -62,9 +62,9 @@ public class UserServiceBO implements UserService {
 		PageRequest request = this.buildPageRequest(num, size);
 		Page<User> pages = null;
 		if (cid == null) {
-			pages = this.userdao.findByKey(key, request);
+			pages = this.userdao.findCommonByKey(key, request);
 		} else {
-			pages = userdao.findByKeyAndCid(key, cid, request);
+			pages = userdao.findCommonByKeyAndCid(key, cid, request);
 		}
 		return pages;
 	}

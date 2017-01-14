@@ -890,6 +890,16 @@ request jsonstr 格式：
 		state:"",  //success || failed
 		msg:frequency,    //信息
 	}
+3.手机端登陆
+	request：
+		account
+		password
+	response:
+		{
+		username,
+		did
+		}
+
 
 
 +--------------------------------------------------------------------------------------------------+
