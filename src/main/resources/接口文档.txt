@@ -900,7 +900,26 @@ request jsonstr 格式：
 		did
 		}
 
-
+4.用户未解决异常/user/undoalarm
+	request:
+		did
+	response:
+	{"state":"success",
+	"msg":"",
+	"result":[{"dataid":11,
+	"did":"111111",
+	"reasontype":6,
+	"status_change_time":"2017-01-13 13:26:33",
+	"hasresloved":0,
+	"level":3,
+	"data":"跌倒"},
+	{"dataid":3,
+	"did":"111111",
+	"reasontype":99,
+	"status_change_time":"2017-01-09 12:32:58",
+	"hasresloved":0,
+	"level":1,
+	"data":"111"}]}
 
 +--------------------------------------------------------------------------------------------------+
 |--------------------------------------------------------------------------------------------------|

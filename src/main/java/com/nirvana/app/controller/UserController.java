@@ -22,12 +22,15 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.google.gson.Gson;
 import com.nirvana.app.util.GsonUtils;
+import com.nirvana.app.vo.ExceptionVO;
 import com.nirvana.app.vo.NodeHomePageVO;
 import com.nirvana.app.vo.NodeVO;
 import com.nirvana.app.vo.Result;
 import com.nirvana.app.vo.UserVO;
+import com.nirvana.bll.service.AlarmDataService;
 import com.nirvana.bll.service.NodeService;
 import com.nirvana.bll.service.UserService;
+import com.nirvana.dal.po.AlarmData;
 import com.nirvana.dal.po.User;
 
 @RestController
@@ -39,6 +42,17 @@ public class UserController {
 	@Autowired
 	private NodeService nodeservicebo;
 
+	@Autowired
+	private AlarmDataService alarmservice;
+	
+	@RequestMapping("/undoalarm")
+	public void undoalarm(HttpServletRequest request, HttpServletResponse response,@RequestParam("did") String did) throws IOException{
+		List<AlarmData> volist = alarmservice.findUndoByDid(did);
+		Result result = null;
+		result = Result.getSuccessInstance(volist);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
 	
 	@RequestMapping("/mobilelogin")
 	public void mobilelogin(HttpServletRequest request, HttpServletResponse response,@RequestParam("account") String account,@RequestParam("password") String password) throws IOException{

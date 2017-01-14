@@ -22,4 +22,6 @@ public interface AlarmDataService {
 	AlarmFilterVO findByFilter(String[] ids, String[] types, Date start, Date end);
 
 	void sloveByAid(Integer id);
+
+	List<AlarmData> findUndoByDid(String did);
 }

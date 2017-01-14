@@ -215,4 +215,10 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		alarmdatadao.save(data);
 	}
 
+	@Override
+	public List<AlarmData> findUndoByDid(String did) {
+		List<AlarmData> list = alarmdatadao.findUndoByDid(did);
+		return list;
+	}
+
 }
