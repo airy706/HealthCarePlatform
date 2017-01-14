@@ -184,7 +184,7 @@ public class NoticeController extends BaseController {
 						File uploadfile = new File(realPath, fileName);
 						//  不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉  
 						FileUtils.copyInputStreamToFile(file.getInputStream(), uploadfile);
-						String url = request.getServletContext().getContextPath() + "/upload/notice/" + fileName;
+						String url = "http://139.199.76.64:8080"+request.getServletContext().getContextPath() + "/upload/notice/" + fileName;
 						System.out.println(url);
 						Result result = Result.getSuccessInstance(url);
 						response.setContentType("text/html;charset=utf-8");

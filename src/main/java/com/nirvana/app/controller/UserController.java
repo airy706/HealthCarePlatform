@@ -307,7 +307,7 @@ public class UserController extends BaseController{
 							//  不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉  
 							FileUtils.copyInputStreamToFile(file.getInputStream(), uploadfile);
 
-							String url = request.getServletContext().getContextPath() + "/upload/avatar/" + fileName;
+							String url = "http://139.199.76.64:8080"+request.getServletContext().getContextPath() + "/upload/avatar/" + fileName;
 							System.out.println(url);
 							result = Result.getSuccessInstance(url);
 						}
