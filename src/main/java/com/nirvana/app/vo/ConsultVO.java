@@ -21,7 +21,7 @@ public class ConsultVO {
 	private String toaskName;
 	private Integer toaskId;
 	private String username;
-	private Date commintTime;
+	private Date commitTime;
 	private boolean isFinish;
 	private Date finishTime;
 
@@ -36,12 +36,12 @@ public class ConsultVO {
 		this.username = username;
 	}
 
-	public Date getCommintTime() {
-		return commintTime;
+	public Date getCommitTime() {
+		return commitTime;
 	}
 
-	public void setCommintTime(Date commintTime) {
-		this.commintTime = commintTime;
+	public void setCommitTime(Date commitTime) {
+		this.commitTime = commitTime;
 	}
 
 	public boolean isFinish() {

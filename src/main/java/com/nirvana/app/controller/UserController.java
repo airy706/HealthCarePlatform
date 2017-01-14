@@ -82,7 +82,7 @@ public class UserController {
 			result = Result.getSuccessInstance(null);
 		}
 		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print(new Gson().toJson(result));
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 	@RequestMapping("/createmanager")
@@ -98,7 +98,7 @@ public class UserController {
 			result = Result.getSuccessInstance(null);
 		}
 		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print(new Gson().toJson(result));
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 	@RequestMapping("/editmanager")
@@ -116,7 +116,7 @@ public class UserController {
 			result = Result.getSuccessInstance(null);
 		}
 		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print(new Gson().toJson(result));
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 	@RequestMapping("/frequency")
@@ -140,7 +140,7 @@ public class UserController {
 			result = Result.getSuccessInstance(list);
 		}
 		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print(new Gson().toJson(result));
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 	@RequestMapping("/online")
@@ -155,7 +155,7 @@ public class UserController {
 			result = Result.getSuccessInstance(list);
 		}
 		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print(new Gson().toJson(result));
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 	@RequestMapping("/setf")
@@ -169,7 +169,7 @@ public class UserController {
 			result = Result.getSuccessInstance(null);
 		}
 		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print(new Gson().toJson(result));
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 	@RequestMapping("/getf")
@@ -192,7 +192,7 @@ public class UserController {
 			result.setMsg(pages.getTotalElements() + "");
 		}
 		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print(new Gson().toJson(result));
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 	@RequestMapping("/home")
@@ -215,7 +215,7 @@ public class UserController {
 		UserVO vo = userservicebo.getDetailByUid(userid);
 		Result result = Result.getSuccessInstance(vo);
 		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print(new Gson().toJson(result));
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 	@RequestMapping("/info")
@@ -229,7 +229,7 @@ public class UserController {
 			result = Result.getSuccessInstance(vo);
 		}
 		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print(new Gson().toJson(result));
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 	@RequestMapping("/psdcheck")

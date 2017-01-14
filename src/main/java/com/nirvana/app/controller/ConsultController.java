@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.nirvana.app.util.GsonUtils;
 import com.nirvana.app.vo.ConsultVO;
 import com.nirvana.app.vo.ConsulttypeVO;
 import com.nirvana.app.vo.Result;
@@ -230,7 +231,7 @@ public class ConsultController {
 				vo.setConsultType(consult.getConsulttype().getTypename());
 				vo.setContent(consult.getContent());
 				vo.setToaskName(consult.getToask().getUsername());
-				vo.setCommintTime(consult.getCommittime());
+				vo.setCommitTime(consult.getCommittime());
 				vo.setFinish(consult.isIsfinish());
 				if (consult.isIsfinish() == true) {
 					vo.setFinishTime(consult.getFinishtime());
@@ -241,7 +242,7 @@ public class ConsultController {
 			result.setMsg(pages.getTotalElements() + "");
 		}
 		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print(new Gson().toJson(result));
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 }
