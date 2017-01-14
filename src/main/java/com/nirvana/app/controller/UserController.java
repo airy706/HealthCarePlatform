@@ -39,6 +39,21 @@ public class UserController {
 	@Autowired
 	private NodeService nodeservicebo;
 
+	
+	@RequestMapping("/mobilelogin")
+	public void mobilelogin(HttpServletRequest request, HttpServletResponse response,@RequestParam("account") String account,@RequestParam("password") String password) throws IOException{
+		UserVO vo= userservicebo.commonlogin(account, password);
+		Result result = null;
+		if(vo==null){
+			result=Result.getFailInstance("用户名或密码错误", null);
+		}else{
+			result=Result.getSuccessInstance(vo);
+			result.setMsg("登陆成功");
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+	
 	@RequestMapping("/delmanager")
 	public void delmanager(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("userid") Integer userid) throws IOException {

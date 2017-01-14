@@ -288,5 +288,17 @@ public class UserServiceBO implements UserService {
 		userdao.delete(userid);
 	}
 
+	@Override
+	public UserVO commonlogin(String account, String password) {
+		User user = userdao.findCommonByAccountAndPsd(account,password);
+		if(user==null){
+			return null;
+		}
+		UserVO vo= new UserVO();
+		vo.setUsername(user.getUsername());
+		vo.setDid(user.getUseridentity());
+		return vo;
+	}
+
 
 }

@@ -43,4 +43,6 @@ public interface UserService {
 	List<UserVO> findManagersByKey(String key);
 
 	void delByUid(Integer userid);
+
+	UserVO commonlogin(String account, String password);
 }

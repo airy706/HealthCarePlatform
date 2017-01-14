@@ -25,6 +25,7 @@ public class UserVO {
 	private String identity;
 	private String account;
 	private Date registtime;
+	private String did;
 
 	private List<NodeVO> nodes;
 
@@ -53,6 +54,16 @@ public class UserVO {
 			this.valid = user.getValid();
 			this.frequency = user.getFrequency();
 		}
+	}
+
+	
+	
+	public String getDid() {
+		return did;
+	}
+
+	public void setDid(String did) {
+		this.did = did;
 	}
 
 	public Date getRegisttime() {
