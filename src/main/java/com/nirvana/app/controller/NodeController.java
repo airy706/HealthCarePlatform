@@ -38,7 +38,7 @@ public class NodeController extends BaseController {
 	@RequestMapping("/add")
 	public void add(HttpServletRequest request, HttpServletResponse response, @RequestParam("did") String did,
 			@RequestParam("nodetype") Integer nodetype) throws IOException {
-		nodeservice.add(did, nodetype);
+		boolean flag = nodeservice.add(did, nodetype);
 		Result result = null;
 		result = Result.getSuccessInstance(null);
 		result.setMsg("节点添加成功");

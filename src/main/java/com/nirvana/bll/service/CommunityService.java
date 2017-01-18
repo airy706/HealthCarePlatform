@@ -6,7 +6,7 @@ import com.nirvana.app.vo.CommunityVO;
 import com.nirvana.dal.po.Community;
 
 public interface CommunityService {
-	boolean add(Community community);
+	void add(Community community);
 	
 	void delById(Integer id);
 	

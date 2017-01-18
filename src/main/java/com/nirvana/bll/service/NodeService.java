@@ -5,7 +5,7 @@ import java.util.List;
 import com.nirvana.app.vo.NodeVO;
 
 public interface NodeService {
-	void add(String did, Integer nodetype);
+	boolean add(String did, Integer nodetype);
 
 	List<NodeVO> findAllByUid(Integer userid);
 }

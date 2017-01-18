@@ -43,8 +43,10 @@ public class UserServiceBO implements UserService {
 		vo.setUserid(user.getUserid());
 		vo.setUsername(user.getUsername());
 		vo.setTypeid(user.getTypeid());
-		vo.setCommunityid(user.getCommunity().getCommunityid());
-		vo.setCommunityname(user.getCommunity().getCommunityname());
+		if (user.getCommunity() != null) {
+			vo.setCommunityid(user.getCommunity().getCommunityid());
+			vo.setCommunityname(user.getCommunity().getCommunityname());
+		}
 		return vo;
 	}
 
@@ -98,7 +100,7 @@ public class UserServiceBO implements UserService {
 			// if(user.getLastupdatetime().)
 			if (user.getLastupdatetime() != null) {
 				long between = now.getTime() - user.getLastupdatetime().getTime();
-				if (between < 60000 * 5) {
+				if (between < 60000*62/user.getFrequency()) {
 					volist.add(new UserVO(user, 2));
 				}
 			}
@@ -229,20 +231,17 @@ public class UserServiceBO implements UserService {
 		return vo;
 	}
 
-	/*@Override
-	public boolean checkPassword(Integer userid, String oldPassword) {
-		User user = userdao.findOne(userid);
-		if (user.getPassword().equals(oldPassword)) {
-			return true;
-		} else {
-			return false;
-		}
-	}*/
+	/*
+	 * @Override public boolean checkPassword(Integer userid, String
+	 * oldPassword) { User user = userdao.findOne(userid); if
+	 * (user.getPassword().equals(oldPassword)) { return true; } else { return
+	 * false; } }
+	 */
 
 	@Override
 	public void updateinfo(Integer userid, User user) {
 		User u = userdao.findOne(userid);
-		if (!"".equals(user.getPassword())&&user.getPassword()!=null) {
+		if (!"".equals(user.getPassword()) && user.getPassword() != null) {
 			u.setPassword(user.getPassword());
 		}
 		u.setAvatar(user.getAvatar());
@@ -272,7 +271,7 @@ public class UserServiceBO implements UserService {
 		List<User> list = userdao.findManagerByKey(key);
 		System.out.println(list.size());
 		List<UserVO> volist = new ArrayList<UserVO>();
-		for(User user:list){
+		for (User user : list) {
 			UserVO vo = new UserVO();
 			vo.setUserid(user.getUserid());
 			vo.setUsername(user.getUsername());
@@ -292,15 +291,14 @@ public class UserServiceBO implements UserService {
 
 	@Override
 	public UserVO commonlogin(String account, String password) {
-		User user = userdao.findCommonByAccountAndPsd(account,password);
-		if(user==null){
+		User user = userdao.findCommonByAccountAndPsd(account, password);
+		if (user == null) {
 			return null;
 		}
-		UserVO vo= new UserVO();
+		UserVO vo = new UserVO();
 		vo.setUsername(user.getUsername());
 		vo.setDid(user.getUseridentity());
 		return vo;
 	}
-
 
 }

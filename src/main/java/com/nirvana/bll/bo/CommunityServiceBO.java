@@ -18,14 +18,8 @@ public class CommunityServiceBO implements CommunityService{
 	private CommunityDao communitydao;
 
 	@Override
-	public boolean add(Community community) {
-		try {
-			communitydao.save(community);
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-		
+	public void add(Community community) {
+		communitydao.save(community);	
 	}
 
 	@Override
@@ -48,8 +42,7 @@ public class CommunityServiceBO implements CommunityService{
 	@Override
 	public List<CommunityVO> findAll() {
 		List<Community> list =  communitydao.findAll();
-		List<CommunityVO> polist = new ArrayList<CommunityVO>();
-		
+		List<CommunityVO> polist = new ArrayList<CommunityVO>();	
 		for(Community community:list){
 			polist.add(new CommunityVO(community.getCommunityid(),community.getCommunityname()));
 		}

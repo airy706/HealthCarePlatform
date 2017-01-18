@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nirvana.app.vo.Result;
 import com.nirvana.bll.service.AlarmDataService;
 import com.nirvana.bll.service.LocationDataSerivce;
@@ -36,9 +37,10 @@ public class DataController extends BaseController {
 	@RequestMapping(value = "/uploadnode")
 	public void uploadnode(HttpServletRequest request, HttpServletResponse response, @RequestParam("nodedata") String d)
 			throws IOException {
-		String dd = URLDecoder.decode(d);
-		//System.out.println("json:   " + dd);
-		NodeData data = new Gson().fromJson(dd, NodeData.class);
+		//String dd = URLDecoder.decode(d);
+		System.out.println("json:   " + d);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+		NodeData data = gson.fromJson(d, NodeData.class);
 		nodedatabo.addData(data);
 		Result result = null;
 		result = Result.getSuccessInstance(null);
@@ -49,9 +51,10 @@ public class DataController extends BaseController {
 	@RequestMapping(value = "/uploadloc")
 	public void uploadloc(HttpServletRequest request, HttpServletResponse response, @RequestParam("nodedata") String d)
 			throws IOException {
-		String dd = URLDecoder.decode(d);
-		System.out.println("json:   " + dd);
-		LocationData data = new Gson().fromJson(dd, LocationData.class);
+		//String dd = URLDecoder.decode(d);
+		System.out.println("json:   " + d);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+		LocationData data = gson.fromJson(d, LocationData.class);
 		userservicebo.updateloc(data.getDid(), data.getLongtitude(), data.getLatitude(), data.getStatus_change_time());
 		locdatabo.addData(data);
 		Result result = null;
@@ -63,9 +66,10 @@ public class DataController extends BaseController {
 	@RequestMapping(value = "/uploadalarm")
 	public void uploadalarm(HttpServletRequest request, HttpServletResponse response, @RequestParam("nodedata") String d)
 			throws IOException {
-		String dd = URLDecoder.decode(d);
-		//System.out.println("json:   " + dd);
-		AlarmData data = new Gson().fromJson(dd, AlarmData.class);
+		//String dd = URLDecoder.decode(d);
+		System.out.println("json:   " + d);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+		AlarmData data = gson.fromJson(d, AlarmData.class);
 		alarmdatabo.addData(data);
 		Result result = null;
 		result = Result.getSuccessInstance(null);

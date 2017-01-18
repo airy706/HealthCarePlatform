@@ -25,9 +25,12 @@ public class NodeServiceBO implements NodeService {
 	private UserDao userdao;
 
 	@Override
-	public void add(String did, Integer nodetype) {
+	public boolean add(String did, Integer nodetype) {
 		Node node = new Node();
 		User user = userdao.findByDid(did);
+		if(user==null){
+			return false;
+		}
 		node.setNodeaddtime(new Date());
 		node.setNodestatus(1);
 		node.setNodetype(nodetype);
@@ -48,6 +51,7 @@ public class NodeServiceBO implements NodeService {
 			node.setNodename("其他");
 		}
 		nodedao.save(node);
+		return true;
 	}
 
 	@Override
