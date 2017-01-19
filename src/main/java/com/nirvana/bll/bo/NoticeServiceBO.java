@@ -64,7 +64,7 @@ public class NoticeServiceBO implements NoticeService {
 		if (communityid == null) {
 			polist = noticedao.fuzzyQuery(key, request);
 		} else {
-			polist = noticedao.fuzzyQueryByCid(key, request,communityid);
+			polist = noticedao.fuzzyQueryByCid(key, request, communityid);
 		}
 		return polist;
 	}
@@ -72,7 +72,12 @@ public class NoticeServiceBO implements NoticeService {
 	@Override
 	public List<NoticeVO> findNoticeByUid(Integer userid) {
 		User user = userdao.findOne(userid);
-		List<Notice> list = noticedao.findNoticeByCid(user.getCommunity().getCommunityid());
+		List<Notice> list = null;
+		if (user.getCommunity() != null) {
+			list = noticedao.findNoticeByCid(user.getCommunity().getCommunityid());
+		}else{
+			list = noticedao.queryAdmin();
+		}
 		List<NoticeVO> volist = new ArrayList<NoticeVO>();
 		for (Notice notice : list) {
 			NoticeVO vo = new NoticeVO();

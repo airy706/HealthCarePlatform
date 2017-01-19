@@ -44,7 +44,7 @@ public class CommunityController extends BaseController{
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
-	@RequestMapping({ "/create", "/update" })
+	@RequestMapping("/create")
 	public void create(HttpServletRequest request, HttpServletResponse response, Community community)
 			throws IOException {
 		Integer userid = (Integer) request.getSession().getAttribute("userid");
@@ -52,12 +52,8 @@ public class CommunityController extends BaseController{
 		if (userid == null) {
 			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
-			boolean isSuc = communityservicebo.add(community);
-			if (isSuc) {
-				result = Result.getSuccessInstance(isSuc);
-			} else {
-				result = Result.getFailInstance("社区添加失败", isSuc);
-			}
+			 communityservicebo.add(community);
+			result = Result.getSuccessInstance(null);
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));

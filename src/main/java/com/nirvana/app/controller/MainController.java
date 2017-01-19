@@ -75,8 +75,19 @@ public class MainController extends BaseController {
 
 	@RequestMapping("/register")
 	public void register(HttpServletRequest request, HttpServletResponse response, User user) throws IOException {
+		Result result = null;
+		if(user.getUsername()==null||"".equals(user.getUsername().trim())){
+			result = Result.getFailInstance("用户名为空", null);
+		}else if(user.getAccount()==null||"".equals(user.getAccount().trim())){
+			result = Result.getFailInstance("账户为空", null);
+		}else if(user.getUseridentity()==null||"".equals(user.getUseridentity().trim())){
+			result = Result.getFailInstance("身份证为空", null);
+		}else if(user.getPassword()==null||"".equals(user.getPassword().trim())){
+			result = Result.getFailInstance("密码为空", null);
+		}else{	
 		userbo.regist(user);
-		Result result = Result.getSuccessInstance(null);
+		result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
