@@ -528,10 +528,11 @@ request jsonstr 格式：
 	request:
 	response:
 		[{
-			title
-			type
-			id
-			content
+			id,
+			title,
+			isurl,
+			url,
+			time
 		}]	
 
 +--------------------------------------------------------------------------------------------------+
