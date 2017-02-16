@@ -56,7 +56,6 @@
 url  
 /notice/all
 
-
 /notice/community
 request:  id
 response:
@@ -88,6 +87,23 @@ response:
 		]
 		}
 
+url:/notice/detail
+	request:noticeid
+	response:
+	{
+			noticeid;
+			noticedate;
+	 		noticetitle;
+			noticecontent;
+	 		noticetype;
+			attachurl;
+	 		userid;
+	 		communityid;
+	 		username;
+	 		communityname;
+			url;
+	 		isurl;
+	}
 
 ##节点模块##
 1. 获取节点 /node/list
