@@ -31,6 +31,10 @@ public class NodeServiceBO implements NodeService {
 		if(user==null){
 			return false;
 		}
+		Node n = nodedao.findByDidAndTypeid(did,nodetype);
+		if(n!=null){
+			return false;
+		}
 		node.setNodeaddtime(new Date());
 		node.setNodestatus(1);
 		node.setNodetype(nodetype);
