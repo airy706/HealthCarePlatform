@@ -100,7 +100,7 @@ public class UserServiceBO implements UserService {
 			// if(user.getLastupdatetime().)
 			if (user.getLastupdatetime() != null) {
 				long between = now.getTime() - user.getLastupdatetime().getTime();
-				if (between < 60000*62/user.getFrequency()) {
+				if (between < 60000 * 62 / user.getFrequency()) {
 					volist.add(new UserVO(user, 2));
 				}
 			}
@@ -299,6 +299,26 @@ public class UserServiceBO implements UserService {
 		vo.setUsername(user.getUsername());
 		vo.setDid(user.getUseridentity());
 		return vo;
+	}
+
+	@Override
+	public boolean didIsExist(String did) {
+		User user = userdao.findByDid(did);
+		if (user == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	@Override
+	public boolean accountIsExist(String account) {
+		User user = userdao.findByAccount(account);
+		if (user == null) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 }

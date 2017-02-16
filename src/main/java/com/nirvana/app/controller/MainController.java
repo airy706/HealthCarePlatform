@@ -84,7 +84,11 @@ public class MainController extends BaseController {
 			result = Result.getFailInstance("身份证为空", null);
 		}else if(user.getPassword()==null||"".equals(user.getPassword().trim())){
 			result = Result.getFailInstance("密码为空", null);
-		}else{	
+		}else if(userbo.accountIsExist(user.getAccount())){
+			result = Result.getFailInstance("账户名已注册", null);
+		}else if(userbo.didIsExist(user.getUseridentity())){
+			result = Result.getFailInstance("身份证已注册", null);
+		}else{
 		userbo.regist(user);
 		result = Result.getSuccessInstance(null);
 		}

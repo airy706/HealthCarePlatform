@@ -45,4 +45,8 @@ public interface UserService {
 	void delByUid(Integer userid);
 
 	UserVO commonlogin(String account, String password);
+	
+	boolean didIsExist(String did);
+	
+	boolean accountIsExist(String account);
 }
