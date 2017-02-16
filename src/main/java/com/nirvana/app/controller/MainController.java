@@ -9,6 +9,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.nirvana.app.util.GsonUtils;
 import com.nirvana.app.vo.*;
 import com.nirvana.bll.service.*;
 import com.nirvana.dal.po.*;
@@ -93,7 +94,7 @@ public class MainController extends BaseController {
 		result = Result.getSuccessInstance(null);
 		}
 		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print(new Gson().toJson(result));
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 	@RequestMapping("/login")
@@ -116,7 +117,7 @@ public class MainController extends BaseController {
 			}
 		}
 		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print(new Gson().toJson(result));
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 	@RequestMapping("/productintro")
@@ -124,7 +125,7 @@ public class MainController extends BaseController {
 		List<ProductIntroVO> list = productIntro.findShowProductIntro();
 		Result result = Result.getSuccessInstance(list);
 		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print(new Gson().toJson(result));
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 	@RequestMapping("/casesolution")
@@ -132,7 +133,7 @@ public class MainController extends BaseController {
 		List<SolutionCaseVO> list = solutionCase.findShowSolutionCase();
 		Result result = Result.getSuccessInstance(list);
 		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print(new Gson().toJson(result));
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 	@RequestMapping("/broadcast")
@@ -140,6 +141,6 @@ public class MainController extends BaseController {
 		List<NoticeVO> list = noticebo.findAdmin();
 		Result result = Result.getSuccessInstance(list);
 		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print(new Gson().toJson(result));
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 }

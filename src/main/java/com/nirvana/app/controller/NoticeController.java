@@ -49,7 +49,7 @@ public class NoticeController extends BaseController {
 			result = Result.getFailInstance("没有此公告", null);
 		}
 		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print(new Gson().toJson(result));
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
 
 	@RequestMapping("/create")
