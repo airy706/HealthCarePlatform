@@ -49,4 +49,6 @@ public interface UserService {
 	boolean didIsExist(String did);
 	
 	boolean accountIsExist(String account);
+
+	User findByDid(String did);
 }

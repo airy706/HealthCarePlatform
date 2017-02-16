@@ -321,4 +321,10 @@ public class UserServiceBO implements UserService {
 		}
 	}
 
+	@Override
+	public User findByDid(String did) {
+		User user = userdao.findByDid(did);
+		return user;
+	}
+
 }

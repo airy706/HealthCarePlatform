@@ -17,5 +17,7 @@ public interface NodeDao extends JpaRepository<Node, String> {
 
 	@Query("SELECT n FROM Node n WHERE n.user.useridentity=:did AND n.nodetype=:nodetype")
 	Node findByDidAndTypeid(@Param("did") String did,@Param("nodetype") Integer nodetype);
-
+	
+	
+	
 }
