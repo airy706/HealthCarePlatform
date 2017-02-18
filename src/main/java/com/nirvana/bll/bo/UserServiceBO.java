@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nirvana.app.vo.NodeHomePageVO;
+import com.nirvana.app.vo.NodeVO;
 import com.nirvana.app.vo.UserVO;
 import com.nirvana.bll.service.UserService;
 import com.nirvana.dal.api.NodeDao;
@@ -100,7 +101,7 @@ public class UserServiceBO implements UserService {
 			// if(user.getLastupdatetime().)
 			if (user.getLastupdatetime() != null) {
 				long between = now.getTime() - user.getLastupdatetime().getTime();
-				if (between < 60000*62/user.getFrequency()) {
+				if (between < 60000 * 62 / user.getFrequency()) {
 					volist.add(new UserVO(user, 2));
 				}
 			}
@@ -298,7 +299,40 @@ public class UserServiceBO implements UserService {
 		UserVO vo = new UserVO();
 		vo.setUsername(user.getUsername());
 		vo.setDid(user.getUseridentity());
+		List<Node> polist = nodedao.findAllTypeByUid(user.getUserid());
+		List<NodeVO> volist = new ArrayList<NodeVO>();
+		for(Node n:polist){
+			volist.add(new NodeVO(n));
+		}
+		vo.setNodes(volist);
+		vo.setFrequency(user.getFrequency());
 		return vo;
+	}
+
+	@Override
+	public boolean didIsExist(String did) {
+		User user = userdao.findByDid(did);
+		if (user == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	@Override
+	public boolean accountIsExist(String account) {
+		User user = userdao.findByAccount(account);
+		if (user == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	@Override
+	public User findByDid(String did) {
+		User user = userdao.findByDid(did);
+		return user;
 	}
 
 }

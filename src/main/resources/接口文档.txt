@@ -56,7 +56,6 @@
 url  
 /notice/all
 
-
 /notice/community
 request:  id
 response:
@@ -88,6 +87,23 @@ response:
 		]
 		}
 
+url:/notice/detail
+	request:noticeid
+	response:
+	{
+			noticeid;
+			noticedate;
+	 		noticetitle;
+			noticecontent;
+	 		noticetype;
+			attachurl;
+	 		userid;
+	 		communityid;
+	 		username;
+	 		communityname;
+			url;
+	 		isurl;
+	}
 
 ##节点模块##
 1. 获取节点 /node/list
@@ -902,7 +918,16 @@ request jsonstr 格式：
 	response:
 		{
 		username,
-		did
+		did,
+		nodes:[
+		{
+		nodeid;
+	    nodename;
+	    nodetype;
+	    nodeaddtime;
+	    frequency;
+		}
+		]
 		}
 
 4.用户未解决异常/user/undoalarm

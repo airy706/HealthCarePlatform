@@ -3,6 +3,7 @@ package com.nirvana.dal.po;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,12 +14,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "node")
 public class Node {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer nodeid;
 	private String nodename;
 	private Integer nodetype;
@@ -28,6 +30,16 @@ public class Node {
 	@ManyToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "userid")
 	private User user;
+	@ColumnDefault(value = "5")
+	private Integer frequency;
+
+	public Integer getFrequency() {
+		return frequency;
+	}
+
+	public void setFrequency(Integer frequency) {
+		this.frequency = frequency;
+	}
 
 	public Integer getNodeid() {
 		return nodeid;

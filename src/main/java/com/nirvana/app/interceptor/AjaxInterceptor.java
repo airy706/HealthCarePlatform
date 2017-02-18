@@ -18,7 +18,11 @@ public class AjaxInterceptor extends HandlerInterceptorAdapter {
 		request.setAttribute("userId", userId);
 		//response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
+<<<<<<< HEAD
 //		response.setHeader("Access-Control-Allow-Origin", "http://139.199.76.64");
+=======
+		//response.setHeader("Access-Control-Allow-Origin", "http://139.199.76.64");
+>>>>>>> a2a0ad3ed78aebec9c36233e5f6a4e7366b12146
 		response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");

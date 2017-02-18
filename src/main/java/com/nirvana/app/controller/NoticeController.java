@@ -38,22 +38,36 @@ public class NoticeController extends BaseController {
 	@Autowired
 	private UserService userservicebo;
 
+	@RequestMapping("/detail")
+	public void detail(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("noticeid") Integer noticeid) throws IOException {
+		NoticeVO vo = noticeservicebo.findByNid(noticeid);
+		Result result = null;
+		if (vo != null) {
+			result = Result.getSuccessInstance(vo);
+		} else {
+			result = Result.getFailInstance("没有此公告", null);
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
+
 	@RequestMapping("/create")
 	public void create(HttpServletRequest request, HttpServletResponse response, Notice notice) throws IOException {
-		//TODO
+		// TODO
 		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
 		if (userid == null) {
 			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
 			User user = userservicebo.findById(userid);
-			if(user.getTypeid()==1){
+			if (user.getTypeid() == 1) {
 				notice.setNoticetype(1);
-			}else if(user.getTypeid()==2){
+			} else if (user.getTypeid() == 2) {
 				notice.setNoticetype(2);
 				notice.setCommunity(user.getCommunity());
-			}else{
-				
+			} else {
+
 			}
 			notice.setNoticedate(new Date());
 			notice.setUser(user);
@@ -124,13 +138,14 @@ public class NoticeController extends BaseController {
 
 	@RequestMapping("/search")
 	public void search(HttpServletRequest request, HttpServletResponse response, @RequestParam("key") String key,
-			@RequestParam("num") Integer num, @RequestParam("size") Integer size,Integer communityId) throws IOException {
+			@RequestParam("num") Integer num, @RequestParam("size") Integer size, Integer communityId)
+					throws IOException {
 		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
 		if (userid == null) {
 			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
-			Page<Notice> list = noticeservicebo.findByTitleOrUn(key, num, size,communityId);
+			Page<Notice> list = noticeservicebo.findByTitleOrUn(key, num, size, communityId);
 			List<NoticeVO> volist = NoticeVO.toVoList(list.getContent());
 			result = Result.getSuccessInstance(volist);
 			result.setMsg(list.getTotalElements() + "");
@@ -184,7 +199,8 @@ public class NoticeController extends BaseController {
 						File uploadfile = new File(realPath, fileName);
 						//  不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉  
 						FileUtils.copyInputStreamToFile(file.getInputStream(), uploadfile);
-						String url = "http://139.199.76.64:8080"+request.getServletContext().getContextPath() + "/upload/notice/" + fileName;
+						String url = "http://139.199.76.64:8080" + request.getServletContext().getContextPath()
+								+ "/upload/notice/" + fileName;
 						System.out.println(url);
 						Result result = Result.getSuccessInstance(url);
 						response.setContentType("text/html;charset=utf-8");

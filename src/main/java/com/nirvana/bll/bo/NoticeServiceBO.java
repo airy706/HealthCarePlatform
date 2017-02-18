@@ -95,4 +95,14 @@ public class NoticeServiceBO implements NoticeService {
 		}
 		return volist;
 	}
+
+	@Override
+	public NoticeVO findByNid(Integer noticeid) {
+		Notice notice = noticedao.findOne(noticeid);
+		if(notice==null){
+			return null;
+		}
+		NoticeVO vo = new NoticeVO(notice);
+		return vo;
+	}
 }

@@ -74,7 +74,9 @@ public class NodeDataServiceBO implements NodeDataService {
 		} else if (sensortype == 3) {
 			name = "压力坐垫";
 			valueset = Arrays.asList(cushion);
-		} else {
+		} else if(sensortype == 66){
+			name="小米手环";
+		}else{
 			name="其他";
 		}
 		vo.setName(name);

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nirvana.app.util.GsonUtils;
 import com.nirvana.app.vo.NodeDataVO;
 import com.nirvana.app.vo.NodeListVO;
+import com.nirvana.app.vo.NodeVO;
 import com.nirvana.app.vo.Result;
 import com.nirvana.bll.service.NodeDataService;
 import com.nirvana.bll.service.NodeService;
@@ -35,13 +37,31 @@ public class NodeController extends BaseController {
 	@Autowired
 	private NodeService nodeservice;
 
+	@RequestMapping("/type")
+	public void type(HttpServletRequest request, HttpServletResponse response, @RequestParam("did") String did) throws IOException {
+		User user = userservicebo.findByDid(did);
+		Result result = null;
+		if (user == null) {
+			result = Result.getFailInstance("没有此用户", null);
+		} else {
+			List<NodeVO> list = nodeservice.findAllByUid(user.getUserid());
+			result = Result.getSuccessInstance(list);
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
+
 	@RequestMapping("/add")
 	public void add(HttpServletRequest request, HttpServletResponse response, @RequestParam("did") String did,
 			@RequestParam("nodetype") Integer nodetype) throws IOException {
 		boolean flag = nodeservice.add(did, nodetype);
 		Result result = null;
-		result = Result.getSuccessInstance(null);
-		result.setMsg("节点添加成功");
+		if (flag) {
+			result = Result.getSuccessInstance(null);
+			result.setMsg("节点添加成功");
+		} else {
+			result = Result.getFailInstance("已添加", null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}

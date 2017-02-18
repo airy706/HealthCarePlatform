@@ -39,4 +39,7 @@ public interface UserDao extends JpaRepository<User, Integer> {
 
 	@Query("SELECT u FROM User u WHERE u.account=:account AND u.password=:password AND u.typeid=3")
 	User findCommonByAccountAndPsd(@Param("account") String account,@Param("password") String password);
+
+	@Query("SELECT u FROM User u WHERE u.account=:account")
+	User findByAccount(@Param("account") String account);
 }
