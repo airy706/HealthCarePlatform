@@ -759,7 +759,15 @@ request jsonstr 格式：
 			state //正常状态 异常状态
 			usertel
 		}]
-		
+
+//todo
+2. 获取社区的地址位置
+	request:
+		communityId
+	response:
+		latitude
+		longitude
+
 ##上传频率设置模块##
 1. 获取社区上传频率数据/user/getf
 	request:
