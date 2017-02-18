@@ -761,9 +761,9 @@ request jsonstr 格式：
 		}]
 
 //todo
-2. 获取社区的地址位置
+2. 获取社区的地址位置/community/location
 	request:
-		communityId
+		communityid
 	response:
 		latitude
 		longitude

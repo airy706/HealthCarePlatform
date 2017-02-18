@@ -22,12 +22,29 @@ import com.nirvana.dal.po.Community;
 
 @RestController
 @RequestMapping("/community")
-public class CommunityController extends BaseController{
+public class CommunityController extends BaseController {
 	@Autowired
 	private CommunityService communityservicebo;
 
 	@Autowired
 	private UserService userservicebo;
+
+	@RequestMapping("/location")
+	public void location(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("communityid") Integer communityid) throws IOException {
+		Community po = communityservicebo.findById(communityid);
+		Result result = null;
+		if (po == null) {
+			result = Result.getFailInstance("无此社区", null);
+		} else {
+			CommunityVO vo = new CommunityVO();
+			vo.setLatitude(po.getLatitude());
+			vo.setLongtitude(po.getLongtitude());
+			result = Result.getSuccessInstance(vo);
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
 
 	@RequestMapping("/manager")
 	public void manager(HttpServletRequest request, HttpServletResponse response, @RequestParam("key") String key)
@@ -52,7 +69,7 @@ public class CommunityController extends BaseController{
 		if (userid == null) {
 			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
-			 communityservicebo.add(community);
+			communityservicebo.add(community);
 			result = Result.getSuccessInstance(null);
 		}
 		response.setContentType("text/html;charset=utf-8");

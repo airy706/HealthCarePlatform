@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.google.gson.Gson;
+import com.nirvana.app.util.EmailUtils;
 import com.nirvana.app.util.GsonUtils;
 import com.nirvana.app.vo.NodeHomePageVO;
 import com.nirvana.app.vo.NodeVO;
@@ -35,7 +37,7 @@ import com.nirvana.dal.po.User;
 
 @RestController
 @RequestMapping("/user")
-public class UserController extends BaseController{
+public class UserController extends BaseController {
 	@Autowired
 	private UserService userservicebo;
 
@@ -44,6 +46,67 @@ public class UserController extends BaseController{
 
 	@Autowired
 	private AlarmDataService alarmservice;
+
+	@RequestMapping("/checkcode")
+	public void checkcode(HttpServletRequest request, HttpServletResponse response, @RequestParam("did") String did,
+			@RequestParam("code") String code) throws IOException {
+		User user = userservicebo.findByDid(did);
+		Result result = null;
+		if (user == null) {
+			result = Result.getFailInstance("无此用户", null);
+		} else {
+			String words = (String) request.getServletContext().getAttribute(did);
+			if(code.equals(words)){
+				result = Result.getSuccessInstance(null);
+				result.setMsg("验证成功");
+				request.removeAttribute(did);
+			}else{
+				result = Result.getFailInstance("验证码错误", null);
+			}
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
+
+	@RequestMapping("/psdback")
+	public void psdback(HttpServletRequest request, HttpServletResponse response, @RequestParam("did") String did,
+			@RequestParam("way") String way) throws IOException {
+		User user = userservicebo.findByDid(did);
+		Result result = null;
+		if (user == null) {
+			result = Result.getFailInstance("无此用户", null);
+		} else {
+			Random random = new Random();
+			String words = "";
+			for (int i = 0; i < 6; i++) {
+				int r = random.nextInt(10);
+				words = words + r + "";
+			}
+			if ("email".equals(way)) {
+				if (user.getUseremail() == null || "".equals(user.getUseremail())) {
+					result = Result.getFailInstance("无邮箱", null);
+				} else {
+					request.getServletContext().setAttribute(user.getUseridentity(), words);
+					EmailUtils.send_common(user.getUseremail(), words);
+					result = Result.getSuccessInstance(null);
+					result.setMsg("发送成功");
+				}
+			} else if ("tel".equals(way)) {
+				if (user.getUsertel() == null || "".equals(user.getUsertel())) {
+					result = Result.getFailInstance("无手机号", null);
+				} else {
+					request.getServletContext().setAttribute(user.getUseridentity(), words);
+					// 发送短信
+					result = Result.getSuccessInstance(null);
+					result.setMsg("发送成功");
+				}
+			} else {
+				result = Result.getFailInstance("错误发送方式", null);
+			}
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
 
 	@RequestMapping("/undoalarm")
 	public void undoalarm(HttpServletRequest request, HttpServletResponse response, @RequestParam("did") String did)
@@ -307,7 +370,8 @@ public class UserController extends BaseController{
 							//  不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉  
 							FileUtils.copyInputStreamToFile(file.getInputStream(), uploadfile);
 
-							String url = "http://139.199.76.64:8080"+request.getServletContext().getContextPath() + "/upload/avatar/" + fileName;
+							String url = "http://139.199.76.64:8080" + request.getServletContext().getContextPath()
+									+ "/upload/avatar/" + fileName;
 							System.out.println(url);
 							result = Result.getSuccessInstance(url);
 						}
