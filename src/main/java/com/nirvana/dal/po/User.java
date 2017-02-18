@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.ColumnDefault;
+
 @Entity
 @Table(name = "user")
 public class User {
@@ -35,6 +37,7 @@ public class User {
 	private Integer valid;
 	@Column(unique=true)
 	private String account;
+	@ColumnDefault(value="5")
 	private Integer frequency;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date logintime;

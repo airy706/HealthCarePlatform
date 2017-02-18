@@ -28,11 +28,11 @@ public class NodeServiceBO implements NodeService {
 	public boolean add(String did, Integer nodetype) {
 		Node node = new Node();
 		User user = userdao.findByDid(did);
-		if(user==null){
+		if (user == null) {
 			return false;
 		}
-		Node n = nodedao.findByDidAndTypeid(did,nodetype);
-		if(n!=null){
+		Node n = nodedao.findByDidAndTypeid(did, nodetype);
+		if (n != null) {
 			return false;
 		}
 		node.setNodeaddtime(new Date());
@@ -51,6 +51,8 @@ public class NodeServiceBO implements NodeService {
 			node.setNodename("一键求救");
 		} else if (nodetype == 12) {
 			node.setNodename("心率");
+		} else if (nodetype == 66) {
+			node.setNodename("小米手环");
 		} else {
 			node.setNodename("其他");
 		}
@@ -61,8 +63,8 @@ public class NodeServiceBO implements NodeService {
 	@Override
 	public List<NodeVO> findAllByUid(Integer userid) {
 		List<Node> list = nodedao.findAllTypeByUid(userid);
-		List<NodeVO> volist = new  ArrayList<NodeVO>();
-		for(Node node:list){
+		List<NodeVO> volist = new ArrayList<NodeVO>();
+		for (Node node : list) {
 			NodeVO vo = new NodeVO();
 			vo.setNodename(node.getNodename());
 			vo.setNodetype(node.getNodetype());

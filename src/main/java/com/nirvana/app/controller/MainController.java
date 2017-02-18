@@ -129,26 +129,26 @@ public class MainController extends BaseController {
 			}
 		}
 
-		ServletContext ctx = request.getServletContext();
-		ArrayList<HttpSession> sessions = (ArrayList<HttpSession>) ctx.getAttribute("online");
-		if (sessions == null) {
-			sessions = new ArrayList<HttpSession>();
-		}
-
-		if (flag == true) {
-			for (HttpSession session : sessions) {
-				System.out.println("userid:"+session.getAttribute("userid"));
-				if (userid==session.getAttribute("userid")) {
-					sessions.remove(session);
-					session.invalidate();
-					System.out.println("11111111111111");
-					break;
-				}
-			}
-			sessions.add(request.getSession());
-			ctx.setAttribute("online", sessions);
-			System.out.println("222222222");
-		}
+//		ServletContext ctx = request.getServletContext();
+//		ArrayList<HttpSession> sessions = (ArrayList<HttpSession>) ctx.getAttribute("online");
+//		if (sessions == null) {
+//			sessions = new ArrayList<HttpSession>();
+//		}
+//
+//		if (flag == true) {
+//			for (HttpSession session : sessions) {
+//				System.out.println("userid:"+session.getAttribute("userid"));
+//				if (userid==session.getAttribute("userid")) {
+//					sessions.remove(session);
+//					session.invalidate();
+//					System.out.println("11111111111111");
+//					break;
+//				}
+//			}
+//			sessions.add(request.getSession());
+//			ctx.setAttribute("online", sessions);
+//			System.out.println("222222222");
+//		}
 
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));

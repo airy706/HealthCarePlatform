@@ -60,7 +60,7 @@ public class NodeController extends BaseController {
 			result = Result.getSuccessInstance(null);
 			result.setMsg("节点添加成功");
 		} else {
-			result = Result.getFailInstance("节点添加失败", null);
+			result = Result.getFailInstance("已添加", null);
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));

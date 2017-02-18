@@ -910,7 +910,16 @@ request jsonstr 格式：
 	response:
 		{
 		username,
-		did
+		did,
+		nodes:[
+		{
+		nodeid;
+	    nodename;
+	    nodetype;
+	    nodeaddtime;
+	    frequency;
+		}
+		]
 		}
 
 4.用户未解决异常/user/undoalarm
