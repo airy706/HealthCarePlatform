@@ -1,5 +1,6 @@
 package com.nirvana.dal.api;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -30,4 +31,7 @@ public interface NoticeDao extends JpaRepository<Notice, Integer> {
 	@Query("SELECT n FROM Notice n WHERE (n.noticetitle LIKE %:key% OR n.user.username LIKE %:key%) AND n.community.communityid=:communityid")
 	Page<Notice> fuzzyQueryByCid(@Param("key") String key, Pageable pageable,
 			@Param("communityid") Integer communityid);
+
+	@Query("SELECT n FROM Notice n WHERE n.noticedate>:start AND n.noticedate<:end")
+	List<Notice> findByDate(@Param("start") Date start,@Param("end") Date end);
 }

@@ -1,5 +1,6 @@
 package com.nirvana.bll.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -23,4 +24,6 @@ public interface NoticeService {
 	List<NoticeVO> findNoticeByUid(Integer userid);
 
 	NoticeVO findByNid(Integer noticeid);
+
+	List<NoticeVO> findByDate(Date start, Date end);
 }

@@ -1,6 +1,7 @@
 package com.nirvana.bll.bo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,5 +106,16 @@ public class NoticeServiceBO implements NoticeService {
 		}
 		NoticeVO vo = new NoticeVO(notice);
 		return vo;
+	}
+
+	@Override
+	public List<NoticeVO> findByDate(Date start, Date end) {
+		List<Notice> list = noticedao.findByDate(start,end);
+		List<NoticeVO> volist = new ArrayList<NoticeVO>();
+		for(Notice notice:list){
+			NoticeVO vo = new NoticeVO(notice);
+			volist.add(vo);
+		}
+		return volist;
 	}
 }
