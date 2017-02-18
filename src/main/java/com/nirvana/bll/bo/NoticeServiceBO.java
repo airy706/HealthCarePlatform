@@ -90,6 +90,7 @@ public class NoticeServiceBO implements NoticeService {
 			} else {
 				vo.setUrl("");
 			}
+			vo.setAttachurl(notice.getAttachurl());
 			volist.add(vo);
 
 		}
