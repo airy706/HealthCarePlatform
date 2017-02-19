@@ -19,12 +19,15 @@ public class NoticeVO {
 	private String communityname;
 	private String url;
 	private boolean isurl;
+	private boolean istop;
+	private boolean isshow;
 
 	public NoticeVO() {
 
 	}
 
 	public NoticeVO(Notice notice) {
+		this.isshow = notice.isIsshow();
 		this.noticeid = notice.getNoticeid();
 		this.attachurl = notice.getAttachurl();
 		this.noticecontent = notice.getNoticecontent();
@@ -34,6 +37,7 @@ public class NoticeVO {
 		this.userid = notice.getUser().getUserid();
 		this.username = notice.getUser().getUsername();
 		this.isurl = notice.isIsurl();
+		this.istop = notice.isIstop();
 		if (isurl == true) {
 			this.url = notice.getUrl();
 		}
@@ -52,6 +56,22 @@ public class NoticeVO {
 			list.add(new NoticeVO(polist.get(i)));
 		}
 		return list;
+	}
+
+	public boolean isIsshow() {
+		return isshow;
+	}
+
+	public void setIsshow(boolean isshow) {
+		this.isshow = isshow;
+	}
+
+	public boolean isIstop() {
+		return istop;
+	}
+
+	public void setIstop(boolean istop) {
+		this.istop = istop;
 	}
 
 	public String getUrl() {

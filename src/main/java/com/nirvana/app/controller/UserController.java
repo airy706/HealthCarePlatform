@@ -60,6 +60,7 @@ public class UserController extends BaseController {
 				result = Result.getSuccessInstance(null);
 				result.setMsg("验证成功");
 				request.removeAttribute(did);
+				request.getSession().setAttribute("userid", user.getUserid());
 			}else{
 				result = Result.getFailInstance("验证码错误", null);
 			}
