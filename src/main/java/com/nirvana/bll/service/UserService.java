@@ -51,4 +51,6 @@ public interface UserService {
 	boolean accountIsExist(String account);
 
 	User findByDid(String did);
+
+	List<UserVO> findAllByCid(Integer communityid);
 }

@@ -23,7 +23,7 @@ import com.nirvana.bll.service.AlarmDataService;
 
 @RestController
 @RequestMapping("/alarm")
-public class AlarmController extends BaseController{
+public class AlarmController extends BaseController {
 
 	@Autowired
 	private AlarmDataService alarmservicebo;
@@ -139,4 +139,40 @@ public class AlarmController extends BaseController{
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
+
+	@RequestMapping("/people")
+	public void people(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("communityid") String communityid, @RequestParam("userids") String userids,
+			@RequestParam("alarmType") String type, @RequestParam("startTime") String startTime,
+			@RequestParam("endTime") String endTime) throws IOException {
+			Result result = null;
+			String[] ids = userids.split(",");
+			String[] types = type.split(",");
+			Date start = null;
+			Date end = null;
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			if (startTime == null || "".equals(startTime)) {
+				end = new Date();
+				start = new Date(end.getTime());
+				start.setTime(start.getTime() - 7 * 24 * 60 * 60 * 1000);
+			} else {
+				try {
+					// 2017/01/11 00:00:00
+					// 2017/01/12 24:00:00
+					startTime += " 00:00:00";
+					endTime += " 00:00:00";
+					start = sdf.parse(startTime);
+					end = sdf.parse(endTime);
+					end.setTime(end.getTime() + 24 * 60 * 60 * 1000);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
+			System.out.println(ids.length + "  " + types.length);
+			AlarmFilterVO filtervo = alarmservicebo.findPeopleByFilter(communityid,ids, types, start, end);
+			result = Result.getSuccessInstance(filtervo);
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print(new Gson().toJson(result));
+	}
+
 }

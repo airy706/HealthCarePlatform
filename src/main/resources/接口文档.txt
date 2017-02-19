@@ -450,8 +450,25 @@ request jsonstr 格式：
 				data:[14,21] //每一天的数据
 			}]
 		}
-		
-4. 获取所有异常分布 /alarm/times
+
+url:/alarm/people
+4.筛选特定人员异常数据
+	request:
+		communityId:1,
+		userId:'1,2,4', //逗号隔开 为空为社区内的全部人员
+		alarmType:'1,2,3',//逗号隔开  为空全部
+		startTime:'2014/02/02'  为空默认最近一周
+		endTime:'2015/02/02'
+	response:
+		{
+			names:['张三','李四'],
+			data:[{
+				name:'张三',
+				data:[14,21] //每一天的数据
+			}]
+		}
+
+5. 获取所有异常分布 /alarm/times
 	request:
 	response:
 	[{
@@ -459,7 +476,16 @@ request jsonstr 格式：
 		alarmTimes, //异常次数
 	}]
 
+url:/community/userlist
+6. 获取社区所有的成员
 
+	request:
+		communityid
+	response:
+	[{
+		userid,
+		username
+	}]
 
 普通用户模块
 1. 获取节点首页数据/user/home
@@ -760,6 +786,10 @@ request jsonstr 格式：
 			usertel
 		}]
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> dd0d16d067713e85c694c06e4713a88e82d4b815
 2. 获取社区的地址位置/community/location
 	request:
 		communityid

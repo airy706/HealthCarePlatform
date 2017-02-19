@@ -46,4 +46,8 @@ public interface AlarmDataDao extends JpaRepository<AlarmData, Integer> {
 	@Query("SELECT a FROM AlarmData a WHERE a.did=:did AND a.hasresloved=0 ORDER BY a.status_change_time DESC")
 	List<AlarmData> findUndoByDid(@Param("did") String did);
 
+	@Query("SELECT a FROM AlarmData a WHERE a.did=:did AND a.status_change_time>=:start AND a.status_change_time<=:end AND a.reasontype in :types ORDER BY status_change_time")
+	List<AlarmData> findPeopleFilter(@Param("types") List<Integer> typesint, @Param("did") String useridentity,
+			@Param("start") Date start, @Param("end") Date end);
+
 }

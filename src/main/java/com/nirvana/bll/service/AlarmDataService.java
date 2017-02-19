@@ -24,4 +24,6 @@ public interface AlarmDataService {
 	void sloveByAid(Integer id);
 
 	List<AlarmData> findUndoByDid(String did);
+
+	AlarmFilterVO findPeopleByFilter(String communityid, String[] ids, String[] types, Date start, Date end);
 }

@@ -29,6 +29,16 @@ public class CommunityController extends BaseController {
 	@Autowired
 	private UserService userservicebo;
 
+	@RequestMapping("/userlist")
+	public void userlist(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("communityid") Integer communityid) throws IOException {
+		List<UserVO> volist = userservicebo.findAllByCid(communityid);
+		Result result = null;
+		result = Result.getSuccessInstance(volist);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
+
 	@RequestMapping("/location")
 	public void location(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("communityid") Integer communityid) throws IOException {

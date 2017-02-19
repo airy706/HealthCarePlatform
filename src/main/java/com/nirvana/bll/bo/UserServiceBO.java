@@ -301,7 +301,7 @@ public class UserServiceBO implements UserService {
 		vo.setDid(user.getUseridentity());
 		List<Node> polist = nodedao.findAllTypeByUid(user.getUserid());
 		List<NodeVO> volist = new ArrayList<NodeVO>();
-		for(Node n:polist){
+		for (Node n : polist) {
 			volist.add(new NodeVO(n));
 		}
 		vo.setNodes(volist);
@@ -333,6 +333,19 @@ public class UserServiceBO implements UserService {
 	public User findByDid(String did) {
 		User user = userdao.findByDid(did);
 		return user;
+	}
+
+	@Override
+	public List<UserVO> findAllByCid(Integer communityid) {
+		List<User> polist = userdao.findAllByCid(communityid);
+		List<UserVO> volist = new ArrayList<UserVO>();
+		for (User user : polist) {
+			UserVO vo = new UserVO();
+			vo.setUserid(user.getUserid());
+			vo.setUsername(user.getUsername());
+			volist.add(vo);
+		}
+		return volist;
 	}
 
 }

@@ -41,12 +41,12 @@ public class AlarmDataServiceBO implements AlarmDataService {
 	public void addData(AlarmData data) {
 		data.setHasresloved(0);
 		PageRequest request = this.buildPageRequest(1, 1);
-		List<AlarmData> list  = alarmdatadao.findLatest(data.getReasontype(), data.getDid(), request).getContent();
-		if(list.size()==0){
+		List<AlarmData> list = alarmdatadao.findLatest(data.getReasontype(), data.getDid(), request).getContent();
+		if (list.size() == 0) {
 			alarmdatadao.save(data);
 			return;
 		}
-		AlarmData latest =list.get(0);
+		AlarmData latest = list.get(0);
 		// 时间间隔设为 30min;
 		if (latest == null) {
 			alarmdatadao.save(data);
@@ -164,6 +164,47 @@ public class AlarmDataServiceBO implements AlarmDataService {
 				times = analyseTimes(list, start.getTime(), end.getTime());
 				System.out.println("over");
 			}
+			datavo.setData(times);
+			data.add(datavo);
+		}
+		filtervo.setNames(names);
+		filtervo.setData(data);
+		return filtervo;
+	}
+
+	@Override
+	public AlarmFilterVO findPeopleByFilter(String communityid, String[] ids, String[] types, Date start, Date end) {
+		List<Integer> typesint = new ArrayList<Integer>();
+		List<User> useridsint = new ArrayList<User>();
+		for (int i = 0; i < types.length; i++) {
+			if (!"".equals(types[i])) {
+				typesint.add(Integer.parseInt(types[i]));
+			}
+		}
+		for (int i = 0; i < ids.length; i++) {
+			if (!"".equals(ids[i])) {
+				useridsint.add(userdao.findOne(Integer.parseInt(ids[i])));
+			}
+		}
+		if (typesint.size() == 0) {
+			List<Integer> tps = alarmdatadao.findAlltype();
+			for (Integer t : tps) {
+				typesint.add(t);
+			}
+		}
+		if (useridsint.size() == 0) {
+			useridsint = userdao.findAllByCid(Integer.parseInt(communityid));
+		}
+		AlarmFilterVO filtervo = new AlarmFilterVO();
+		List<String> names = new ArrayList<String>();
+		List<AlarmCommunityVO> data = new ArrayList<AlarmCommunityVO>();
+		for (User user : useridsint) {
+			names.add(user.getUsername());
+			AlarmCommunityVO datavo = new AlarmCommunityVO();
+			datavo.setName(user.getUsername());
+			List<Integer> times = null;
+			List<AlarmData> list = alarmdatadao.findPeopleFilter(typesint, user.getUseridentity(), start, end);
+			times = analyseTimes(list, start.getTime(), end.getTime());
 			datavo.setData(times);
 			data.add(datavo);
 		}
