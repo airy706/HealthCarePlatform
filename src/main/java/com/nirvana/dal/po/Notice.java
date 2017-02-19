@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
@@ -38,6 +39,26 @@ public class Notice {
 	@ManyToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "communityid")
 	private Community community;
+	@ColumnDefault(value = "0")
+	private boolean istop;
+	@ColumnDefault(value = "1")
+	private boolean isshow;
+
+	public boolean isIsshow() {
+		return isshow;
+	}
+
+	public void setIsshow(boolean isshow) {
+		this.isshow = isshow;
+	}
+
+	public boolean isIstop() {
+		return istop;
+	}
+
+	public void setIstop(boolean istop) {
+		this.istop = istop;
+	}
 
 	public boolean isIsurl() {
 		return isurl;

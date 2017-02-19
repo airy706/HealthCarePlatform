@@ -16,7 +16,7 @@ import com.nirvana.dal.po.Notice;
 @Repository
 public interface NoticeDao extends JpaRepository<Notice, Integer> {
 
-	@Query("SELECT n FROM Notice n WHERE n.noticetype=1")
+	@Query("SELECT n FROM Notice n WHERE n.noticetype=1 AND n.isshow=1 ORDER BY n.noticedate DESC")
 	List<Notice> queryAdmin();
 
 	@Query("SELECT n FROM Notice n WHERE n.noticetype=2 AND n.community.communityid=:communityid")
@@ -25,13 +25,19 @@ public interface NoticeDao extends JpaRepository<Notice, Integer> {
 	@Query("SELECT n FROM Notice n WHERE n.noticetitle LIKE %:key% OR n.user.username LIKE %:key%")
 	Page<Notice> fuzzyQuery(@Param("key") String key, Pageable pageable);
 
-	@Query("SELECT n FROM Notice n WHERE n.community.communityid=:communityid OR n.noticetype=1")
+	@Query("SELECT n FROM Notice n WHERE (n.community.communityid=:communityid OR n.noticetype=1) AND n.isshow=1 ORDER BY n.noticedate DESC")
 	List<Notice> findNoticeByCid(@Param("communityid") Integer communityid);
 
 	@Query("SELECT n FROM Notice n WHERE (n.noticetitle LIKE %:key% OR n.user.username LIKE %:key%) AND n.community.communityid=:communityid")
 	Page<Notice> fuzzyQueryByCid(@Param("key") String key, Pageable pageable,
 			@Param("communityid") Integer communityid);
 
-	@Query("SELECT n FROM Notice n WHERE n.noticedate>:start AND n.noticedate<:end")
+	@Query("SELECT n FROM Notice n WHERE n.noticedate>:start AND n.noticedate<:end AND n.isshow=1 ORDER BY n.noticedate DESC")
 	List<Notice> findByDate(@Param("start") Date start,@Param("end") Date end);
+
+	@Query("SELECT n FROM Notice n WHERE n.noticetype=1 AND n.istop=0 AND n.isshow=1 ORDER BY n.noticedate DESC")
+	List<Notice> queryAdminNotTop();
+
+	@Query("SELECT n FROM Notice n WHERE n.noticetype=1 AND n.istop=1 AND n.isshow=1 ORDER BY n.noticedate DESC")
+	List<Notice> queryAdminIsTop();
 }

@@ -44,8 +44,12 @@ public class NoticeServiceBO implements NoticeService {
 
 	@Override
 	public List<NoticeVO> findAdmin() {
-		List<Notice> polist = noticedao.queryAdmin();
-		return NoticeVO.toVoList(polist);
+		List<Notice> list1 = noticedao.queryAdminNotTop();
+		List<Notice> list2 = noticedao.queryAdminIsTop();
+		for (Notice n : list1) {
+			list2.add(n);
+		}
+		return NoticeVO.toVoList(list2);
 	}
 
 	@Override
@@ -73,14 +77,29 @@ public class NoticeServiceBO implements NoticeService {
 	@Override
 	public List<NoticeVO> findNoticeByUid(Integer userid) {
 		User user = userdao.findOne(userid);
-		List<Notice> list = null;
+		List<Notice> list1 = null;
+		List<Notice> list2 = new ArrayList<Notice>();
 		if (user.getCommunity() != null) {
-			list = noticedao.findNoticeByCid(user.getCommunity().getCommunityid());
-		}else{
-			list = noticedao.queryAdmin();
+			list1 = noticedao.findNoticeByCid(user.getCommunity().getCommunityid());
+			for (Notice n : list1) {
+				if (n.isIstop()) {
+					list2.add(n);
+				}
+			}
+			for (Notice n : list1) {
+				if (!n.isIstop()) {
+					list2.add(n);
+				}
+			}
+		} else {
+			list1 = noticedao.queryAdminNotTop();
+			list2 = noticedao.queryAdminIsTop();
+			for (Notice n : list1) {
+				list2.add(n);
+			}
 		}
 		List<NoticeVO> volist = new ArrayList<NoticeVO>();
-		for (Notice notice : list) {
+		for (Notice notice : list2) {
 			NoticeVO vo = new NoticeVO();
 			vo.setNoticeid(notice.getNoticeid());
 			vo.setNoticetitle(notice.getNoticetitle());
@@ -92,6 +111,7 @@ public class NoticeServiceBO implements NoticeService {
 				vo.setUrl("");
 			}
 			vo.setAttachurl(notice.getAttachurl());
+			vo.setIstop(notice.isIstop());
 			volist.add(vo);
 
 		}
@@ -101,7 +121,7 @@ public class NoticeServiceBO implements NoticeService {
 	@Override
 	public NoticeVO findByNid(Integer noticeid) {
 		Notice notice = noticedao.findOne(noticeid);
-		if(notice==null){
+		if (notice == null) {
 			return null;
 		}
 		NoticeVO vo = new NoticeVO(notice);
@@ -110,9 +130,9 @@ public class NoticeServiceBO implements NoticeService {
 
 	@Override
 	public List<NoticeVO> findByDate(Date start, Date end) {
-		List<Notice> list = noticedao.findByDate(start,end);
+		List<Notice> list = noticedao.findByDate(start, end);
 		List<NoticeVO> volist = new ArrayList<NoticeVO>();
-		for(Notice notice:list){
+		for (Notice notice : list) {
 			NoticeVO vo = new NoticeVO(notice);
 			volist.add(vo);
 		}
