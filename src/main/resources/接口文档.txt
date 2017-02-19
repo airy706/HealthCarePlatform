@@ -760,7 +760,6 @@ request jsonstr 格式：
 			usertel
 		}]
 
-//todo
 2. 获取社区的地址位置/community/location
 	request:
 		communityid
