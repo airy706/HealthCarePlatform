@@ -177,6 +177,7 @@ url:/notice/detail
 
 ##注册会员管理模块##
 //todo
+url:/user/search
 1. 列出注册会员的信息 //不包括超级管理员
 	request:
 		key //根据用户名或身份证号或手机号搜索
@@ -185,13 +186,13 @@ url:/notice/detail
 	response:
 		msg:总计条数
 		[{
-			id,
+			userid,
 			username,
-			useridentity,
-			useraddress,
+			did,
+			address,
 			usertel,
 			useremail,
-			usertype,
+			typeid,
 			account,
 			communityid,
 			communityname,

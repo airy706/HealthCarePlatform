@@ -47,6 +47,23 @@ public class UserController extends BaseController {
 	@Autowired
 	private AlarmDataService alarmservice;
 
+	@RequestMapping("/search")
+	public void search(HttpServletRequest request, HttpServletResponse response, @RequestParam("key") String key,
+			@RequestParam("size") Integer size, @RequestParam("num") Integer num) throws IOException {
+		Result result = null;
+		Page<User> page = userservicebo.findRegisterByKey(key, size, num);
+		List<User> polist = page.getContent();
+		List<UserVO> volist = new ArrayList<UserVO>();
+		for (User user : polist) {
+			UserVO vo = new UserVO(user, 4);
+			volist.add(vo);
+		}
+		result = Result.getSuccessInstance(volist);
+	    result.setMsg(page.getTotalElements()+"");
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
+
 	@RequestMapping("/checkcode")
 	public void checkcode(HttpServletRequest request, HttpServletResponse response, @RequestParam("did") String did,
 			@RequestParam("code") String code) throws IOException {
@@ -56,12 +73,12 @@ public class UserController extends BaseController {
 			result = Result.getFailInstance("无此用户", null);
 		} else {
 			String words = (String) request.getServletContext().getAttribute(did);
-			if(code.equals(words)){
+			if (code.equals(words)) {
 				result = Result.getSuccessInstance(null);
 				result.setMsg("验证成功");
 				request.removeAttribute(did);
 				request.getSession().setAttribute("userid", user.getUserid());
-			}else{
+			} else {
 				result = Result.getFailInstance("验证码错误", null);
 			}
 		}

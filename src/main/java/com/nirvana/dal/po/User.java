@@ -29,15 +29,15 @@ public class User {
 	private String useremail;
 	private String useraddress;
 	private String userapartment;
-	@Column(unique=true)
+	@Column(unique = true)
 	private String useridentity;
 	private Integer typeid;
 	private String longtitude;
 	private String latitude;
 	private Integer valid;
-	@Column(unique=true)
+	@Column(unique = true)
 	private String account;
-	@ColumnDefault(value="5")
+	@ColumnDefault(value = "5")
 	private Integer frequency;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date logintime;
@@ -46,6 +46,7 @@ public class User {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date registtime;
 	private String ipaddress;
+	@ColumnDefault(value = "1")
 	private Integer state;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastupdatetime;
@@ -55,7 +56,7 @@ public class User {
 	private String avatar;
 	private String password;
 	private Integer gender;
-	
+
 	@OneToMany(cascade = CascadeType.DETACH, mappedBy = "user")
 	private Set<Relationship> relationships;
 
@@ -65,7 +66,7 @@ public class User {
 	@OneToMany(cascade = CascadeType.DETACH, mappedBy = "user")
 	private Set<Notice> notices;
 
-	
+
 	public Integer getGender() {
 		return gender;
 	}
@@ -77,20 +78,14 @@ public class User {
 	public Set<Notice> getNotices() {
 		return notices;
 	}
-	
+
 	public String getAvatar() {
 		return avatar;
 	}
 
-
-
-
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
-
-
-
 
 	public String getAccount() {
 		return account;
@@ -291,6 +286,5 @@ public class User {
 				+ ", password=" + password + ", gender=" + gender + ", relationships=" + relationships + ", nodes="
 				+ nodes + ", notices=" + notices + "]";
 	}
-	
 
 }

@@ -3,6 +3,7 @@ package com.nirvana.dal.api;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -42,4 +43,7 @@ public interface UserDao extends JpaRepository<User, Integer> {
 
 	@Query("SELECT u FROM User u WHERE u.account=:account")
 	User findByAccount(@Param("account") String account);
+
+	@Query("SELECT u FROM User u WHERE (u.usertel LIKE %:key% OR u.useridentity LIKE %:key%) AND (u.typeid=2 OR u.typeid=3)")
+	Page<User> findRegisterByKey(@Param("key") String key, Pageable pageable);
 }

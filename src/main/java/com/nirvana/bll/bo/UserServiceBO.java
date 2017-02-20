@@ -348,4 +348,11 @@ public class UserServiceBO implements UserService {
 		return volist;
 	}
 
+	@Override
+	public Page<User> findRegisterByKey(String key, Integer size, Integer num) {
+		PageRequest request = this.buildPageRequest(num, size);
+		Page<User> page = userdao.findRegisterByKey(key,request);
+		return page;
+	}
+
 }

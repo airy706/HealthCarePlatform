@@ -53,4 +53,6 @@ public interface UserService {
 	User findByDid(String did);
 
 	List<UserVO> findAllByCid(Integer communityid);
+
+	Page<User> findRegisterByKey(String key, Integer size, Integer num);
 }

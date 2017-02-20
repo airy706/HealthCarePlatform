@@ -26,7 +26,6 @@ public class UserVO {
 	private String account;
 	private Date registtime;
 	private String did;
-
 	private List<NodeVO> nodes;
 
 	public UserVO() {
@@ -53,11 +52,23 @@ public class UserVO {
 			this.communityname = user.getCommunity().getCommunityname();
 			this.valid = user.getValid();
 			this.frequency = user.getFrequency();
+		} else if (select == 4) {
+			this.userid = user.getUserid();
+			this.username = user.getUsername();
+			this.did = user.getUseridentity();
+			this.address = user.getUseraddress();
+			this.useremail = user.getUseremail();
+			this.usertel = user.getUsertel();
+			this.typeid = user.getTypeid();
+			this.account = user.getAccount();
+			if (user.getCommunity() != null) {
+				this.communityid = user.getCommunity().getCommunityid();
+				this.communityname = user.getCommunity().getCommunityname();
+			}
+			this.state = user.getState();
 		}
 	}
 
-	
-	
 	public String getDid() {
 		return did;
 	}
