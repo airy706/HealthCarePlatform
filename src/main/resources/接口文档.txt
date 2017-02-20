@@ -175,7 +175,51 @@ url:/notice/detail
 			}]
 		}
 
+##注册会员管理模块##
+//todo
+1. 列出注册会员的信息 //不包括超级管理员
+	request:
+		key //根据用户名或身份证号或手机号搜索
+		size
+		num
+	response:
+		msg:总计条数
+		[{
+			id,
+			username,
+			useridentity,
+			useraddress,
+			usertel,
+			useremail,
+			usertype,
+			account,
+			communityid,
+			communityname,
+			state  //用户状态 1为冻结 0为正常
+		}]
+
+2. 编辑注册会员的信息
+	//用户其他的数据不发生改变 
+	request:
+		id,
+		username,
+		useridentity,
+		useraddress,
+		usertel,
+		useremail,
+		account
+	response:
 	
+3. 删除注册会员的信息 //需要先删除所有有数据约束的相关的信息
+	request:
+		id
+	response:
+
+4. 冻结/恢复 用户信息 //冻结后用户无法进行登录操作
+	request:
+		id 
+	response:
+		
 ##解决方案模块##
 1. 添加解决方案 /case/create
 	request:
