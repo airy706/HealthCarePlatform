@@ -142,7 +142,7 @@ public class AlarmController extends BaseController {
 
 	@RequestMapping("/people")
 	public void people(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam("communityid") String communityid, @RequestParam("userids") String userids,
+			@RequestParam("communityId") String communityid, @RequestParam("userId") String userids,
 			@RequestParam("alarmType") String type, @RequestParam("startTime") String startTime,
 			@RequestParam("endTime") String endTime) throws IOException {
 			Result result = null;
