@@ -110,11 +110,15 @@ public class MainController extends BaseController {
 		Integer userid = 0;
 		UserVO vo = userbo.login(account, password);
 		if (vo != null) {
-			userid = vo.getUserid();
-			request.getSession().setAttribute("userid", userid);
-			result = Result.getSuccessInstance(vo);
-			result.setMsg("common");
-			flag = true;
+			if (vo.getState() == 1) {
+				userid = vo.getUserid();
+				request.getSession().setAttribute("userid", userid);
+				result = Result.getSuccessInstance(vo);
+				result.setMsg("common");
+				flag = true;
+			} else {
+				result = Result.getFailInstance("该账户被冻结", null);
+			}
 		} else {
 			LinkManVO linkman = shipservicebo.findOneByAccountAndPsd(account, password);
 			if (linkman == null) {
@@ -129,26 +133,27 @@ public class MainController extends BaseController {
 			}
 		}
 
-//		ServletContext ctx = request.getServletContext();
-//		ArrayList<HttpSession> sessions = (ArrayList<HttpSession>) ctx.getAttribute("online");
-//		if (sessions == null) {
-//			sessions = new ArrayList<HttpSession>();
-//		}
-//
-//		if (flag == true) {
-//			for (HttpSession session : sessions) {
-//				System.out.println("userid:"+session.getAttribute("userid"));
-//				if (userid==session.getAttribute("userid")) {
-//					sessions.remove(session);
-//					session.invalidate();
-//					System.out.println("11111111111111");
-//					break;
-//				}
-//			}
-//			sessions.add(request.getSession());
-//			ctx.setAttribute("online", sessions);
-//			System.out.println("222222222");
-//		}
+		// ServletContext ctx = request.getServletContext();
+		// ArrayList<HttpSession> sessions = (ArrayList<HttpSession>)
+		// ctx.getAttribute("online");
+		// if (sessions == null) {
+		// sessions = new ArrayList<HttpSession>();
+		// }
+		//
+		// if (flag == true) {
+		// for (HttpSession session : sessions) {
+		// System.out.println("userid:"+session.getAttribute("userid"));
+		// if (userid==session.getAttribute("userid")) {
+		// sessions.remove(session);
+		// session.invalidate();
+		// System.out.println("11111111111111");
+		// break;
+		// }
+		// }
+		// sessions.add(request.getSession());
+		// ctx.setAttribute("online", sessions);
+		// System.out.println("222222222");
+		// }
 
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));

@@ -29,7 +29,7 @@ import com.nirvana.dal.po.User;
 
 @RestController
 @RequestMapping("/consult")
-public class ConsultController extends BaseController{
+public class ConsultController extends BaseController {
 
 	@Autowired
 	private ConsultService consultbo;
@@ -159,54 +159,64 @@ public class ConsultController extends BaseController{
 	}
 
 	@RequestMapping("/undo")
-	public void undo(HttpServletRequest request, HttpServletResponse response,@RequestParam("num") Integer num,@RequestParam("size") Integer size) throws IOException {
+	public void undo(HttpServletRequest request, HttpServletResponse response, @RequestParam("num") Integer num,
+			@RequestParam("size") Integer size) throws IOException {
 		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
 		if (userid == null) {
 			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
-			Page<Consult> page = consultbo.findUndoByUid(userid,num,size);
+			Page<Consult> page = consultbo.findUndoByUid(userid, num, size);
 			List<Consult> list = page.getContent();
 			List<ConsultVO> volist = new ArrayList<ConsultVO>();
 			for (Consult consult : list) {
 				ConsultVO vo = new ConsultVO();
 				vo.setConsultId(consult.getConsultid());
-				vo.setConsultType(consult.getConsulttype().getTypename());
+				if (consult.getConsulttype() != null) {
+					vo.setConsultType(consult.getConsulttype().getTypename());
+					vo.setTypeId(consult.getConsulttype().getTypeid());
+				}
 				vo.setContent(consult.getContent());
-				vo.setTypeId(consult.getConsulttype().getTypeid());
-				vo.setToaskId(consult.getToask().getUserid());
-				vo.setToaskName(consult.getUser().getUsername());
+				if (consult.getToask() != null) {
+					vo.setToaskId(consult.getToask().getUserid());
+					vo.setToaskName(consult.getToask().getUsername());
+				}
 				volist.add(vo);
 			}
 			result = Result.getSuccessInstance(volist);
-			result.setMsg(page.getTotalElements()+"");
+			result.setMsg(page.getTotalElements() + "");
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
 
 	@RequestMapping("/done")
-	public void done(HttpServletRequest request, HttpServletResponse response,@RequestParam("num") Integer num,@RequestParam("size") Integer size) throws IOException {
+	public void done(HttpServletRequest request, HttpServletResponse response, @RequestParam("num") Integer num,
+			@RequestParam("size") Integer size) throws IOException {
 		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
 		if (userid == null) {
 			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
-			Page<Consult> page = consultbo.findDoneByUid(userid,num,size);
+			Page<Consult> page = consultbo.findDoneByUid(userid, num, size);
 			List<Consult> list = page.getContent();
 			List<ConsultVO> volist = new ArrayList<ConsultVO>();
 			for (Consult consult : list) {
 				ConsultVO vo = new ConsultVO();
 				vo.setConsultId(consult.getConsultid());
-				vo.setConsultType(consult.getConsulttype().getTypename());
+				if (consult.getConsulttype() != null) {
+					vo.setConsultType(consult.getConsulttype().getTypename());
+					vo.setTypeId(consult.getConsulttype().getTypeid());
+				}
 				vo.setContent(consult.getContent());
-				vo.setTypeId(consult.getConsulttype().getTypeid());
-				vo.setToaskId(consult.getToask().getUserid());
-				vo.setToaskName(consult.getUser().getUsername());
+				if (consult.getToask() != null) {
+					vo.setToaskId(consult.getToask().getUserid());
+					vo.setToaskName(consult.getToask().getUsername());
+				}
 				volist.add(vo);
 			}
 			result = Result.getSuccessInstance(volist);
-			result.setMsg(page.getTotalElements()+"");
+			result.setMsg(page.getTotalElements() + "");
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
@@ -228,9 +238,13 @@ public class ConsultController extends BaseController{
 				ConsultVO vo = new ConsultVO();
 				vo.setConsultId(consult.getConsultid());
 				vo.setUsername(consult.getUser().getUsername());
+				if(consult.getConsulttype()!=null){
 				vo.setConsultType(consult.getConsulttype().getTypename());
+				}
 				vo.setContent(consult.getContent());
+				if(consult.getToask()!=null){
 				vo.setToaskName(consult.getToask().getUsername());
+				}
 				vo.setCommitTime(consult.getCommittime());
 				vo.setFinish(consult.isIsfinish());
 				if (consult.isIsfinish() == true) {

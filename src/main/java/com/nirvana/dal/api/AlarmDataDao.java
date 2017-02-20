@@ -50,4 +50,7 @@ public interface AlarmDataDao extends JpaRepository<AlarmData, Integer> {
 	List<AlarmData> findPeopleFilter(@Param("types") List<Integer> typesint, @Param("did") String useridentity,
 			@Param("start") Date start, @Param("end") Date end);
 
+	@Query(nativeQuery=true,value="DELETE FROM AlarmData WHERE did=:did")
+	void delByDid(@Param("did") String useridentity);
+
 }

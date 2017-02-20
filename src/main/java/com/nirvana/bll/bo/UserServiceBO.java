@@ -14,6 +14,8 @@ import com.nirvana.app.vo.NodeHomePageVO;
 import com.nirvana.app.vo.NodeVO;
 import com.nirvana.app.vo.UserVO;
 import com.nirvana.bll.service.UserService;
+import com.nirvana.dal.api.AlarmDataDao;
+import com.nirvana.dal.api.LocationDataDao;
 import com.nirvana.dal.api.NodeDao;
 import com.nirvana.dal.api.NodeDataDao;
 import com.nirvana.dal.api.UserDao;
@@ -34,6 +36,12 @@ public class UserServiceBO implements UserService {
 	@Autowired
 	private NodeDataDao nodedatadao;
 
+	@Autowired
+	private AlarmDataDao alarmdatadao;
+
+	@Autowired
+	private LocationDataDao locationdatadao;
+
 	@Override
 	public UserVO login(String account, String password) {
 		User user = userdao.findByAccountandPsd(account, password);
@@ -48,6 +56,7 @@ public class UserServiceBO implements UserService {
 			vo.setCommunityid(user.getCommunity().getCommunityid());
 			vo.setCommunityname(user.getCommunity().getCommunityname());
 		}
+		vo.setState(user.getState());
 		return vo;
 	}
 
@@ -287,7 +296,12 @@ public class UserServiceBO implements UserService {
 
 	@Override
 	public void delByUid(Integer userid) {
+		User user = userdao.findOne(userid);
+		alarmdatadao.delByDid(user.getUseridentity());
+		nodedatadao.delByDid(user.getUseridentity());
+		locationdatadao.delByDid(user.getUseridentity());
 		userdao.delete(userid);
+
 	}
 
 	@Override
@@ -299,6 +313,7 @@ public class UserServiceBO implements UserService {
 		UserVO vo = new UserVO();
 		vo.setUsername(user.getUsername());
 		vo.setDid(user.getUseridentity());
+		vo.setState(user.getState());
 		List<Node> polist = nodedao.findAllTypeByUid(user.getUserid());
 		List<NodeVO> volist = new ArrayList<NodeVO>();
 		for (Node n : polist) {
@@ -351,8 +366,34 @@ public class UserServiceBO implements UserService {
 	@Override
 	public Page<User> findRegisterByKey(String key, Integer size, Integer num) {
 		PageRequest request = this.buildPageRequest(num, size);
-		Page<User> page = userdao.findRegisterByKey(key,request);
+		Page<User> page = userdao.findRegisterByKey(key, request);
 		return page;
+	}
+
+	@Override
+	public void updateregister(User user) {
+		User u = userdao.findOne(user.getUserid());
+		u.setUsername(user.getUsername());
+		u.setUseridentity(user.getUseridentity());
+		u.setUseraddress(user.getUseraddress());
+		u.setUsertel(user.getUsertel());
+		u.setUseremail(user.getUseremail());
+		u.setAccount(user.getAccount());
+		userdao.save(u);
+	}
+
+	@Override
+	public void frozen(Integer userid) {
+		User user = userdao.findOne(userid);
+		user.setState(0);
+		userdao.save(user);
+	}
+
+	@Override
+	public void recovery(Integer userid) {
+		User user = userdao.findOne(userid);
+		user.setState(1);
+		userdao.save(user);
 	}
 
 }

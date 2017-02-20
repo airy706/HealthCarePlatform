@@ -199,10 +199,11 @@ url:/user/search
 			state  //用户状态 1为冻结 0为正常
 		}]
 
+/user/regiteredit
 2. 编辑注册会员的信息
 	//用户其他的数据不发生改变 
 	request:
-		id,
+		userid,
 		username,
 		useridentity,
 		useraddress,
@@ -210,15 +211,18 @@ url:/user/search
 		useremail,
 		account
 	response:
-	
+
+/user/registerdel
 3. 删除注册会员的信息 //需要先删除所有有数据约束的相关的信息
 	request:
-		id
+		userid
 	response:
 
+/user/frozen
+/user/recovery
 4. 冻结/恢复 用户信息 //冻结后用户无法进行登录操作
 	request:
-		id 
+		userid 
 	response:
 		
 ##解决方案模块##

@@ -55,4 +55,10 @@ public interface UserService {
 	List<UserVO> findAllByCid(Integer communityid);
 
 	Page<User> findRegisterByKey(String key, Integer size, Integer num);
+
+	void updateregister(User user);
+
+	void frozen(Integer userid);
+
+	void recovery(Integer userid);
 }

@@ -56,16 +56,22 @@ public class User {
 	private String avatar;
 	private String password;
 	private Integer gender;
+	
 
-	@OneToMany(cascade = CascadeType.DETACH, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
 	private Set<Relationship> relationships;
 
-	@OneToMany(cascade = CascadeType.DETACH, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
 	private Set<Node> nodes;
 
-	@OneToMany(cascade = CascadeType.DETACH, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
 	private Set<Notice> notices;
-
+	
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
+	private Set<Consult> consults ;
+	
+	@OneToMany(cascade = CascadeType.DETACH, mappedBy = "toask")
+	private Set<Consult> toasks;
 
 	public Integer getGender() {
 		return gender;

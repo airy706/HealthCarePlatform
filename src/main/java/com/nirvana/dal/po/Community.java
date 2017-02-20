@@ -23,11 +23,22 @@ public class Community {
 	private String latitude;
 	private String longtitude;
 
-	@OneToMany(cascade = CascadeType.DETACH, mappedBy = "community")
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "community")
 	private Set<User> users;
 
-	@OneToMany(cascade = CascadeType.DETACH, mappedBy = "community")
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "community")
 	private Set<Notice> notices;
+
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "community")
+	private Set<Consulttype> consulttypes;
+
+	public Set<Consulttype> getConsulttypes() {
+		return consulttypes;
+	}
+
+	public void setConsulttypes(Set<Consulttype> consulttypes) {
+		this.consulttypes = consulttypes;
+	}
 
 	public Set<Notice> getNotices() {
 		return notices;

@@ -47,6 +47,44 @@ public class UserController extends BaseController {
 	@Autowired
 	private AlarmDataService alarmservice;
 
+	@RequestMapping("/frozen")
+	public void frozen(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("userid") Integer userid) throws IOException {
+		userservicebo.frozen(userid);
+		Result result = null;
+		result = Result.getSuccessInstance(null);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
+
+	@RequestMapping("/recovery")
+	public void recovery(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("userid") Integer userid) throws IOException {
+		userservicebo.recovery(userid);
+		Result result = null;
+		result = Result.getSuccessInstance(null);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
+	@RequestMapping("/registerdel")
+	public void registerdel(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("userid") Integer userid) throws IOException {
+		userservicebo.delByUid(userid);
+		Result result = null;
+		result = Result.getSuccessInstance(null);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
+
+	@RequestMapping("/registeredit")
+	public void registeredit(HttpServletRequest request, HttpServletResponse response, User user) throws IOException {
+		userservicebo.updateregister(user);
+		Result result = null;
+		result = Result.getSuccessInstance(null);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
+
 	@RequestMapping("/search")
 	public void search(HttpServletRequest request, HttpServletResponse response, @RequestParam("key") String key,
 			@RequestParam("size") Integer size, @RequestParam("num") Integer num) throws IOException {
@@ -59,7 +97,7 @@ public class UserController extends BaseController {
 			volist.add(vo);
 		}
 		result = Result.getSuccessInstance(volist);
-	    result.setMsg(page.getTotalElements()+"");
+		result.setMsg(page.getTotalElements() + "");
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
@@ -144,8 +182,12 @@ public class UserController extends BaseController {
 		if (vo == null) {
 			result = Result.getFailInstance("用户名或密码错误", null);
 		} else {
+			if(vo.getState()==1){
 			result = Result.getSuccessInstance(vo);
 			result.setMsg("登陆成功");
+			}else{
+				result = Result.getFailInstance("该用户已冻结", null);
+			}
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
