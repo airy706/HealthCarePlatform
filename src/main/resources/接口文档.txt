@@ -52,7 +52,15 @@
 7. 超管公告编辑  url /notice/create
 		request 包含noticeid
 		
-8. 超管公告查询 
+8. 超管公告查询
+
+//todo
+9. 公告置顶 /notice/top
+	request:
+		id
+	response:
+		
+		 
 url  
 /notice/all
 
@@ -177,7 +185,6 @@ url:/notice/detail
 
 ##注册会员管理模块##
 //todo
-url:/user/search
 1. 列出注册会员的信息 //不包括超级管理员
 	request:
 		key //根据用户名或身份证号或手机号搜索
@@ -186,24 +193,23 @@ url:/user/search
 	response:
 		msg:总计条数
 		[{
-			userid,
+			id,
 			username,
-			did,
-			address,
+			useridentity,
+			useraddress,
 			usertel,
 			useremail,
-			typeid,
+			usertype,
 			account,
 			communityid,
 			communityname,
 			state  //用户状态 1为冻结 0为正常
 		}]
 
-/user/regiteredit
 2. 编辑注册会员的信息
 	//用户其他的数据不发生改变 
 	request:
-		userid,
+		id,
 		username,
 		useridentity,
 		useraddress,
@@ -211,18 +217,15 @@ url:/user/search
 		useremail,
 		account
 	response:
-
-/user/registerdel
+	
 3. 删除注册会员的信息 //需要先删除所有有数据约束的相关的信息
 	request:
-		userid
+		id
 	response:
 
-/user/frozen
-/user/recovery
 4. 冻结/恢复 用户信息 //冻结后用户无法进行登录操作
 	request:
-		userid 
+		id 
 	response:
 		
 ##解决方案模块##
