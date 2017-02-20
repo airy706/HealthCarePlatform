@@ -3,6 +3,7 @@ package com.nirvana.dal.api;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -50,7 +51,7 @@ public interface AlarmDataDao extends JpaRepository<AlarmData, Integer> {
 	List<AlarmData> findPeopleFilter(@Param("types") List<Integer> typesint, @Param("did") String useridentity,
 			@Param("start") Date start, @Param("end") Date end);
 
-	@Query(nativeQuery=true,value="DELETE FROM AlarmData WHERE did=:did")
-	void delByDid(@Param("did") String useridentity);
+	@Query(value="SELECT a FROM AlarmData a WHERE a.did=:did")
+	List<AlarmData> findByDid(@Param("did") String useridentity);
 
 }

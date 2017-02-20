@@ -19,6 +19,8 @@ import com.nirvana.dal.api.LocationDataDao;
 import com.nirvana.dal.api.NodeDao;
 import com.nirvana.dal.api.NodeDataDao;
 import com.nirvana.dal.api.UserDao;
+import com.nirvana.dal.po.AlarmData;
+import com.nirvana.dal.po.LocationData;
 import com.nirvana.dal.po.Node;
 import com.nirvana.dal.po.NodeData;
 import com.nirvana.dal.po.User;
@@ -297,9 +299,12 @@ public class UserServiceBO implements UserService {
 	@Override
 	public void delByUid(Integer userid) {
 		User user = userdao.findOne(userid);
-		alarmdatadao.delByDid(user.getUseridentity());
-		nodedatadao.delByDid(user.getUseridentity());
-		locationdatadao.delByDid(user.getUseridentity());
+		List<AlarmData> adatas = alarmdatadao.findByDid(user.getUseridentity());
+		List<NodeData> ndatas = nodedatadao.findByDid(user.getUseridentity());
+		List<LocationData> ldatas = locationdatadao.findByDid(user.getUseridentity());
+		alarmdatadao.delete(adatas);
+		nodedatadao.delete(ndatas);
+		locationdatadao.delete(ldatas);
 		userdao.delete(userid);
 
 	}

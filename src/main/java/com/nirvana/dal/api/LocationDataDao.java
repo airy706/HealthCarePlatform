@@ -1,5 +1,7 @@
 package com.nirvana.dal.api;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,7 +13,7 @@ import com.nirvana.dal.po.LocationData;
 public interface LocationDataDao extends JpaRepository<LocationData, Integer> {
 
 	
-	@Query(nativeQuery=true,value="DELETE FROM LocationData WHERE did=:did")
-	void delByDid(@Param("did") String useridentity);
+	@Query(value="SELECT l FROM LocationData l WHERE l.did=:did")
+	List<LocationData> findByDid(@Param("did") String useridentity);
 
 }

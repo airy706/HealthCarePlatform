@@ -22,7 +22,7 @@ public interface NodeDataDao extends JpaRepository<NodeData, Integer> {
 	List<NodeData> findByDidAndTypeinWeek(@Param("did") String did, @Param("type") Integer type,
 			@Param("start") Date start, @Param("end") Date end);
 
-	@Query(nativeQuery=true,value="DELETE FROM NodeData WHERE did=:did")
-	void delByDid(@Param("did") String useridentity);
+	@Query(value="SELECT n FROM NodeData n WHERE n.did=:did")
+	List<NodeData> findByDid(@Param("did") String useridentity);
 
 }
