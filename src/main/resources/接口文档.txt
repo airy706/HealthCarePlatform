@@ -112,7 +112,13 @@ url:/notice/detail
 			url;
 	 		isurl;
 	}
-
+ 
+//todo 
+9. 公告置顶/取消置顶 /notice/top //返回公告信息的时候都加上state字段 1为置顶，0为正常
+	request:
+		id
+	response
+		//置顶改为不置顶，不置顶改为置顶
 ##节点模块##
 1. 获取节点 /node/list
 	request:
