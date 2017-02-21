@@ -23,7 +23,7 @@ public class Community {
 	private String latitude;
 	private String longtitude;
 
-	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "community")
+	@OneToMany(cascade = CascadeType.DETACH, mappedBy = "community")
 	private Set<User> users;
 
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "community")

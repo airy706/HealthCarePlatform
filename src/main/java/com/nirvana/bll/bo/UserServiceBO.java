@@ -207,8 +207,10 @@ public class UserServiceBO implements UserService {
 		UserVO vo = new UserVO();
 		vo.setUserid(user.getUserid());
 		vo.setUsername(user.getUsername());
-		vo.setCommunityid(user.getCommunity().getCommunityid());
-		vo.setCommunityname(user.getCommunity().getCommunityname());
+		if (user.getCommunity() != null) {
+			vo.setCommunityid(user.getCommunity().getCommunityid());
+			vo.setCommunityname(user.getCommunity().getCommunityname());
+		}
 		vo.setLatitude(user.getLatitude());
 		vo.setLongitude(user.getLongtitude());
 		vo.setState(user.getState());
@@ -222,6 +224,7 @@ public class UserServiceBO implements UserService {
 		user.setTypeid(3);
 		user.setFrequency(5);
 		user.setValid(0);
+		user.setState(1);
 		userdao.save(user);
 	}
 
@@ -287,8 +290,10 @@ public class UserServiceBO implements UserService {
 			UserVO vo = new UserVO();
 			vo.setUserid(user.getUserid());
 			vo.setUsername(user.getUsername());
-			vo.setCommunityname(user.getCommunity().getCommunityname());
-			vo.setCommunityid(user.getCommunity().getCommunityid());
+			if (user.getCommunity() != null) {
+				vo.setCommunityname(user.getCommunity().getCommunityname());
+				vo.setCommunityid(user.getCommunity().getCommunityid());
+			}
 			vo.setAccount(user.getAccount());
 			vo.setRegisttime(user.getRegisttime());
 			volist.add(vo);
