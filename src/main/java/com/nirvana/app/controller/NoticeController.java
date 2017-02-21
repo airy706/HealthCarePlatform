@@ -38,6 +38,16 @@ public class NoticeController extends BaseController {
 	@Autowired
 	private UserService userservicebo;
 
+	@RequestMapping("/top")
+	public void top(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("noticeid") Integer noticeid) throws IOException {
+		noticeservicebo.setTopByNid(noticeid);
+		Result result = null;
+		result = Result.getSuccessInstance(null);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
+
 	@RequestMapping("/detail")
 	public void detail(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("noticeid") Integer noticeid) throws IOException {

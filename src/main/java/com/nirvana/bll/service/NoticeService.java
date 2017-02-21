@@ -26,4 +26,6 @@ public interface NoticeService {
 	NoticeVO findByNid(Integer noticeid);
 
 	List<NoticeVO> findByDate(Date start, Date end);
+
+	void setTopByNid(Integer noticeid);
 }

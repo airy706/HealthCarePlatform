@@ -138,4 +138,15 @@ public class NoticeServiceBO implements NoticeService {
 		}
 		return volist;
 	}
+
+	@Override
+	public void setTopByNid(Integer noticeid) {
+		Notice notice = noticedao.findOne(noticeid);
+		if(notice.isIstop()==true){
+			notice.setIstop(false);
+		}else{
+			notice.setIstop(true);
+		}
+		noticedao.save(notice);
+	}
 }

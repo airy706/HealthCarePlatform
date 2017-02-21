@@ -54,10 +54,10 @@
 		
 8. 超管公告查询
 
-//todo
+
 9. 公告置顶 /notice/top
 	request:
-		id
+		noticeid
 	response:
 		
 		 
