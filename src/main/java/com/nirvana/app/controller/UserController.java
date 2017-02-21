@@ -217,6 +217,7 @@ public class UserController extends BaseController {
 		} else {
 			user.setTypeid(2);
 			user.setRegisttime(new Date());
+			user.setState(1);
 			userservicebo.add(user);
 			result = Result.getSuccessInstance(null);
 		}

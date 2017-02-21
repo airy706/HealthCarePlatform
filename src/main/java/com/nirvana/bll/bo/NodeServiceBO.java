@@ -56,6 +56,7 @@ public class NodeServiceBO implements NodeService {
 		} else {
 			node.setNodename("其他");
 		}
+		node.setFrequency(5);
 		nodedao.save(node);
 		return true;
 	}

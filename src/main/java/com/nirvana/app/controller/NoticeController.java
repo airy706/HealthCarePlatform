@@ -79,6 +79,7 @@ public class NoticeController extends BaseController {
 			} else {
 
 			}
+			notice.setIsshow(true);
 			notice.setNoticedate(new Date());
 			notice.setUser(user);
 			noticeservicebo.add(notice);
