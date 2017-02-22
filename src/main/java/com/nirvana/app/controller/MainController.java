@@ -20,6 +20,7 @@ import com.nirvana.dal.po.*;
 import org.apache.catalina.core.ApplicationContext;
 import org.dom4j.io.STAXEventReader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,17 +65,19 @@ public class MainController extends BaseController {
 
 	@RequestMapping({ "/test" })
 	public void test(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Date end = new Date();
-		Date start = new Date(end.getTime());
-		start.setTime(start.getTime() - 7 * 24 * 60 * 60 * 1000);
+//		Date end = new Date();
+//		Date start = new Date(end.getTime());
+//		start.setTime(start.getTime() - 7 * 24 * 60 * 60 * 1000);
 		// Integer[] types = {6,12,99,7};
 		// String[] dids={"111111"};
 		// List<AlarmData> list = alarmdao.findFilter(Arrays.asList(types),
 		// Arrays.asList(dids), start, end);
-		String[] ids = {};
-		String[] types = {};
-		AlarmFilterVO vo = alarmbo.findByFilter(ids, types, start, end);
-		Result result = Result.getSuccessInstance(vo);
+//		String[] ids = {};
+//		String[] types = {};
+//		AlarmFilterVO vo = alarmbo.findByFilter(ids, types, start, end);
+		Page<User> pages = userbo.findBykeypage("", 1, 10,null);
+		NodeListVO nodeListVO = new NodeListVO(pages);
+		Result result = Result.getSuccessInstance(nodeListVO);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}

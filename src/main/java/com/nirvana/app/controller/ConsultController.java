@@ -48,8 +48,13 @@ public class ConsultController extends BaseController {
 		if (userid == null) {
 			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
-			List<ConsulttypeVO> list = consultbo.findAllTypeByCid(communityId, key);
+			User user=userservicebo.findById(userid);
+			if(user.getCommunity()!=null){
+			List<ConsulttypeVO> list = consultbo.findAllTypeByCid(user.getCommunity().getCommunityid(), key);
 			result = Result.getSuccessInstance(list);
+			}else{
+				result = Result.getFailInstance("未选择社区", null);
+			}
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
@@ -88,9 +93,16 @@ public class ConsultController extends BaseController {
 	@RequestMapping("/toask")
 	public void toask(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("communityId") Integer communityId) throws IOException {
-		List<UserVO> list = consultbo.findAskByCid(communityId);
 		Result result = null;
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		User user = userservicebo.findById(userid);
+		if(user.getCommunity()!=null){
+		List<UserVO> list = consultbo.findAskByCid(user.getCommunity().getCommunityid());
 		result = Result.getSuccessInstance(list);
+		}else{
+			result=Result.getFailInstance("未选择社区", null);
+		}
+		
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}

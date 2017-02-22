@@ -15,6 +15,7 @@ import com.nirvana.app.vo.NodeVO;
 import com.nirvana.app.vo.UserVO;
 import com.nirvana.bll.service.UserService;
 import com.nirvana.dal.api.AlarmDataDao;
+import com.nirvana.dal.api.CommunityDao;
 import com.nirvana.dal.api.LocationDataDao;
 import com.nirvana.dal.api.NodeDao;
 import com.nirvana.dal.api.NodeDataDao;
@@ -43,6 +44,9 @@ public class UserServiceBO implements UserService {
 
 	@Autowired
 	private LocationDataDao locationdatadao;
+	
+	@Autowired
+	private CommunityDao communitydao; 
 
 	@Override
 	public UserVO login(String account, String password) {
@@ -225,6 +229,7 @@ public class UserServiceBO implements UserService {
 		user.setFrequency(5);
 		user.setValid(0);
 		user.setState(1);
+		user.setUserapartment("");
 		userdao.save(user);
 	}
 
@@ -265,6 +270,9 @@ public class UserServiceBO implements UserService {
 		u.setUsertel(user.getUsertel());
 		u.setUseraddress(user.getUseraddress());
 		u.setCommunity(user.getCommunity());
+		if(user.getCommunity()!=null){
+		u.setUserapartment(communitydao.findOne(user.getCommunity().getCommunityid()).getCommunityname());
+		}
 		userdao.save(u);
 	}
 
@@ -324,6 +332,11 @@ public class UserServiceBO implements UserService {
 		vo.setUsername(user.getUsername());
 		vo.setDid(user.getUseridentity());
 		vo.setState(user.getState());
+		vo.setGender(user.getGender());
+		vo.setAddress(user.getUseraddress());
+		vo.setUseremail(user.getUseremail());
+		vo.setAccount(user.getAccount());
+		vo.setUsertel(user.getUsertel());
 		List<Node> polist = nodedao.findAllTypeByUid(user.getUserid());
 		List<NodeVO> volist = new ArrayList<NodeVO>();
 		for (Node n : polist) {

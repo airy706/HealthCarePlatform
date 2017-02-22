@@ -17,7 +17,7 @@ public interface UserDao extends JpaRepository<User, Integer> {
 	@Query("SELECT u FROM User u WHERE u.account=:account and u.password=:password")
 	User findByAccountandPsd(@Param("account") String account, @Param("password") String password);
 
-	@Query("SELECT u FROM User u WHERE (u.username LIKE %:key% OR u.community.communityname LIKE %:key%) AND u.typeid=3")
+	@Query("SELECT u FROM User u WHERE (u.username LIKE %:key% OR u.userapartment LIKE %:key%) AND u.typeid=3")
 	Page<User> findCommonByKey(@Param("key") String key, Pageable pageable);
 
 	@Query("SELECT u FROM User u WHERE u.useridentity=:did")
@@ -44,6 +44,6 @@ public interface UserDao extends JpaRepository<User, Integer> {
 	@Query("SELECT u FROM User u WHERE u.account=:account")
 	User findByAccount(@Param("account") String account);
 
-	@Query("SELECT u FROM User u WHERE (u.usertel LIKE %:key% OR u.useridentity LIKE %:key%) AND (u.typeid=2 OR u.typeid=3)")
+	@Query("SELECT u FROM User u WHERE (u.username LIKE %:key% OR u.usertel LIKE %:key% OR u.useridentity LIKE %:key% OR u.userapartment LIKE %:key%) AND (u.typeid=2 OR u.typeid=3)")
 	Page<User> findRegisterByKey(@Param("key") String key, Pageable pageable);
 }

@@ -36,20 +36,26 @@ public class UserVO {
 		if (select == 1) {
 			this.userid = user.getUserid();
 			this.username = user.getUsername();
+			if(user.getCommunity()!=null){
 			this.communityname = user.getCommunity().getCommunityname();
+			}
 		} else if (select == 2) {
 			this.usertel = user.getUsertel();
 			this.userid = user.getUserid();
 			this.username = user.getUsername();
-			this.communityname = user.getCommunity().getCommunityname();
-			this.communityid = user.getCommunity().getCommunityid();
+			if(user.getCommunity()!=null){
+				this.communityname = user.getCommunity().getCommunityname();
+				this.communityid = user.getCommunity().getCommunityid();
+				}
 			this.latitude = user.getLatitude();
 			this.longitude = user.getLongtitude();
 			this.state = user.getState();
 		} else if (select == 3) {
 			this.userid = user.getUserid();
 			this.username = user.getUsername();
-			this.communityname = user.getCommunity().getCommunityname();
+			if(user.getCommunity()!=null){
+				this.communityname = user.getCommunity().getCommunityname();
+				}
 			this.valid = user.getValid();
 			this.frequency = user.getFrequency();
 		} else if (select == 4) {

@@ -28,6 +28,7 @@ public class User {
 	private String usertel;
 	private String useremail;
 	private String useraddress;
+	@ColumnDefault(value="")
 	private String userapartment;
 	@Column(unique = true)
 	private String useridentity;
