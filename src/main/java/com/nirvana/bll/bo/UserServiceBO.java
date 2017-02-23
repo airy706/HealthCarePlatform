@@ -152,7 +152,7 @@ public class UserServiceBO implements UserService {
 				vo.setLatestData(list.get(0).getData());
 				vo.setLastestTime(list.get(0).getStatus_change_time());
 			} else {
-				vo.setLatestData("NaN");
+				vo.setLatestData("暂无数据");
 			}
 			vo.setNodeName(node.getNodename());
 			vo.setNodeType(type);

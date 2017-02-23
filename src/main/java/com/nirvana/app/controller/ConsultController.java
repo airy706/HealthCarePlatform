@@ -193,6 +193,8 @@ public class ConsultController extends BaseController {
 					vo.setToaskId(consult.getToask().getUserid());
 					vo.setToaskName(consult.getToask().getUsername());
 				}
+				vo.setFinish(false);
+				vo.setCommitTime(consult.getCommittime());
 				volist.add(vo);
 			}
 			result = Result.getSuccessInstance(volist);
@@ -225,6 +227,9 @@ public class ConsultController extends BaseController {
 					vo.setToaskId(consult.getToask().getUserid());
 					vo.setToaskName(consult.getToask().getUsername());
 				}
+				vo.setFinish(true);
+				vo.setCommitTime(consult.getCommittime());
+				vo.setFinishTime(consult.getFinishtime());
 				volist.add(vo);
 			}
 			result = Result.getSuccessInstance(volist);

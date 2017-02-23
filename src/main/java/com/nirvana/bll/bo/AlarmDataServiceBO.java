@@ -141,9 +141,14 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		}
 		if (communityids.size() == 0) {
 			List<Community> coms = communitydao.findAll();
+			int i=0;
 			for (Community community : coms) {
 				System.out.println(community.getCommunityid());
 				communityids.add(community.getCommunityid());
+				i++;
+				if(i==4){
+					break;
+				}
 			}
 		}
 		AlarmFilterVO filtervo = new AlarmFilterVO();
