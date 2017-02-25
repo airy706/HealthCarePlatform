@@ -29,8 +29,9 @@ public class NodeDataServiceBO implements NodeDataService {
 	private String[] posture = { "正常", "长期不动", "跌倒" };
 	private String[] help = { "正常", "求救" };
 	private String[] wheelchair = { "正常", "右翻", "前翻", "后翻", "左翻" };
-	private String[] cushion = { "直坐", "左倾", "右倾", "前倾", "后倾" };
-
+	//private String[] cushion = { "直坐", "左倾", "右倾", "前倾", "后倾" };
+	//压力坐垫 数据集合 修改
+	private String[] cushion = {"久坐","正常"};
 	@Override
 	public void addData(NodeData data) {
 		data = nodedatadao.save(data);

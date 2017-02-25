@@ -25,7 +25,7 @@ public class ExceptionVO {
 		if (type == 4) {
 			this.alarmName = "血压异常";
 		} else if (type == 6) {
-			this.alarmName = "坐姿异常";
+			this.alarmName = "活动状态异常";
 		} else if (type == 99) {
 			this.alarmName = "一键急救";
 		} else if (type == 12) {
@@ -48,7 +48,7 @@ public class ExceptionVO {
 		if (type == 4) {
 			this.exceptionName = "血压异常";
 		} else if (type == 6) {
-			this.exceptionName = "坐姿异常";		
+			this.exceptionName = "活动状态异常";		
 		} else if (type == 99) {
 			this.exceptionName = "一键急救";	
 		} else if (type == 12) {
@@ -62,10 +62,10 @@ public class ExceptionVO {
 		}
 		if(user.getCommunity()!=null){
 		this.exceptionContent = user.getCommunity().getCommunityname() + "的" + user.getUsername()
-		+ this.exceptionName+"，请立即查看并采取措施！";
+		+ this.exceptionName+data.getData()+"，请立即查看并采取措施！";
 		}else{
 			this.exceptionContent = "个体用户" + user.getUsername()
-			+ this.exceptionName+"，请立即查看并采取措施！";
+			+ this.exceptionName+data.getData()+"，请立即查看并采取措施！";
 		}
 	}
 
