@@ -75,9 +75,10 @@ public class MainController extends BaseController {
 //		String[] ids = {};
 //		String[] types = {};
 //		AlarmFilterVO vo = alarmbo.findByFilter(ids, types, start, end);
-		Page<User> pages = userbo.findBykeypage("", 1, 10,null);
-		NodeListVO nodeListVO = new NodeListVO(pages);
-		Result result = Result.getSuccessInstance(nodeListVO);
+//		Page<User> pages = userbo.findBykeypage("", 1, 10,null);
+//		NodeListVO nodeListVO = new NodeListVO(pages);
+		List<CommunityVO> volist = communitybo.findFuzzy("");
+		Result result = Result.getSuccessInstance(volist);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}

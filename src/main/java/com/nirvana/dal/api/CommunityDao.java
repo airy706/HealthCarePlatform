@@ -11,6 +11,9 @@ import com.nirvana.dal.po.Community;
 
 @Repository
 public interface CommunityDao extends JpaRepository<Community, Integer>{
-	@Query("SELECT c FROM Community c WHERE c.communityname LIKE %:key% OR c.communitylocation LIKE %:key%")
-	List<Community> fuzzyQuery(@Param("key") String key);
+	@Query(nativeQuery=true,value="SELECT * FROM Community WHERE communityname LIKE %:key% OR communitylocation LIKE %:key% ORDER BY CONVERT(communityname USING gbk) ASC")
+	List<Community> fuzzyQueryOrderByGBK(@Param("key") String key);
+
+	@Query(nativeQuery=true,value="SELECT * FROM Community ORDER BY CONVERT(communityname USING gbk) ASC")
+	List<Community> findAllOrderByGBK();
 }

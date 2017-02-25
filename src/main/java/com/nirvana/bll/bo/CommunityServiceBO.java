@@ -29,7 +29,7 @@ public class CommunityServiceBO implements CommunityService{
 
 	@Override
 	public List<CommunityVO> findFuzzy(String key) {
-		List<Community> polist = communitydao.fuzzyQuery(key);
+		List<Community> polist = communitydao.fuzzyQueryOrderByGBK(key);
 		return CommunityVO.toListVO(polist);
 	}
 
@@ -41,7 +41,7 @@ public class CommunityServiceBO implements CommunityService{
 
 	@Override
 	public List<CommunityVO> findAll() {
-		List<Community> list =  communitydao.findAll();
+		List<Community> list =  communitydao.findAllOrderByGBK();
 		List<CommunityVO> polist = new ArrayList<CommunityVO>();	
 		for(Community community:list){
 			polist.add(new CommunityVO(community.getCommunityid(),community.getCommunityname()));
