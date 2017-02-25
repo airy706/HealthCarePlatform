@@ -12,5 +12,5 @@ public interface RelationshipService {
 
 	List<LinkManVO> findAllByUid(Integer userid);
 
-	LinkManVO findOneByAccountAndPsd(String account, String password);
+	Relationship findOneByAccountAndPsd(String account, String password);
 }

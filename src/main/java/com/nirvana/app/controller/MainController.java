@@ -123,14 +123,24 @@ public class MainController extends BaseController {
 				result = Result.getFailInstance("该账户被冻结", null);
 			}
 		} else {
-			LinkManVO linkman = shipservicebo.findOneByAccountAndPsd(account, password);
+			Relationship linkman = shipservicebo.findOneByAccountAndPsd(account, password);
 			if (linkman == null) {
 				result = Result.getFailInstance("用户名或密码错误", null);
 			} else {
 				// 将联系人的主人userid直接放入session中
-				userid = linkman.getUserid();
+				userid = linkman.getUser().getUserid();
 				request.getSession().setAttribute("userid", userid);
-				result = Result.getSuccessInstance(linkman);
+				User u = linkman.getUser();
+				UserVO uservo = new UserVO();
+				uservo.setUserid(u.getUserid());
+				uservo.setUsername(u.getUsername());
+				uservo.setTypeid(u.getTypeid());
+				if (u.getCommunity() != null) {
+					uservo.setCommunityid(u.getCommunity().getCommunityid());
+					uservo.setCommunityname(u.getCommunity().getCommunityname());
+				}
+				uservo.setState(u.getState());
+				result = Result.getSuccessInstance(uservo);
 				result.setMsg("link");
 				flag = true;
 			}

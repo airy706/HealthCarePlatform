@@ -65,7 +65,7 @@ public interface UserDao extends JpaRepository<User, Integer> {
 	 * @param cid 社区id
 	 * @return list of user belong to community selected
 	 */
-	@Query("SELECT u FROM User u WHERE u.community.communityid=:cid")
+	@Query("SELECT u FROM User u WHERE u.community.communityid=:cid AND u.typeid=3")
 	List<User> findAllByCid(@Param("cid") Integer cid);
 
 	/**

@@ -45,16 +45,11 @@ public class RelationshipServiceBO implements RelationshipService {
 	}
 
 	@Override
-	public LinkManVO findOneByAccountAndPsd(String account, String password) {
+	public Relationship findOneByAccountAndPsd(String account, String password) {
 		Relationship ship = relationshipdao.findOneByAccountAndPsd(account,password);
 		if(ship==null){
 			return null;
 		}
-		LinkManVO vo = new LinkManVO();
-		vo.setRelationid(ship.getRelationid());
-		vo.setRelationname(ship.getRelationname());
-		vo.setRelationtel(ship.getRelationtel());
-		vo.setUserid(ship.getUser().getUserid());
-		return vo;
+		return ship;
 	}
 }
