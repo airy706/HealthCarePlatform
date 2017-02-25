@@ -181,6 +181,7 @@ public class NoticeController extends BaseController {
 
 	@RequestMapping("/upload")
 	public void upload(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Result result = null;
 		//  创建一个通用的多部分解析器 ，用于解析SpringMVC的上下文  
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
 				request.getSession().getServletContext());
@@ -206,14 +207,18 @@ public class NoticeController extends BaseController {
 						 *  file.transferTo(localFile);
 						 */
 						// 如果用的是Tomcat服务器，则文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\WEB-INF\\upload\\文件夹中  
-						String realPath = request.getSession().getServletContext().getRealPath("/upload/notice");
-						File uploadfile = new File(realPath, fileName);
-						//  不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉  
-						FileUtils.copyInputStreamToFile(file.getInputStream(), uploadfile);
-						String url = "http://139.199.76.64:8080" + request.getServletContext().getContextPath()
-								+ "/upload/notice/" + fileName;
-						System.out.println(url);
-						Result result = Result.getSuccessInstance(url);
+						if (file.getSize() > 10 * 1024 * 1000) {
+							result = Result.getFailInstance("文件过大", null);
+						} else {
+							String realPath = request.getSession().getServletContext().getRealPath("/upload/notice");
+							File uploadfile = new File(realPath, fileName);
+							//  不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉  
+							FileUtils.copyInputStreamToFile(file.getInputStream(), uploadfile);
+							String url = "http://139.199.76.64:8080" + request.getServletContext().getContextPath()
+									+ "/upload/notice/" + fileName;
+							System.out.println(url);
+							 result = Result.getSuccessInstance(url);
+						}
 						response.setContentType("text/html;charset=utf-8");
 						response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 					}
