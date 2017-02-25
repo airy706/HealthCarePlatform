@@ -16,7 +16,7 @@ import com.nirvana.dal.po.AlarmData;
 @Repository
 public interface AlarmDataDao extends JpaRepository<AlarmData, Integer> {
 
-	@Query(value = "SELECT a FROM AlarmData a WHERE a.reasontype=:reasontype AND a.did=:did ORDER BY status_change_time DESC")
+	@Query(value = "SELECT a FROM AlarmData a WHERE a.reasontype=:reasontype AND a.did=:did AND a.hasresloved=0 ORDER BY status_change_time DESC")
 	Page<AlarmData> findLatest(@Param("reasontype") Integer reasontype, @Param("did") String did, Pageable pageable);
 
 	@Query("SELECT a FROM AlarmData a WHERE a.hasresloved=0 ORDER BY status_change_time DESC")
