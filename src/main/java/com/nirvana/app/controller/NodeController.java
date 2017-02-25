@@ -38,7 +38,8 @@ public class NodeController extends BaseController {
 	private NodeService nodeservice;
 
 	@RequestMapping("/type")
-	public void type(HttpServletRequest request, HttpServletResponse response, @RequestParam("did") String did) throws IOException {
+	public void type(HttpServletRequest request, HttpServletResponse response, @RequestParam("did") String did)
+			throws IOException {
 		User user = userservicebo.findByDid(did);
 		Result result = null;
 		if (user == null) {
@@ -54,13 +55,18 @@ public class NodeController extends BaseController {
 	@RequestMapping("/add")
 	public void add(HttpServletRequest request, HttpServletResponse response, @RequestParam("did") String did,
 			@RequestParam("nodetype") Integer nodetype) throws IOException {
-		boolean flag = nodeservice.add(did, nodetype);
 		Result result = null;
-		if (flag) {
-			result = Result.getSuccessInstance(null);
-			result.setMsg("节点添加成功");
+		if (nodetype == 3 || nodetype == 4 || nodetype == 6 || nodetype == 7 || nodetype == 12 || nodetype == 99
+				|| nodetype == 66) {
+			boolean flag = nodeservice.add(did, nodetype);
+			if (flag) {
+				result = Result.getSuccessInstance(null);
+				result.setMsg("节点添加成功");
+			} else {
+				result = Result.getFailInstance("已添加", null);
+			}
 		} else {
-			result = Result.getFailInstance("已添加", null);
+			result = Result.getFailInstance("添加节点错误", null);
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));

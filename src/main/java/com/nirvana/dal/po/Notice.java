@@ -15,32 +15,46 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.Length;
-
+/**
+ * 
+ * @author Bin
+ * 公告类
+ */
 @Entity
 @Table(name = "notice")
 public class Notice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer noticeid;
-
+	//公告发布日期
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date noticedate;
+	//公告标题
 	private String noticetitle;
+	//公告内容
 	@Length(max = 10000)
 	private String noticecontent;
+	//公告类型id 1-超管 公告 2-社区公告
 	private Integer noticetype;
+	//附件地址
 	private String attachurl;
+	//是否是外接url
 	private boolean isurl;
+	//外接链接URl
 	private String url;
 
+	//发布公告者
 	@ManyToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "userid")
 	private User user;
+	//公告所属社区
 	@ManyToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "communityid")
 	private Community community;
+	//是否置顶
 	@ColumnDefault(value = "0")
 	private boolean istop;
+	//是否显示
 	@ColumnDefault(value = "1")
 	private boolean isshow;
 

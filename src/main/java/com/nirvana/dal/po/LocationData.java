@@ -9,15 +9,21 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+/**
+ * 
+ * @author Bin
+ * 定位数据类
+ */
 @Entity
 @Table(name = "locationdata")
 public class LocationData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer dataid;
+	//身份证
 	private String did;
 	private String gps;
+	//经纬度
 	private String longtitude;
 	private String latitude;
 	@Temporal(TemporalType.TIMESTAMP)

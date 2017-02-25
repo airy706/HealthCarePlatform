@@ -9,18 +9,26 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+/**
+ * 
+ * @author Bin
+ * 节点数据类（包含正常和异常）按照一定的频率上传
+ */
 @Entity
 @Table(name = "nodedata")
 public class NodeData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer dataid;
+	//身份证
 	private String did;
+	//传感器类型id
 	private Integer sensortype;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date status_change_time;
+	//节点id 无用 因为nodeid没有实现
 	private Integer nodeid;
+	//上传数据
 	private String data;
 
 	public Integer getDataid() {

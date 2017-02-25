@@ -12,26 +12,37 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+/**
+ * 
+ * @author Bin
+ * 咨询类
+ */
 @Entity
 @Table(name = "consult")
 public class Consult {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer consultid;
+	//咨询类型
 	@ManyToOne(cascade = { CascadeType.DETACH })
 	@JoinColumn(name = "typeid")
 	private Consulttype consulttype;
+	//咨询用户
 	@ManyToOne(cascade = { CascadeType.DETACH})
 	@JoinColumn(name = "userid")
 	private User user;
+	//咨询内容
 	private String content;
 	@Temporal(TemporalType.TIMESTAMP)
+	//提交时间
 	private Date committime;
+	//是否完成
 	private boolean isfinish;
+	//完成时间
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date finishtime;
 
+	//被提问社区管理员
 	@ManyToOne(cascade = { CascadeType.DETACH})
 	@JoinColumn(name = "toaskid")
 	private User toask;

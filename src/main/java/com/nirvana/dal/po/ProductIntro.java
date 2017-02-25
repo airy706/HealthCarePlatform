@@ -7,18 +7,25 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Length;
-
+/**
+ * 
+ * @author Bin
+ * 产品介绍类
+ */
 @Entity
 @Table(name = "productintro")
 public class ProductIntro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer productid;
+	//介绍标题
 	private String producttitle;
+	//产品照片
 	private String productimg;
+	//介绍内容
 	@Length(max = 1000)
 	private String productcontent;
-
+	//是否显示
 	private boolean isshow;
 
 	public String getProducttitle() {

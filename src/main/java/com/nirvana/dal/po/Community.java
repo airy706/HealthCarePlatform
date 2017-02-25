@@ -9,29 +9,42 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
+/**
+ * 
+ * @author Bin
+ *社区类
+ */
 @Entity
 @Table(name = "community")
 public class Community {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer communityid;
+	//区域名
 	private String areaname;
+	//社区名
 	private String communityname;
+	//社区电话
 	private String communitytel;
+	//社区地址
 	private String communitylocation;
+	//经纬度
 	private String latitude;
 	private String longtitude;
 
+	//社区下普通用户
 	@OneToMany(cascade = CascadeType.DETACH, mappedBy = "community")
 	private Set<User> users;
 
+	//社区下的公告
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "community")
 	private Set<Notice> notices;
 
+	//社区下的服务类型
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "community")
 	private Set<Consulttype> consulttypes;
 
+	
 	public Set<Consulttype> getConsulttypes() {
 		return consulttypes;
 	}

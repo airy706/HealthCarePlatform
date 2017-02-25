@@ -42,11 +42,11 @@ public class NodeServiceBO implements NodeService {
 		if (nodetype == 4) {
 			node.setNodename("血压");
 		} else if (nodetype == 6) {
-			node.setNodename("人体状态");
+			node.setNodename("人体活动状态");
 		} else if (nodetype == 3) {
 			node.setNodename("压力坐垫");
-		} else if (nodetype == 9) {
-			node.setNodename("其他");
+		} else if (nodetype == 7) {
+			node.setNodename("轮椅状态");
 		} else if (nodetype == 99) {
 			node.setNodename("一键求救");
 		} else if (nodetype == 12) {
@@ -57,6 +57,9 @@ public class NodeServiceBO implements NodeService {
 			node.setNodename("其他");
 		}
 		node.setFrequency(5);
+		if(node.getNodename().equals("其他")){
+			return false;
+		}
 		nodedao.save(node);
 		return true;
 	}

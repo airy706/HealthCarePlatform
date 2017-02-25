@@ -7,18 +7,26 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Length;
-
+/**
+ * 
+ * @author Bin
+ * 产品案例类
+ */
 @Entity
 @Table(name = "solutioncase")
 public class SolutionCase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer caseid;
+	//案例标题
 	private String casetitle;
+	//图片
 	private String caseimg;
 	@Length(max = 10000)
+	//内容
 	private String casecontent;
 
+	//是否显示
 	private boolean isshow;
 
 	public boolean isIsshow() {

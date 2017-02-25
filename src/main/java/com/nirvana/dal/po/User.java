@@ -17,44 +17,66 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
-
+/**
+ * 
+ * @author Bin
+ * 系统用户类 （超管，社管，普通用户）
+ */
 @Entity
 @Table(name = "user")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer userid;
+	//姓名
 	private String username;
+	//电话
 	private String usertel;
+	//邮箱
 	private String useremail;
+	//地址
 	private String useraddress;
 	@ColumnDefault(value="")
+	//社区名
 	private String userapartment;
 	@Column(unique = true)
+	//身份证
 	private String useridentity;
+	//用户类型id 1-2-3
 	private Integer typeid;
+	//经纬度
 	private String longtitude;
 	private String latitude;
 	private Integer valid;
+	//账户名
 	@Column(unique = true)
 	private String account;
+	//位置数据上传频率
 	@ColumnDefault(value = "5")
 	private Integer frequency;
+	//最近登入时间
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date logintime;
+	//最近登出时间
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date logouttime;
 	@Temporal(TemporalType.TIMESTAMP)
+	//注册时间
 	private Date registtime;
+	//登录ip
 	private String ipaddress;
 	@ColumnDefault(value = "1")
+	//是否冻结
 	private Integer state;
+	//最新的数据上传时间 用来判断是否在线
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastupdatetime;
 	@ManyToOne(cascade = { CascadeType.DETACH })
 	@JoinColumn(name = "communityid")
 	private Community community;
+	//头像地址
 	private String avatar;
+	//密码
 	private String password;
 	private Integer gender;
 	

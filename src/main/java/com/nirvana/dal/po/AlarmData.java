@@ -9,22 +9,28 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+/**
+ * 
+ * @author Bin
+ * 报警数据类
+ */
 @Entity
 @Table(name = "alarmdata")
 public class AlarmData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer dataid;
+	//身份证
 	private String did;
+	//报警原因类型typeid
 	private Integer reasontype;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date status_change_time;
-
+	//是否解决
 	private Integer hasresloved;
-
+	//报警等级
 	private Integer level;
-
+	//报警时传感器数据
 	private String data;
 
 	public String getData() {
