@@ -44,9 +44,9 @@ public class UserServiceBO implements UserService {
 
 	@Autowired
 	private LocationDataDao locationdatadao;
-	
+
 	@Autowired
-	private CommunityDao communitydao; 
+	private CommunityDao communitydao;
 
 	@Override
 	public UserVO login(String account, String password) {
@@ -152,7 +152,11 @@ public class UserServiceBO implements UserService {
 				vo.setLatestData(list.get(0).getData());
 				vo.setLastestTime(list.get(0).getStatus_change_time());
 			} else {
-				vo.setLatestData("暂无数据");
+				if (type == 4) {
+					vo.setLatestData("暂无数据,暂无数据");
+				} else {
+					vo.setLatestData("暂无数据");
+				}
 			}
 			vo.setNodeName(node.getNodename());
 			vo.setNodeType(type);
@@ -270,8 +274,8 @@ public class UserServiceBO implements UserService {
 		u.setUsertel(user.getUsertel());
 		u.setUseraddress(user.getUseraddress());
 		u.setCommunity(user.getCommunity());
-		if(user.getCommunity()!=null){
-		u.setUserapartment(communitydao.findOne(user.getCommunity().getCommunityid()).getCommunityname());
+		if (user.getCommunity() != null) {
+			u.setUserapartment(communitydao.findOne(user.getCommunity().getCommunityid()).getCommunityname());
 		}
 		userdao.save(u);
 	}
