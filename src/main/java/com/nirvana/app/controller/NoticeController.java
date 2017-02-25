@@ -211,8 +211,7 @@ public class NoticeController extends BaseController {
 							result = Result.getFailInstance("文件过大", null);
 						} else {
 							String realPath = request.getSession().getServletContext().getRealPath("/upload/notice");
-							File uploadfile = new File(realPath, fileName);
-							//  不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉  
+							File uploadfile = new File(realPath, fileName);							//  不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉  
 							FileUtils.copyInputStreamToFile(file.getInputStream(), uploadfile);
 							String url = "http://139.199.76.64:8080" + request.getServletContext().getContextPath()
 									+ "/upload/notice/" + fileName;
