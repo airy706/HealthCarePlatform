@@ -54,10 +54,12 @@ public class UserServiceBO implements UserService {
 		if (user == null) {
 			return null;
 		}
+		//准备视图展示类
 		UserVO vo = new UserVO();
 		vo.setUserid(user.getUserid());
 		vo.setUsername(user.getUsername());
 		vo.setTypeid(user.getTypeid());
+		//防止nullpoint
 		if (user.getCommunity() != null) {
 			vo.setCommunityid(user.getCommunity().getCommunityid());
 			vo.setCommunityname(user.getCommunity().getCommunityname());
@@ -79,7 +81,9 @@ public class UserServiceBO implements UserService {
 
 	@Override
 	public Page<User> findBykeypage(String key, Integer num, Integer size, Integer cid) {
+		//创建分页类
 		PageRequest request = this.buildPageRequest(num, size);
+		//根据是否有communityid 进行相应的搜索
 		Page<User> pages = null;
 		if (cid == null) {
 			pages = this.userdao.findCommonByKey(key, request);
@@ -88,7 +92,13 @@ public class UserServiceBO implements UserService {
 		}
 		return pages;
 	}
-
+	
+	/**
+	 * 创建分页类函数.
+	 * @param pageNumber 页码
+	 * @param pagzSize  每页条数
+	 * @return
+	 */
 	private PageRequest buildPageRequest(int pageNumber, int pagzSize) {
 		return new PageRequest(pageNumber - 1, pagzSize, null);
 	}
@@ -96,12 +106,14 @@ public class UserServiceBO implements UserService {
 	@Override
 	public void updateloc(String did, String longtitude, String latitude, Date updatetime) {
 		User user = userdao.findByDid(did);
+		//更新相应的用户
 		user.setLatitude(latitude);
 		user.setLongtitude(longtitude);
 		user.setLastupdatetime(updatetime);
 		userdao.save(user);
 	}
 
+	
 	@Override
 	public List<UserVO> findOnline(Integer cid) {
 		List<User> list = null;
@@ -114,6 +126,7 @@ public class UserServiceBO implements UserService {
 		List<UserVO> volist = new ArrayList<UserVO>();
 		for (User user : list) {
 			// if(user.getLastupdatetime().)
+			//根据最新的更新时间与当前时间对比来判断是否在在线
 			if (user.getLastupdatetime() != null) {
 				long between = now.getTime() - user.getLastupdatetime().getTime();
 				if (between < 60000 * 62 / user.getFrequency()) {
@@ -136,18 +149,22 @@ public class UserServiceBO implements UserService {
 	public List<NodeHomePageVO> findNodeDataByUid(Integer userid) {
 		User user = userdao.findOne(userid);
 		String did = user.getUseridentity();
+		//查找所有节点
 		List<Node> nodes = nodedao.findAllTypeByUid(userid);
 		System.out.println(nodes.size());
 		List<NodeHomePageVO> volist = new ArrayList<NodeHomePageVO>();
+		//准备视图展示类
 		for (Node node : nodes) {
 			Integer type = node.getNodetype();
 			System.out.println(type);
 			System.out.println(did);
 			PageRequest request = this.buildPageRequest(1, 1);
+			//查询某节点最新的数据
 			Page<NodeData> pages = nodedatadao.findLatestByDidAndType(did, type, request);
 			List<NodeData> list = pages.getContent();
 			System.out.println(list.size());
 			NodeHomePageVO vo = new NodeHomePageVO();
+			//判断是否该节点上传过数据
 			if (list.size() > 0) {
 				vo.setLatestData(list.get(0).getData());
 				vo.setLastestTime(list.get(0).getStatus_change_time());
@@ -160,17 +177,21 @@ public class UserServiceBO implements UserService {
 			}
 			vo.setNodeName(node.getNodename());
 			vo.setNodeType(type);
+			//计算一段时间里的最高最低数据
+			//对数值进行分析即可
 			if (type == 12 || type == 4) {
 				Integer h1 = 0, h2 = 0;
 				Integer l1 = 10000, l2 = 10000;
 				Date end = new Date();
 				Date start = new Date();
 				start.setTime(end.getTime() - 7 * 24 * 60 * 60 * 1000);
+				//查询一定时间段的所有数据
 				List<NodeData> datas = nodedatadao.findByDidAndTypeinWeek(did, type, start, end);
 				for (int i = 0; i < datas.size(); i++) {
 					String value = datas.get(i).getData();
 					if (type == 4) {
 						String v[] = value.split(",");
+						//比较过程
 						if (Integer.parseInt(v[0]) > h1) {
 							h1 = Integer.parseInt(v[0]);
 							vo.setHighTime(datas.get(i).getStatus_change_time());
@@ -297,6 +318,7 @@ public class UserServiceBO implements UserService {
 	public List<UserVO> findManagersByKey(String key) {
 		List<User> list = userdao.findManagerByKey(key);
 		System.out.println(list.size());
+		//准备视图展示层
 		List<UserVO> volist = new ArrayList<UserVO>();
 		for (User user : list) {
 			UserVO vo = new UserVO();
@@ -319,6 +341,7 @@ public class UserServiceBO implements UserService {
 		List<AlarmData> adatas = alarmdatadao.findByDid(user.getUseridentity());
 		List<NodeData> ndatas = nodedatadao.findByDid(user.getUseridentity());
 		List<LocationData> ldatas = locationdatadao.findByDid(user.getUseridentity());
+		//注意 要把相关的数据级联删除
 		alarmdatadao.delete(adatas);
 		nodedatadao.delete(ndatas);
 		locationdatadao.delete(ldatas);

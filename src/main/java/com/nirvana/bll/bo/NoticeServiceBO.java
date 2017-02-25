@@ -80,6 +80,7 @@ public class NoticeServiceBO implements NoticeService {
 		List<Notice> list1 = null;
 		List<Notice> list2 = new ArrayList<Notice>();
 		if (user.getCommunity() != null) {
+			//按照置顶在前 按照时间排列
 			list1 = noticedao.findNoticeByCid(user.getCommunity().getCommunityid());
 			for (Notice n : list1) {
 				if (n.isIstop()) {

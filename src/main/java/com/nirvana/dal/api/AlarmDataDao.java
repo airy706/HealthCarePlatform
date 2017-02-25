@@ -124,4 +124,5 @@ public interface AlarmDataDao extends JpaRepository<AlarmData, Integer> {
 	@Query(value="SELECT a FROM AlarmData a WHERE a.did=:did")
 	List<AlarmData> findByDid(@Param("did") String useridentity);
 
+
 }

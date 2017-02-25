@@ -267,4 +267,25 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		return list;
 	}
 
+	@Override
+	public void rmall(Integer communityId) {
+		List<AlarmData> list = null;
+		if(communityId==null){
+			//超管去除异常
+			list = alarmdatadao.findUnresloved();
+		}else{
+			//社区管理员去除异常
+			List<String> dids = userdao.findAllCommondid(communityId);
+			if(dids.size()==0){
+				return;
+			}else{
+			list = alarmdatadao.findUnreslovedByCid(dids);
+			}
+		}
+		for(AlarmData alarmData:list){
+			alarmData.setHasresloved(1);
+			alarmdatadao.save(alarmData);
+		}
+	}
+
 }

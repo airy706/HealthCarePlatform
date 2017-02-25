@@ -28,6 +28,20 @@ public class AlarmController extends BaseController {
 	@Autowired
 	private AlarmDataService alarmservicebo;
 
+	@RequestMapping("/rmall")
+	public void rmall(HttpServletRequest request, HttpServletResponse response, Integer communityId) throws IOException{
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			alarmservicebo.rmall(communityId);
+			result = Result.getSuccessInstance(null);
+			result.setMsg("全部去除");
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
 	@RequestMapping("/resolved")
 	public void resolved(HttpServletRequest request, HttpServletResponse response, Integer communityId)
 			throws IOException {
