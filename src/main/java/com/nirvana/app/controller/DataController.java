@@ -37,13 +37,17 @@ public class DataController extends BaseController {
 	@RequestMapping(value = "/uploadnode")
 	public void uploadnode(HttpServletRequest request, HttpServletResponse response, @RequestParam("nodedata") String d)
 			throws IOException {
-		//String dd = URLDecoder.decode(d);
+		// String dd = URLDecoder.decode(d);
 		System.out.println("json:   " + d);
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 		NodeData data = gson.fromJson(d, NodeData.class);
-		nodedatabo.addData(data);
 		Result result = null;
-		result = Result.getSuccessInstance(null);
+		if (data.getData() == null || "".equals(data.getData())) {
+			result = Result.getFailInstance("上传失败", null);
+		} else {
+			nodedatabo.addData(data);
+			result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
@@ -51,7 +55,7 @@ public class DataController extends BaseController {
 	@RequestMapping(value = "/uploadloc")
 	public void uploadloc(HttpServletRequest request, HttpServletResponse response, @RequestParam("nodedata") String d)
 			throws IOException {
-		//String dd = URLDecoder.decode(d);
+		// String dd = URLDecoder.decode(d);
 		System.out.println("json:   " + d);
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 		LocationData data = gson.fromJson(d, LocationData.class);
@@ -64,15 +68,19 @@ public class DataController extends BaseController {
 	}
 
 	@RequestMapping(value = "/uploadalarm")
-	public void uploadalarm(HttpServletRequest request, HttpServletResponse response, @RequestParam("nodedata") String d)
-			throws IOException {
-		//String dd = URLDecoder.decode(d);
+	public void uploadalarm(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("nodedata") String d) throws IOException {
+		// String dd = URLDecoder.decode(d);
 		System.out.println("json:   " + d);
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-		AlarmData data = gson.fromJson(d, AlarmData.class);
-		alarmdatabo.addData(data);
 		Result result = null;
-		result = Result.getSuccessInstance(null);
+		AlarmData data = gson.fromJson(d, AlarmData.class);
+		if (data.getData() == null || "".equals(data.getData())) {
+			result = Result.getFailInstance("上传失败", null);
+		} else {
+			alarmdatabo.addData(data);
+			result = Result.getSuccessInstance(null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}

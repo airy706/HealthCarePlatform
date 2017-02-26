@@ -67,6 +67,7 @@ public class UserVO {
 			this.usertel = user.getUsertel();
 			this.typeid = user.getTypeid();
 			this.account = user.getAccount();
+			this.registtime = user.getRegisttime();
 			if (user.getCommunity() != null) {
 				this.communityid = user.getCommunity().getCommunityid();
 				this.communityname = user.getCommunity().getCommunityname();

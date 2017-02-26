@@ -47,9 +47,38 @@ public class UserController extends BaseController {
 	@Autowired
 	private AlarmDataService alarmservice;
 
+	@RequestMapping("/logincheck")
+	public void logincheck(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("请输入用户名密码登录", null);
+		} else {
+			User user = userservicebo.findById(userid);
+			if (user == null) {
+				result = Result.getFailInstance("请输入用户名密码登录", null);
+			} else {
+				UserVO vo = new UserVO();
+				vo.setUserid(user.getUserid());
+				vo.setUsername(user.getUsername());
+				vo.setTypeid(user.getTypeid());
+				// 防止nullpoint
+				if (user.getCommunity() != null) {
+					vo.setCommunityid(user.getCommunity().getCommunityid());
+					vo.setCommunityname(user.getCommunity().getCommunityname());
+				}
+				vo.setState(user.getState());
+				result = Result.getSuccessInstance(vo);
+				result.setMsg("已登录");
+			}
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
+
 	@RequestMapping("/frozen")
-	public void frozen(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam("userid") Integer userid) throws IOException {
+	public void frozen(HttpServletRequest request, HttpServletResponse response, @RequestParam("userid") Integer userid)
+			throws IOException {
 		userservicebo.frozen(userid);
 		Result result = null;
 		result = Result.getSuccessInstance(null);
@@ -66,6 +95,7 @@ public class UserController extends BaseController {
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
+
 	@RequestMapping("/registerdel")
 	public void registerdel(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("userid") Integer userid) throws IOException {
@@ -182,10 +212,10 @@ public class UserController extends BaseController {
 		if (vo == null) {
 			result = Result.getFailInstance("用户名或密码错误", null);
 		} else {
-			if(vo.getState()==1){
-			result = Result.getSuccessInstance(vo);
-			result.setMsg("登陆成功");
-			}else{
+			if (vo.getState() == 1) {
+				result = Result.getSuccessInstance(vo);
+				result.setMsg("登陆成功");
+			} else {
 				result = Result.getFailInstance("该用户已冻结", null);
 			}
 		}

@@ -31,7 +31,7 @@ public class NodeDataServiceBO implements NodeDataService {
 	private String[] wheelchair = { "正常", "右翻", "前翻", "后翻", "左翻" };
 	// private String[] cushion = { "直坐", "左倾", "右倾", "前倾", "后倾" };
 	// 压力坐垫 数据集合 修改
-	private String[] cushion = { "久坐", "正常" };
+	private String[] cushion = { "未在轮椅上", "正坐", "左倾", "右倾", "前倾", "后倾" };
 
 	@Override
 	public void addData(NodeData data) {
