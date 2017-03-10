@@ -63,6 +63,22 @@ public class MainController extends BaseController {
 	@Autowired
 	private RelationshipService shipservicebo;
 
+	
+	@RequestMapping("/logout")
+	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		request.getSession().removeAttribute("userid");
+		Integer userid=(Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if(userid==null){
+			result = Result.getSuccessInstance(null);
+			result.setMsg("注销成功");
+		}else{
+			result = Result.getFailInstance("注销失败", null);
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+	
 	@RequestMapping({ "/test" })
 	public void test(HttpServletRequest request, HttpServletResponse response) throws Exception {
 //		Date end = new Date();

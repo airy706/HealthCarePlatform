@@ -26,7 +26,7 @@ public class NodeDataServiceBO implements NodeDataService {
 	@Autowired
 	private UserDao userdao;
 
-	private String[] posture = { "正常", "长期不动", "跌倒" };
+	private String[] posture = { "正常", "长期不动","长期剧烈运动", "跌倒" };
 	private String[] help = { "正常", "求救" };
 	private String[] wheelchair = { "正常", "右翻", "前翻", "后翻", "左翻" };
 	// private String[] cushion = { "直坐", "左倾", "右倾", "前倾", "后倾" };
