@@ -1,7 +1,11 @@
 package com.nirvana.app.controller;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,6 +51,19 @@ public class UserController extends BaseController {
 	@Autowired
 	private AlarmDataService alarmservice;
 
+	
+	@RequestMapping("/download")
+	public void download(HttpServletRequest request,HttpServletResponse response,@RequestParam("url") String url) throws IOException{
+		FileInputStream fis = new FileInputStream(url);
+		BufferedInputStream bis = new BufferedInputStream(fis);
+		byte[] bytes = new byte[bis.available()];
+		response.setContentType("application/octet-stream");
+		OutputStream os = response.getOutputStream();
+		bis.read(bytes);
+		os.write(bytes);
+	}
+	
+	
 	@RequestMapping("/logincheck")
 	public void logincheck(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Integer userid = (Integer) request.getSession().getAttribute("userid");
@@ -425,7 +442,7 @@ public class UserController extends BaseController {
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
-
+	
 	@RequestMapping("/avatar")
 	public void avatar(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Result result = null;
