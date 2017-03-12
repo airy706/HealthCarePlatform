@@ -14,8 +14,13 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-public class EmailUtils {
-	public static boolean send_common(String to,String words) throws IOException {
+import com.taobao.api.DefaultTaobaoClient;
+import com.taobao.api.TaobaoClient;
+import com.taobao.api.request.AlibabaAliqinFcSmsNumSendRequest;
+import com.taobao.api.response.AlibabaAliqinFcSmsNumSendResponse;
+
+public class SendUtils {
+	public static boolean send_email(String to,String words) throws IOException {
 
 		final String url = "http://api.sendcloud.net/apiv2/mail/send";
 		//final String url = "http://I47fqVkdjPP4vbt04myyF6Ko9mrNcp3K.sendcloud.org/apiv2/mail/send";
@@ -54,5 +59,29 @@ public class EmailUtils {
 			return false;
 		}
 		
+	}
+
+	public static void send_tel(String usertel, String words) {
+		//官网的URL
+		String url="http://gw.api.taobao.com/router/rest";
+		//成为开发者，创建应用后系统自动生成 
+		String appkey="23669124";
+		String secret="556385a1418752c5501a3165c0fa8284";
+		//短信模板的内容
+		String json="{\"code\":\""+words+"\"}";
+		TaobaoClient client = new DefaultTaobaoClient(url, appkey, secret);
+		AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
+		req.setSmsType("normal");
+		req.setSmsFreeSignName("关爱平台100");
+		req.setSmsParamString(json);
+		req.setRecNum(usertel);
+		req.setSmsTemplateCode("SMS_53900206");
+		try{
+			AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
+			System.out.println(rsp.getBody());
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.err.println("error");
+			}
 	}
 }

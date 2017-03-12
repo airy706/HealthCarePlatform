@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.google.gson.Gson;
-import com.nirvana.app.util.EmailUtils;
+import com.nirvana.app.util.SendUtils;
 import com.nirvana.app.util.GsonUtils;
 import com.nirvana.app.vo.NodeHomePageVO;
 import com.nirvana.app.vo.NodeVO;
@@ -144,7 +144,7 @@ public class UserController extends BaseController {
 			if (code.equals(words)) {
 				result = Result.getSuccessInstance(null);
 				result.setMsg("验证成功");
-				request.removeAttribute(did);
+				request.getServletContext().removeAttribute(did);
 				request.getSession().setAttribute("userid", user.getUserid());
 			} else {
 				result = Result.getFailInstance("验证码错误", null);
@@ -173,7 +173,7 @@ public class UserController extends BaseController {
 					result = Result.getFailInstance("无邮箱", null);
 				} else {
 					request.getServletContext().setAttribute(user.getUseridentity(), words);
-					EmailUtils.send_common(user.getUseremail(), words);
+					SendUtils.send_email(user.getUseremail(), words);
 					result = Result.getSuccessInstance(null);
 					result.setMsg("发送成功");
 				}
@@ -183,6 +183,7 @@ public class UserController extends BaseController {
 				} else {
 					request.getServletContext().setAttribute(user.getUseridentity(), words);
 					// 发送短信
+					SendUtils.send_tel(user.getUsertel(), words);
 					result = Result.getSuccessInstance(null);
 					result.setMsg("发送成功");
 				}

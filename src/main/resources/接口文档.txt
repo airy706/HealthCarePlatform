@@ -778,6 +778,18 @@ url:/community/userlist
 	request:
 		relationid //紧急联系人id
 	response
+
+9.验证码发送 /user/psdback
+request:
+		did:
+		way:"tel"or"email"
+response:
+		
+10.验证码验证 /user/checkcode
+	request:
+		did:
+		code:
+	response:
 		
 
 ##节点数据部分##

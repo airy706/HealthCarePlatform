@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.nirvana.app.util.GsonUtils;
+import com.nirvana.app.util.SendUtils;
 import com.nirvana.app.vo.*;
 import com.nirvana.bll.service.*;
 import com.nirvana.dal.po.*;
@@ -81,20 +83,14 @@ public class MainController extends BaseController {
 	
 	@RequestMapping({ "/test" })
 	public void test(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		Date end = new Date();
-//		Date start = new Date(end.getTime());
-//		start.setTime(start.getTime() - 7 * 24 * 60 * 60 * 1000);
-		// Integer[] types = {6,12,99,7};
-		// String[] dids={"111111"};
-		// List<AlarmData> list = alarmdao.findFilter(Arrays.asList(types),
-		// Arrays.asList(dids), start, end);
-//		String[] ids = {};
-//		String[] types = {};
-//		AlarmFilterVO vo = alarmbo.findByFilter(ids, types, start, end);
-//		Page<User> pages = userbo.findBykeypage("", 1, 10,null);
-//		NodeListVO nodeListVO = new NodeListVO(pages);
-		List<CommunityVO> volist = communitybo.findFuzzy("");
-		Result result = Result.getSuccessInstance(volist);
+		String words = "";
+		Random random=  new Random();
+		for (int i = 0; i < 6; i++) {
+			int r = random.nextInt(10);
+			words = words + r + "";
+		}
+		SendUtils.send_tel("13797073054", words);
+		Result result = Result.getSuccessInstance(null);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
