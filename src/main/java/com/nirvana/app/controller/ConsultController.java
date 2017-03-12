@@ -169,7 +169,7 @@ public class ConsultController extends BaseController {
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
-
+	
 	@RequestMapping("/undo")
 	public void undo(HttpServletRequest request, HttpServletResponse response, @RequestParam("num") Integer num,
 			@RequestParam("size") Integer size) throws IOException {
@@ -238,9 +238,9 @@ public class ConsultController extends BaseController {
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
-
+	
 	@RequestMapping("/list")
-	public void list(HttpServletRequest request, HttpServletResponse response, @RequestParam("key") String key,
+	public void list(HttpServletRequest request, HttpServletResponse response,@RequestParam("isfinish") Integer isfinish,@RequestParam("key") String key,
 			@RequestParam("size") Integer size, @RequestParam("num") Integer num,
 			@RequestParam("communityid") Integer communityid) throws IOException {
 		Integer userid = (Integer) request.getSession().getAttribute("userid");
@@ -248,7 +248,7 @@ public class ConsultController extends BaseController {
 		if (userid == null) {
 			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
-			Page<Consult> pages = consultbo.findByKey(communityid, key, num, size);
+			Page<Consult> pages = consultbo.findByKey(communityid,key, num, size,isfinish);
 			List<ConsultVO> volist = new ArrayList<ConsultVO>();
 			List<Consult> list = pages.getContent();
 			for (Consult consult : list) {

@@ -54,9 +54,12 @@ public class UserController extends BaseController {
 	
 	@RequestMapping("/download")
 	public void download(HttpServletRequest request,HttpServletResponse response,@RequestParam("url") String url) throws IOException{
-		FileInputStream fis = new FileInputStream(url);
+		int index =url.lastIndexOf("/");
+		String filename = url.substring(index+1);
+		FileInputStream fis = new FileInputStream("/opt/apache-tomcat-8.5.9/webapps/Smartlab/upload/notice/"+filename);
 		BufferedInputStream bis = new BufferedInputStream(fis);
 		byte[] bytes = new byte[bis.available()];
+		response.addHeader("Content-Disposition", "attachment;filename="+filename);
 		response.setContentType("application/octet-stream");
 		OutputStream os = response.getOutputStream();
 		bis.read(bytes);
@@ -148,6 +151,30 @@ public class UserController extends BaseController {
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
+	
+	@RequestMapping("/changepsd")
+	public void changepsd(HttpServletRequest request, HttpServletResponse response, @RequestParam("did") String did,
+			@RequestParam("code") String code,@RequestParam("password") String password) throws IOException{
+		User user = userservicebo.findByDid(did);
+		Result result = null;
+		if (user == null) {
+			result = Result.getFailInstance("无此用户", null);
+		} else {
+			String words = (String) request.getServletContext().getAttribute(did);
+			if (code.equals(words)) {
+				result = Result.getSuccessInstance(null);
+				result.setMsg("修改成功");
+				request.getServletContext().removeAttribute(did);
+				//修改密码
+				user.setPassword(password);
+				userservicebo.add(user);
+			} else {
+				result = Result.getFailInstance("修改失败", null);
+			}
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
 
 	@RequestMapping("/checkcode")
 	public void checkcode(HttpServletRequest request, HttpServletResponse response, @RequestParam("did") String did,
@@ -161,8 +188,6 @@ public class UserController extends BaseController {
 			if (code.equals(words)) {
 				result = Result.getSuccessInstance(null);
 				result.setMsg("验证成功");
-				request.getServletContext().removeAttribute(did);
-				request.getSession().setAttribute("userid", user.getUserid());
 			} else {
 				result = Result.getFailInstance("验证码错误", null);
 			}

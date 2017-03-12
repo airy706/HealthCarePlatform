@@ -3,6 +3,7 @@ package com.nirvana.dal.api;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -45,6 +46,10 @@ public interface ConsultDao extends JpaRepository<Consult, Integer> {
 	 */
 	@Query("SELECT c FROM Consult c WHERE c.user.community.communityid=:communityid AND c.user.username LIKE %:key% ORDER BY c.committime")
 	Page<Consult> findPageByKeyAndCid(@Param("communityid") Integer communityid, @Param("key") String key,
+			Pageable pageable);
+
+	@Query("SELECT c FROM Consult c WHERE c.user.community.communityid=:communityid AND c.user.username LIKE %:key% AND c.isfinish=0 ORDER BY c.committime")
+	Page<Consult> findPageByKeyAndCidfinish(@Param("communityid") Integer communityid, @Param("key") String key,
 			Pageable pageable);
 
 }

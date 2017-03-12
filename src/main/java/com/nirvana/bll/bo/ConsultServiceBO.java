@@ -95,16 +95,16 @@ public class ConsultServiceBO implements ConsultService {
 	}
 
 	@Override
-	public Page<Consult> findUndoByUid(Integer id,Integer num,Integer size) {
+	public Page<Consult> findUndoByUid(Integer id, Integer num, Integer size) {
 		PageRequest request = this.buildPageRequest(num, size);
-		Page<Consult> page = consultdao.findUndoByUid(id,request);
+		Page<Consult> page = consultdao.findUndoByUid(id, request);
 		return page;
 	}
 
 	@Override
-	public Page<Consult> findDoneByUid(Integer id,Integer num,Integer size) {
+	public Page<Consult> findDoneByUid(Integer id, Integer num, Integer size) {
 		PageRequest request = this.buildPageRequest(num, size);
-		Page<Consult> page = consultdao.findDoneByUid(id,request);
+		Page<Consult> page = consultdao.findDoneByUid(id, request);
 		return page;
 	}
 
@@ -113,9 +113,15 @@ public class ConsultServiceBO implements ConsultService {
 	}
 
 	@Override
-	public Page<Consult> findByKey(Integer communityid, String key, Integer num, Integer size) {
+	public Page<Consult> findByKey(Integer communityid, String key, Integer num, Integer size, Integer isfinish) {
 		PageRequest request = this.buildPageRequest(num, size);
-		Page<Consult> pages = consultdao.findPageByKeyAndCid(communityid, key, request);
+		Page<Consult> pages=null;
+		if (isfinish == 1) {
+			pages = consultdao.findPageByKeyAndCid(communityid, key, request);
+		}
+		if (isfinish == 0) {
+			pages = consultdao.findPageByKeyAndCidfinish(communityid, key, request);
+		}
 		return pages;
 	}
 

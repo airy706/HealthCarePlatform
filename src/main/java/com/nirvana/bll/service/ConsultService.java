@@ -79,6 +79,6 @@ public interface ConsultService {
 	 * @param size
 	 * @return
 	 */
-	Page<Consult> findByKey(Integer communityid,String key,Integer num,Integer size);
+	Page<Consult> findByKey(Integer communityid,String key,Integer num,Integer size,Integer isfinish);
 
 }
