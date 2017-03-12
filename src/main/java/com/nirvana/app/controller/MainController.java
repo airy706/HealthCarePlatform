@@ -65,32 +65,65 @@ public class MainController extends BaseController {
 	@Autowired
 	private RelationshipService shipservicebo;
 
-	
 	@RequestMapping("/logout")
-	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		request.getSession().removeAttribute("userid");
-		Integer userid=(Integer) request.getSession().getAttribute("userid");
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
-		if(userid==null){
+		if (userid == null) {
 			result = Result.getSuccessInstance(null);
 			result.setMsg("注销成功");
-		}else{
+		} else {
 			result = Result.getFailInstance("注销失败", null);
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
-	
+
 	@RequestMapping({ "/test" })
 	public void test(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String words = "";
-		Random random=  new Random();
+		Random random = new Random();
 		for (int i = 0; i < 6; i++) {
 			int r = random.nextInt(10);
 			words = words + r + "";
 		}
 		SendUtils.send_tel("13797073054", words);
 		Result result = Result.getSuccessInstance(null);
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+
+	@RequestMapping("/sendtelcode")
+	public void sendtelcode(HttpServletRequest request, HttpServletResponse response, @RequestParam("tel") String tel)
+			throws IOException {
+		String words = "";
+		Random random = new Random();
+		Result result = null;
+		for (int i = 0; i < 6; i++) {
+			int r = random.nextInt(10);
+			words = words + r + "";
+		}
+		SendUtils.send_tel(tel, words);
+		request.getServletContext().setAttribute(tel, words);
+		result = Result.getSuccessInstance(null);
+		result.setMsg("验证码已发送");
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+
+	@RequestMapping("/checktel")
+	public void checktel(HttpServletRequest request, HttpServletResponse response, @RequestParam("tel") String tel,
+			@RequestParam("code") String code) throws IOException {
+		String words = (String) request.getServletContext().getAttribute(tel);
+		Result result = null;
+		if (code.equals(words)) {
+			result = Result.getSuccessInstance(null);
+			result.setMsg("验证成功");
+			request.getServletContext().setAttribute(tel, "111111111");
+		} else {
+			result = Result.getFailInstance("验证失败", null);
+		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
@@ -110,9 +143,17 @@ public class MainController extends BaseController {
 			result = Result.getFailInstance("账户名已注册", null);
 		} else if (userbo.didIsExist(user.getUseridentity())) {
 			result = Result.getFailInstance("身份证已注册", null);
+		} else if (user.getUsertel() == null || "".equals(user.getUsertel().trim())) {
+			result = Result.getFailInstance("电话为空", null);
 		} else {
-			userbo.regist(user);
-			result = Result.getSuccessInstance(null);
+			String w = (String) request.getServletContext().getAttribute(user.getUsertel());
+			if ("111111111".endsWith(w)) {
+				userbo.regist(user);
+				result = Result.getSuccessInstance(null);
+				request.removeAttribute(user.getUsertel());
+			} else {
+				result = Result.getFailInstance("注册失败未验证", null);
+			}
 		}
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
@@ -202,8 +243,9 @@ public class MainController extends BaseController {
 	}
 
 	@RequestMapping("/broadcast")
-	public void broadcast(HttpServletRequest request, HttpServletResponse response,@RequestParam("num") Integer num,@RequestParam("size") Integer size) throws IOException {
-		List<NoticeVO> list = noticebo.findAdmin(num,size);
+	public void broadcast(HttpServletRequest request, HttpServletResponse response, @RequestParam("num") Integer num,
+			@RequestParam("size") Integer size) throws IOException {
+		List<NoticeVO> list = noticebo.findAdmin(num, size);
 		Result result = Result.getSuccessInstance(list);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
