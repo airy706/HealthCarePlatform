@@ -21,6 +21,7 @@ public class NoticeVO {
 	private boolean isurl;
 	private boolean istop;
 	private boolean isshow;
+	private boolean isshort;
 
 	public NoticeVO() {
 
@@ -38,6 +39,8 @@ public class NoticeVO {
 		this.username = notice.getUser().getUsername();
 		this.isurl = notice.isIsurl();
 		this.istop = notice.isIstop();
+		this.isshort = notice.isIsshort();
+		
 		if (isurl == true) {
 			this.url = notice.getUrl();
 		}
@@ -56,6 +59,14 @@ public class NoticeVO {
 			list.add(new NoticeVO(polist.get(i)));
 		}
 		return list;
+	}
+
+	public boolean isIsshort() {
+		return isshort;
+	}
+
+	public void setIsshort(boolean isshort) {
+		this.isshort = isshort;
 	}
 
 	public boolean isIsshow() {

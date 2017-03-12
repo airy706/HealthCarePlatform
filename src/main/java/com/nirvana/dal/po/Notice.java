@@ -57,6 +57,17 @@ public class Notice {
 	//是否显示
 	@ColumnDefault(value = "1")
 	private boolean isshow;
+	//是否是一句话
+	@ColumnDefault(value="0")
+	private boolean isshort;
+	
+	public boolean isIsshort() {
+		return isshort;
+	}
+
+	public void setIsshort(boolean isshort) {
+		this.isshort = isshort;
+	}
 
 	public boolean isIsshow() {
 		return isshow;
