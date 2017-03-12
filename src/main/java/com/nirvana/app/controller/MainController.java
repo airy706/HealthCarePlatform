@@ -202,8 +202,8 @@ public class MainController extends BaseController {
 	}
 
 	@RequestMapping("/broadcast")
-	public void broadcast(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		List<NoticeVO> list = noticebo.findAdmin();
+	public void broadcast(HttpServletRequest request, HttpServletResponse response,@RequestParam("num") Integer num,@RequestParam("size") Integer size) throws IOException {
+		List<NoticeVO> list = noticebo.findAdmin(num,size);
 		Result result = Result.getSuccessInstance(list);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));

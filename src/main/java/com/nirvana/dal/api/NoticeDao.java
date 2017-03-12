@@ -49,9 +49,13 @@ public interface NoticeDao extends JpaRepository<Notice, Integer> {
 	 * @param communityid 社区id
 	 * @return 公告集合
 	 */
-	@Query("SELECT n FROM Notice n WHERE (n.community.communityid=:communityid OR n.noticetype=1) AND n.isshow=1 ORDER BY n.noticedate DESC")
-	List<Notice> findNoticeByCid(@Param("communityid") Integer communityid);
+	@Query("SELECT n FROM Notice n WHERE (n.community.communityid=:communityid OR n.noticetype=1) AND n.isshow=1 AND n.istop=0 ORDER BY n.noticedate DESC")
+	Page<Notice> findNoticeByCidNotTop(@Param("communityid") Integer communityid,Pageable pageable);
 
+	
+	@Query("SELECT n FROM Notice n WHERE (n.community.communityid=:communityid OR n.noticetype=1) AND n.isshow=1 AND n.istop=1 ORDER BY n.noticedate DESC")
+	List<Notice> findNoticeByCidIsTop(@Param("communityid") Integer communityid);
+	
 	/**
 	 * 根据公告标题以及发布用户名 模糊查询所有符合的社区公告
 	 * @param key 搜索值
@@ -77,7 +81,7 @@ public interface NoticeDao extends JpaRepository<Notice, Integer> {
 	 * @return
 	 */
 	@Query("SELECT n FROM Notice n WHERE n.noticetype=1 AND n.istop=0 AND n.isshow=1 ORDER BY n.noticedate DESC")
-	List<Notice> queryAdminNotTop();
+	Page<Notice> queryAdminNotTop(Pageable pageable);
 
 	/**
 	 * 查询所有的不置顶公告

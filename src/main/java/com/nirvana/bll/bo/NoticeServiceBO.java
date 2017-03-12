@@ -43,8 +43,10 @@ public class NoticeServiceBO implements NoticeService {
 	}
 
 	@Override
-	public List<NoticeVO> findAdmin() {
-		List<Notice> list1 = noticedao.queryAdminNotTop();
+	public List<NoticeVO> findAdmin(Integer num,Integer size) {
+		PageRequest request = this.buildPageRequest(num, size);
+		Page<Notice> page1 = noticedao.queryAdminNotTop(request);
+		List<Notice> list1 = page1.getContent();
 		List<Notice> list2 = noticedao.queryAdminIsTop();
 		for (Notice n : list1) {
 			list2.add(n);
@@ -75,13 +77,16 @@ public class NoticeServiceBO implements NoticeService {
 	}
 
 	@Override
-	public List<NoticeVO> findNoticeByUid(Integer userid) {
+	public List<NoticeVO> findNoticeByUid(Integer userid,Integer num,Integer size) {
+		PageRequest request = this.buildPageRequest(num,size);
 		User user = userdao.findOne(userid);
 		List<Notice> list1 = null;
 		List<Notice> list2 = new ArrayList<Notice>();
 		if (user.getCommunity() != null) {
 			//按照置顶在前 按照时间排列
-			list1 = noticedao.findNoticeByCid(user.getCommunity().getCommunityid());
+			Page<Notice> page= noticedao.findNoticeByCidNotTop(user.getCommunity().getCommunityid(),request);
+			list1 = page.getContent();
+			list2 = noticedao.findNoticeByCidIsTop(user.getCommunity().getCommunityid());
 			for (Notice n : list1) {
 				if (n.isIstop()) {
 					list2.add(n);
@@ -93,7 +98,8 @@ public class NoticeServiceBO implements NoticeService {
 				}
 			}
 		} else {
-			list1 = noticedao.queryAdminNotTop();
+			Page<Notice> page1= noticedao.queryAdminNotTop(request);
+			list1 = page1.getContent();
 			list2 = noticedao.queryAdminIsTop();
 			for (Notice n : list1) {
 				list2.add(n);

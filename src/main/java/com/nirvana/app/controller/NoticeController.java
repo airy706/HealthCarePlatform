@@ -120,13 +120,13 @@ public class NoticeController extends BaseController {
 	}
 
 	@RequestMapping("/admin")
-	public void listadmin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void listadmin(HttpServletRequest request, HttpServletResponse response,@RequestParam("num") Integer num,@RequestParam("size") Integer size) throws IOException {
 		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
 		if (userid == null) {
 			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
-			List<NoticeVO> list = noticeservicebo.findAdmin();
+			List<NoticeVO> list = noticeservicebo.findAdmin(num,size);
 			result = Result.getSuccessInstance(list);
 		}
 		response.setContentType("text/html;charset=utf-8");
@@ -167,13 +167,13 @@ public class NoticeController extends BaseController {
 	}
 
 	@RequestMapping("/user")
-	public void user(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void user(HttpServletRequest request, HttpServletResponse response,@RequestParam("num") Integer num,@RequestParam("size") Integer size) throws IOException {
 		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
 		if (userid == null) {
 			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
-			List<NoticeVO> list = noticeservicebo.findNoticeByUid(userid);
+			List<NoticeVO> list = noticeservicebo.findNoticeByUid(userid,num,size);
 			result = Result.getSuccessInstance(list);
 		}
 		response.setContentType("text/html;charset=utf-8");

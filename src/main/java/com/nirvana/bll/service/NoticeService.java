@@ -31,7 +31,7 @@ public interface NoticeService {
 	 * 查询所有超管公告
 	 * @return
 	 */
-	List<NoticeVO> findAdmin();
+	List<NoticeVO> findAdmin(Integer num,Integer size);
 	
 	/**
 	 * 查询所有社区公告
@@ -55,7 +55,7 @@ public interface NoticeService {
 	 * @param userid
 	 * @return
 	 */
-	List<NoticeVO> findNoticeByUid(Integer userid);
+	List<NoticeVO> findNoticeByUid(Integer userid,Integer num,Integer size);
 
 	/**
 	 * 查询某一个公告
