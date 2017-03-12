@@ -143,6 +143,12 @@ public class UserServiceBO implements UserService {
 		u.setFrequency(user.getFrequency());
 		u.setValid(user.getValid());
 		userdao.save(u);
+		List<Node> nodes = nodedao.findAllTypeByUid(user.getUserid());
+		for(Node node:nodes){
+			node.setFrequency(user.getFrequency());
+		}
+		nodedao.save(nodes);
+		
 	}
 
 	@Override
