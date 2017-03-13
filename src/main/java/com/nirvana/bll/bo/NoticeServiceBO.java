@@ -118,6 +118,7 @@ public class NoticeServiceBO implements NoticeService {
 				vo.setUrl("");
 			}
 			vo.setAttachurl(notice.getAttachurl());
+			vo.setIsshort(notice.isIsshort());
 			vo.setIstop(notice.isIstop());
 			volist.add(vo);
 
