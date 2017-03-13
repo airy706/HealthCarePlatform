@@ -1094,5 +1094,41 @@ response:
 
 3.12 后接口
 验证码 注册 和修改密码两处
-/community/list 返回所有经纬度不为空的社区
-
+用户下载附件资源：/user/download
+		request:
+			url 资源路径
+		response:
+			。。
+用户密码丢失发送验证码：/user/psdback
+		request:
+			did:
+			way: tel|email
+		response:
+			。。
+验证验证码：/user/checkcode
+		request:
+			did:
+			code：
+		response:
+			。。
+修改密码：/user/changepsd
+		request:
+			did:
+			code：
+			password:
+		response:
+			。。
+发送手机验证码注册时：/sendtelcode
+		request:
+			tel:
+		response:
+			。。
+验证手机验证码：/checktel
+		request:
+			tel:
+			code：
+		response:
+			。。
+返回所有经纬度不为空的社区：/community/list 
+		request：
+		response：
