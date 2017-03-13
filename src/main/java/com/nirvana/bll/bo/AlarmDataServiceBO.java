@@ -19,7 +19,11 @@ import com.nirvana.dal.api.UserDao;
 import com.nirvana.dal.po.AlarmData;
 import com.nirvana.dal.po.Community;
 import com.nirvana.dal.po.User;
-
+/**
+ * 报警数据接口实现
+ * @author Bin
+ *
+ */
 @Service
 @Transactional
 public class AlarmDataServiceBO implements AlarmDataService {
@@ -33,24 +37,36 @@ public class AlarmDataServiceBO implements AlarmDataService {
 	@Autowired
 	private CommunityDao communitydao;
 
+	/**
+	 * 创建分页查询请求
+	 * @param pageNumber 页码
+	 * @param pagzSize 每页容量
+	 * @return
+	 */
 	private PageRequest buildPageRequest(int pageNumber, int pagzSize) {
 		return new PageRequest(pageNumber - 1, pagzSize, null);
 	}
 
+	/**
+	 * 在30min内同一种类型同一个人的报警数据不会再次发送
+	 */
 	@Override
 	public void addData(AlarmData data) {
 		data.setHasresloved(0);
 		PageRequest request = this.buildPageRequest(1, 1);
 		List<AlarmData> list = alarmdatadao.findLatest(data.getReasontype(), data.getDid(), request).getContent();
+		//没有报警直接插入
 		if (list.size() == 0) {
 			alarmdatadao.save(data);
 			return;
 		}
+		//最新的报警
 		AlarmData latest = list.get(0);
 		// 时间间隔设为 30min;
 		if (latest == null) {
 			alarmdatadao.save(data);
 		} else {
+			//计算时间间隔
 			long between = data.getStatus_change_time().getTime() - latest.getStatus_change_time().getTime();
 			if (between > 30 * 60000) {
 				alarmdatadao.save(data);
@@ -62,15 +78,19 @@ public class AlarmDataServiceBO implements AlarmDataService {
 	public List<ExceptionVO> findAllRedo(Integer id) {
 		List<AlarmData> list = null;
 		List<ExceptionVO> exs = new ArrayList<ExceptionVO>();
+		//根据传入的id是否为空来做查询
 		if (id == null) {
+			//超管查询所有
 			list = alarmdatadao.findUnresloved();
 		} else {
+			//社管查询社区里的
 			List<String> dids = userdao.findAllCommondid(id);
 			if (dids.size() == 0) {
 				return exs;
 			}
 			list = alarmdatadao.findUnreslovedByCid(dids);
 		}
+		//准备vo数据
 		for (AlarmData data : list) {
 			User user = userdao.findByDid(data.getDid());
 			exs.add(new ExceptionVO(data, user));
@@ -80,6 +100,7 @@ public class AlarmDataServiceBO implements AlarmDataService {
 
 	@Override
 	public List<ExceptionVO> detect(Integer aid, Integer cid) {
+		//获得网页上显示的最新的一条数据的时间
 		AlarmData data = alarmdatadao.findOne(aid);
 		List<ExceptionVO> exs = new ArrayList<ExceptionVO>();
 		List<AlarmData> list = null;
@@ -90,8 +111,10 @@ public class AlarmDataServiceBO implements AlarmDataService {
 			if (dids.size() == 0) {
 				return exs;
 			}
+			//查询之后的报警数据
 			list = alarmdatadao.findAfterByCid(data.getStatus_change_time(), dids);
 		}
+		//数据包装
 		for (AlarmData alarm : list) {
 			User user = userdao.findByDid(alarm.getDid());
 			exs.add(new ExceptionVO(alarm, user));

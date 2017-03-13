@@ -79,7 +79,6 @@ public class NoticeController extends BaseController {
 			} else {
 
 			}
-			notice.setIsshort(false);
 			notice.setIsshow(true);
 			notice.setNoticedate(new Date());
 			notice.setUser(user);
