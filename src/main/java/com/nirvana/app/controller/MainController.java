@@ -82,14 +82,8 @@ public class MainController extends BaseController {
 
 	@RequestMapping({ "/test" })
 	public void test(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String words = "";
-		Random random = new Random();
-		for (int i = 0; i < 6; i++) {
-			int r = random.nextInt(10);
-			words = words + r + "";
-		}
-		SendUtils.send_tel("13797073054", words);
-		Result result = Result.getSuccessInstance(null);
+		List<CommunityVO> list = communitybo.findAllNotEmpty();
+		Result result = Result.getSuccessInstance(list);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
