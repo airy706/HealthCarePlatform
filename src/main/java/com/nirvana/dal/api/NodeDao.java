@@ -14,7 +14,7 @@ import com.nirvana.dal.po.Node;
  * 节点数据库访问层
  */
 @Repository
-public interface NodeDao extends JpaRepository<Node, String> {
+public interface NodeDao extends JpaRepository<Node, Integer> {
 
 	/**
 	 *  查询所有节点根据用户id
@@ -32,6 +32,9 @@ public interface NodeDao extends JpaRepository<Node, String> {
 	 */
 	@Query("SELECT n FROM Node n WHERE n.user.useridentity=:did AND n.nodetype=:nodetype")
 	Node findByDidAndTypeid(@Param("did") String did,@Param("nodetype") Integer nodetype);
+
+	@Query("SELECT n FROM Node n WHERE n.nodeid=:nodeid")
+	Node findOneById(@Param("nodeid") Integer nodeid);
 	
 	
 	

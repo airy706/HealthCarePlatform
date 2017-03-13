@@ -37,6 +37,17 @@ public class NodeController extends BaseController {
 	@Autowired
 	private NodeService nodeservice;
 
+	
+	@RequestMapping("/cstatus")
+	public void cstatus(HttpServletRequest request, HttpServletResponse response,@RequestParam("nodeid") Integer nodeid) throws IOException{
+		nodeservice.cstatus(nodeid);
+		Result result = null;
+		result = Result.getSuccessInstance(null);
+		result.setMsg("节点状态修改成功");
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
+	
 	@RequestMapping("/type")
 	public void type(HttpServletRequest request, HttpServletResponse response, @RequestParam("did") String did)
 			throws IOException {

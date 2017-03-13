@@ -11,6 +11,7 @@ public class NodeVO {
 	private Date nodeaddtime;
 	private String communityname;
 	private Integer frequency;
+	private Integer nodestatus;
 
 	public NodeVO() {
 		super();
@@ -23,6 +24,15 @@ public class NodeVO {
 		this.nodetype = node.getNodetype();
 		this.nodeaddtime = node.getNodeaddtime();
 		this.frequency = node.getFrequency();
+		this.nodestatus = node.getNodestatus();
+	}
+
+	public Integer getNodestatus() {
+		return nodestatus;
+	}
+
+	public void setNodestatus(Integer nodestatus) {
+		this.nodestatus = nodestatus;
 	}
 
 	public Integer getFrequency() {

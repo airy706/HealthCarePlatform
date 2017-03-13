@@ -10,4 +10,6 @@ public interface NodeService {
 
 	//查询用户的所有节点
 	List<NodeVO> findAllByUid(Integer userid);
+
+	void cstatus(Integer nodeid);
 }

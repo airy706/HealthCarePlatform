@@ -69,12 +69,21 @@ public class NodeServiceBO implements NodeService {
 		List<Node> list = nodedao.findAllTypeByUid(userid);
 		List<NodeVO> volist = new ArrayList<NodeVO>();
 		for (Node node : list) {
-			NodeVO vo = new NodeVO();
-			vo.setNodename(node.getNodename());
-			vo.setNodetype(node.getNodetype());
+			NodeVO vo = new NodeVO(node);
 			volist.add(vo);
 		}
 		return volist;
+	}
+
+	@Override
+	public void cstatus(Integer nodeid) {
+		Node node = nodedao.findOne(nodeid);
+		if(node.getNodestatus()==1){
+			node.setNodestatus(0);
+		}else if(node.getNodestatus()==0){
+			node.setNodestatus(1);
+		}
+		nodedao.save(node);
 	}
 
 }

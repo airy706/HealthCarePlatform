@@ -15,10 +15,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
+
 /**
  * 
- * @author Bin
- * 节点类
+ * @author Bin 节点类
  */
 @Entity
 @Table(name = "node")
@@ -26,21 +26,22 @@ public class Node {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer nodeid;
-	//节点名字
+	// 节点名字
 	private String nodename;
-	//节点类型id
+
+	// 节点类型id
 	private Integer nodetype;
-	//节点状态
-	//待用
+	// 节点状态
+	// 待用
 	private Integer nodestatus;
 	@Temporal(TemporalType.TIMESTAMP)
-	//节点添加时间
+	// 节点添加时间
 	private Date nodeaddtime;
-	//节点使用者
+	// 节点使用者
 	@ManyToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "userid")
 	private User user;
-	//节点上传频率
+	// 节点上传频率
 	@ColumnDefault(value = "5")
 	private Integer frequency;
 
