@@ -15,4 +15,6 @@ public interface CommunityService {
 	Community findById(Integer id);
 
 	List<CommunityVO> findAll();
+
+	List<CommunityVO> findAllNotEmpty();
 }

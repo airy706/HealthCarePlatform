@@ -48,4 +48,14 @@ public class CommunityServiceBO implements CommunityService{
 		}
 		return polist;
 	}
+
+	@Override
+	public List<CommunityVO> findAllNotEmpty() {
+		List<Community> list =  communitydao.findAllNotEmpty();
+		List<CommunityVO> polist = new ArrayList<CommunityVO>();	
+		for(Community community:list){
+			polist.add(new CommunityVO(community));
+		}
+		return polist;
+	}
 }

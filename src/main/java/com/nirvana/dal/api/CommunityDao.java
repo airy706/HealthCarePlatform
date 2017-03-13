@@ -29,4 +29,7 @@ public interface CommunityDao extends JpaRepository<Community, Integer>{
 	 */
 	@Query(nativeQuery=true,value="SELECT * FROM community ORDER BY CONVERT(communityname USING gbk) ASC")
 	List<Community> findAllOrderByGBK();
+
+	@Query(nativeQuery=true,value="SELECT * FROM community WHERE latitude!='' AND latitude not null AND longtitude!='' AND longtitude not null")
+	List<Community> findAllNotEmpty();
 }

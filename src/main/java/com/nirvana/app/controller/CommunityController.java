@@ -129,4 +129,19 @@ public class CommunityController extends BaseController {
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(new Gson().toJson(result));
 	}
+	
+	@RequestMapping("/list")
+	public void list(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			List<CommunityVO> list = communityservicebo.findAllNotEmpty();
+			result = Result.getSuccessInstance(list);
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+	
 }
