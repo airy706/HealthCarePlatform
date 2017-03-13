@@ -18,7 +18,12 @@ import com.nirvana.bll.service.RelationshipService;
 import com.nirvana.bll.service.UserService;
 import com.nirvana.dal.po.Relationship;
 import com.nirvana.dal.po.User;
-
+/**
+ * 家属视图转换层 
+ * 接口处理可参考接口文档
+ * @author Bin
+ *
+ */
 @RestController
 @RequestMapping("/linkman")
 public class RelationshipController extends BaseController{

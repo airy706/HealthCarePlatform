@@ -26,7 +26,12 @@ import com.nirvana.bll.service.UserService;
 import com.nirvana.dal.po.Consult;
 import com.nirvana.dal.po.Consulttype;
 import com.nirvana.dal.po.User;
-
+/**
+ * 咨询视图转换层 
+ * 接口处理可参考接口文档
+ * @author Bin
+ *
+ */
 @RestController
 @RequestMapping("/consult")
 public class ConsultController extends BaseController {

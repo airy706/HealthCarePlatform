@@ -23,7 +23,12 @@ import com.nirvana.app.util.GsonUtils;
 import com.nirvana.app.vo.Result;
 import com.nirvana.bll.service.ProductIntroService;
 import com.nirvana.dal.po.ProductIntro;
-
+/**
+ * 产品介绍视图转换层 
+ * 接口处理可参考接口文档
+ * @author Bin
+ *
+ */
 @RestController
 @RequestMapping("/product")
 public class ProductIntroController extends BaseController{

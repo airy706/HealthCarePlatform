@@ -21,7 +21,12 @@ import com.nirvana.bll.service.UserService;
 import com.nirvana.dal.po.AlarmData;
 import com.nirvana.dal.po.LocationData;
 import com.nirvana.dal.po.NodeData;
-
+/**
+ * 数据视图转换层 
+ * 接口处理可参考接口文档
+ * @author Bin
+ *
+ */
 @RestController
 @RequestMapping(value = "/data")
 public class DataController extends BaseController {

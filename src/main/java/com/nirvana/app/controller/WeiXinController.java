@@ -21,7 +21,12 @@ import com.nirvana.bll.service.NoticeService;
 import com.nirvana.bll.service.UserService;
 import com.nirvana.dal.po.AlarmData;
 import com.nirvana.dal.po.User;
-
+/**
+ * 微信视图转换层 
+ * 接口处理可参考接口文档
+ * @author Bin
+ *
+ */
 @RestController
 @RequestMapping("/weixin")
 public class WeiXinController extends BaseController {

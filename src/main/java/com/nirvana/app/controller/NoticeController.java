@@ -28,7 +28,12 @@ import com.nirvana.bll.service.NoticeService;
 import com.nirvana.bll.service.UserService;
 import com.nirvana.dal.po.Notice;
 import com.nirvana.dal.po.User;
-
+/**
+ * 公告视图转换层 
+ * 接口处理可参考接口文档
+ * @author Bin
+ *
+ */
 @RestController
 @RequestMapping("/notice")
 public class NoticeController extends BaseController {

@@ -5,7 +5,11 @@ import org.apache.http.impl.client.HttpClients;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
+/**
+ * json字符串格式限制工具类
+ * @author Bin
+ *
+ */
 public class GsonUtils {
 	private static GsonBuilder gb;
 

@@ -23,7 +23,12 @@ import com.nirvana.app.util.GsonUtils;
 import com.nirvana.app.vo.Result;
 import com.nirvana.bll.service.SolutionCaseService;
 import com.nirvana.dal.po.SolutionCase;
-
+/**
+ * 案例视图转换层 
+ * 接口处理可参考接口文档
+ * @author Bin
+ *
+ */
 @RestController
 @RequestMapping("/case")
 public class CaseController extends BaseController{

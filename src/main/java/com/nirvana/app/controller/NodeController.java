@@ -24,7 +24,12 @@ import com.nirvana.bll.service.NodeDataService;
 import com.nirvana.bll.service.NodeService;
 import com.nirvana.bll.service.UserService;
 import com.nirvana.dal.po.User;
-
+/**
+ * 节点视图转换层 
+ * 接口处理可参考接口文档
+ * @author Bin
+ *
+ */
 @RestController
 @RequestMapping("/node")
 public class NodeController extends BaseController {

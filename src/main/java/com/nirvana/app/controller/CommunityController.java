@@ -19,7 +19,12 @@ import com.nirvana.app.vo.UserVO;
 import com.nirvana.bll.service.CommunityService;
 import com.nirvana.bll.service.UserService;
 import com.nirvana.dal.po.Community;
-
+/**
+ * 社区视图转换层 
+ * 接口处理可参考接口文档
+ * @author Bin
+ *
+ */
 @RestController
 @RequestMapping("/community")
 public class CommunityController extends BaseController {

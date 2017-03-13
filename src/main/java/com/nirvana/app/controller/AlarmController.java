@@ -20,7 +20,12 @@ import com.nirvana.app.vo.AlarmFilterVO;
 import com.nirvana.app.vo.ExceptionVO;
 import com.nirvana.app.vo.Result;
 import com.nirvana.bll.service.AlarmDataService;
-
+/**
+ * 报警视图转换层 
+ * 接口处理可参考接口文档
+ * @author Bin
+ *
+ */
 @RestController
 @RequestMapping("/alarm")
 public class AlarmController extends BaseController {
@@ -161,6 +166,7 @@ public class AlarmController extends BaseController {
 			@RequestParam("communityId") String communityid, @RequestParam("userId") String userids,
 			@RequestParam("alarmType") String type, @RequestParam("startTime") String startTime,
 			@RequestParam("endTime") String endTime) throws IOException {
+		//前端数据基本处理 包括字符串分数组
 		Result result = null;
 		String[] ids = userids.split(",");
 		String[] types = type.split(",");
@@ -168,6 +174,7 @@ public class AlarmController extends BaseController {
 		Date end = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		if (startTime == null || "".equals(startTime)) {
+			//默认时间间隔
 			end = new Date();
 			start = new Date(end.getTime());
 			start.setTime(start.getTime() - 7 * 24 * 60 * 60 * 1000);

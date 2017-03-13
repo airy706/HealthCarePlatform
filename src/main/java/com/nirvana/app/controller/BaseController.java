@@ -8,7 +8,12 @@ import com.google.gson.Gson;
 import com.nirvana.app.exception.BizException;
 import com.nirvana.app.exception.BizLoggedException;
 import com.nirvana.app.vo.Result;
-
+/**
+ * 视图转换层基础类
+ * 包括异常的拦截 
+ * @author Bin
+ *
+ */
 public class BaseController {
 	@ExceptionHandler
 	public void handleException(HttpServletResponse response, Exception e) throws Exception {

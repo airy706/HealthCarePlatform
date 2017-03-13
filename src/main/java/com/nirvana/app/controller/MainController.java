@@ -32,7 +32,12 @@ import com.google.gson.Gson;
 import com.nirvana.dal.api.AlarmDataDao;
 import com.nirvana.dal.api.NodeDataDao;
 import com.nirvana.dal.api.UserDao;
-
+/**
+ * 网站主页业务视图转换层 
+ * 接口处理可参考接口文档
+ * @author Bin
+ *
+ */
 @RestController
 public class MainController extends BaseController {
 	@Autowired
