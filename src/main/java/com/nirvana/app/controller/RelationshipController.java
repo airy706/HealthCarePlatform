@@ -99,4 +99,18 @@ public class RelationshipController extends BaseController{
 		response.getWriter().print(new Gson().toJson(result));
 	}
 	
+	@RequestMapping("/mobilelist")
+	public void mobilelist(HttpServletRequest request,HttpServletResponse response,@RequestParam("did") String did) throws IOException{
+		User user = userservicebo.findByDid(did);
+		Result result = null;
+		if(user==null){
+			result = Result.getFailInstance("没有此用户", null);
+		}else{
+			List<LinkManVO> list = shipservicebo.findAllByUid(user.getUserid());
+			result = Result.getSuccessInstance(list);
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(new Gson().toJson(result));
+	}
+	
 }
