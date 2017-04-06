@@ -195,4 +195,6 @@ public interface UserService {
 	 * @param userid
 	 */
 	void recovery(Integer userid);
+
+	void update(User user);
 }

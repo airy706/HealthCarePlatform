@@ -330,6 +330,7 @@ public class UserServiceBO implements UserService {
 			UserVO vo = new UserVO();
 			vo.setUserid(user.getUserid());
 			vo.setUsername(user.getUsername());
+			vo.setUsertel(user.getUsertel());
 			if (user.getCommunity() != null) {
 				vo.setCommunityname(user.getCommunity().getCommunityname());
 				vo.setCommunityid(user.getCommunity().getCommunityid());
@@ -449,6 +450,11 @@ public class UserServiceBO implements UserService {
 	public void recovery(Integer userid) {
 		User user = userdao.findOne(userid);
 		user.setState(1);
+		userdao.save(user);
+	}
+
+	@Override
+	public void update(User user) {
 		userdao.save(user);
 	}
 

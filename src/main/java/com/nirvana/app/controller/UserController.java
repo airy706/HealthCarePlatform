@@ -56,12 +56,28 @@ public class UserController extends BaseController {
 	@Autowired
 	private AlarmDataService alarmservice;
 
+	@RequestMapping("/changetel")
+	public void changetel(HttpServletRequest request,HttpServletResponse response,@RequestParam("usertel") String usertel) throws IOException{
+		Integer userid = (Integer) request.getSession().getAttribute("userid");
+		Result result = null;
+		if (userid == null) {
+			result = Result.getFailInstance("userid cannot been found", null);
+		} else {
+			User user = userservicebo.findById(userid);
+			user.setUsertel(usertel);
+			userservicebo.update(user);
+			result = Result.getSuccessInstance(null);
+			result.setMsg("手机号码修改成功");
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
 	
 	@RequestMapping("/download")
 	public void download(HttpServletRequest request,HttpServletResponse response,@RequestParam("url") String url) throws IOException{
 		int index =url.lastIndexOf("/");
 		String filename = url.substring(index+1);
-		FileInputStream fis = new FileInputStream("/opt/apache-tomcat-8.5.9/webapps/Smartlab/upload/notice/"+filename);
+		FileInputStream fis = new FileInputStream("/usr/share/tomcat/webapps/Smartlab/upload/notice/"+filename);
 		BufferedInputStream bis = new BufferedInputStream(fis);
 		byte[] bytes = new byte[bis.available()];
 		response.addHeader("Content-Disposition", "attachment;filename="+filename);
@@ -314,6 +330,7 @@ public class UserController extends BaseController {
 			newuser.setAccount(user.getAccount());
 			newuser.setCommunity(user.getCommunity());
 			newuser.setUsername(user.getUsername());
+			newuser.setUsertel(user.getUsertel());
 			userservicebo.add(newuser);
 			result = Result.getSuccessInstance(null);
 		}
