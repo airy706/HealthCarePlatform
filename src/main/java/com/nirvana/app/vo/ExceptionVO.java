@@ -34,8 +34,10 @@ public class ExceptionVO {
 			this.alarmName = "轮椅异常";
 		} else if (type == 3) {
 			this.alarmName = "坐垫异常";
-		} else {
-
+		} else if (type==66){
+			this.alarmName = "手环异常";
+		}else{
+			
 		}
 	}
 
@@ -57,8 +59,8 @@ public class ExceptionVO {
 			this.exceptionName = "轮椅异常";			
 		} else if (type == 3) {
 			this.exceptionName = "坐垫异常";
-		} else {
-
+		} else if(type ==66){
+			this.exceptionName = "手环异常";
 		}
 		if(user.getCommunity()!=null){
 		this.exceptionContent = user.getCommunity().getCommunityname() + "的" + user.getUsername()

@@ -12,4 +12,6 @@ public interface NodeService {
 	List<NodeVO> findAllByUid(Integer userid);
 
 	void cstatus(Integer nodeid);
+
+	void setfreq(Integer nodeid, Integer freq);
 }

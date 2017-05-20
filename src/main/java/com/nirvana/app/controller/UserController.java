@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetAddress;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -75,8 +76,9 @@ public class UserController extends BaseController {
 	
 	@RequestMapping("/download")
 	public void download(HttpServletRequest request,HttpServletResponse response,@RequestParam("url") String url) throws IOException{
-		int index =url.lastIndexOf("/");
-		String filename = url.substring(index+1);
+		String attachurl = new String(url.getBytes("iso-8859-1"),"UTF-8");
+		int index =attachurl.lastIndexOf("/");
+		String filename = attachurl.substring(index+1);
 		FileInputStream fis = new FileInputStream("/usr/share/tomcat/webapps/Smartlab/upload/notice/"+filename);
 		BufferedInputStream bis = new BufferedInputStream(fis);
 		byte[] bytes = new byte[bis.available()];
@@ -85,6 +87,7 @@ public class UserController extends BaseController {
 		OutputStream os = response.getOutputStream();
 		bis.read(bytes);
 		os.write(bytes);
+		bis.close();
 	}
 	
 	
@@ -109,6 +112,7 @@ public class UserController extends BaseController {
 					vo.setCommunityname(user.getCommunity().getCommunityname());
 				}
 				vo.setState(user.getState());
+				vo.setAvatar(user.getAvatar());
 				result = Result.getSuccessInstance(vo);
 				result.setMsg("已登录");
 			}
@@ -331,6 +335,7 @@ public class UserController extends BaseController {
 			newuser.setCommunity(user.getCommunity());
 			newuser.setUsername(user.getUsername());
 			newuser.setUsertel(user.getUsertel());
+			newuser.setUseridentity(user.getUseridentity());
 			userservicebo.add(newuser);
 			result = Result.getSuccessInstance(null);
 		}

@@ -188,6 +188,8 @@ public class MainController extends BaseController {
 				uservo.setUserid(u.getUserid());
 				uservo.setUsername(u.getUsername());
 				uservo.setTypeid(u.getTypeid());
+				uservo.setIdentity(u.getUseridentity());
+				uservo.setUsertel(u.getUsertel());
 				if (u.getCommunity() != null) {
 					uservo.setCommunityid(u.getCommunity().getCommunityid());
 					uservo.setCommunityname(u.getCommunity().getCommunityname());

@@ -40,8 +40,7 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 
-	<!-- <context:component-scan base-package="com.nirvana.app.controller" />
-	<context:component-scan base-package="com.nirvana.bll.bo" /> -->
+	<!-- <context:component-scan base-package="com.nirvana.app.controller" /><context:component-scan base-package="com.nirvana.bll.bo" /> -->
 	
 	<context:component-scan base-package="com.nirvana">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>

@@ -29,8 +29,7 @@
     <context:property-placeholder location="classpath:datasource.properties"/>
     
     
-    <!-- 定义实体管理器工厂
-         Jpa配置   LocalContainerEntityManagerFactoryBean这个选项Spring扮演了容器的角色。完全掌管JPA -->
+    <!-- 定义实体管理器工厂Jpa配置   LocalContainerEntityManagerFactoryBean这个选项Spring扮演了容器的角色。完全掌管JPA -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
            <!-- 指定数据源 -->
         <property name="dataSource" ref="dataSource"/>

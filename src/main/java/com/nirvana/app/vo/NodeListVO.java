@@ -1,6 +1,9 @@
 package com.nirvana.app.vo;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -27,8 +30,22 @@ public class NodeListVO {
 		for (int i = 0; i < content.size(); i++) {
 			User user = content.get(i);
 			Set<Node> nodes = user.getNodes();
+			ArrayList<Node> nodelist = new ArrayList<Node>(nodes);
+			Collections.sort(nodelist, new Comparator<Node>() {
+
+				@Override
+				public int compare(Node o1, Node o2) {
+					if(o1.getNodeid()>o2.getNodeid()){
+						return 1;
+					}else{
+						return -1;
+					}
+					
+				}
+				
+			});
 			List<NodeVO> nodevos = new ArrayList<NodeVO>();
-			for (Node node : nodes) {
+			for (Node node : nodelist) {
 				nodevos.add(new NodeVO(node));
 			}
 			UserVO uservo = new UserVO(user,1);

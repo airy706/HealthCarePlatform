@@ -24,9 +24,10 @@ import com.nirvana.bll.service.NodeDataService;
 import com.nirvana.bll.service.NodeService;
 import com.nirvana.bll.service.UserService;
 import com.nirvana.dal.po.User;
+
 /**
- * 节点视图转换层 
- * 接口处理可参考接口文档
+ * 节点视图转换层 接口处理可参考接口文档
+ * 
  * @author Bin
  *
  */
@@ -42,9 +43,20 @@ public class NodeController extends BaseController {
 	@Autowired
 	private NodeService nodeservice;
 
-	
+	@RequestMapping("/setfreq")
+	public void setfreq(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("nodeid") Integer nodeid, @RequestParam("freq") Integer freq) throws IOException {
+		nodeservice.setfreq(nodeid,freq);
+		Result result = null;
+		result = Result.getSuccessInstance(null);
+		result.setMsg("节点频率修改成功");
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
+	}
+
 	@RequestMapping("/cstatus")
-	public void cstatus(HttpServletRequest request, HttpServletResponse response,@RequestParam("nodeid") Integer nodeid) throws IOException{
+	public void cstatus(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("nodeid") Integer nodeid) throws IOException {
 		nodeservice.cstatus(nodeid);
 		Result result = null;
 		result = Result.getSuccessInstance(null);
@@ -52,7 +64,7 @@ public class NodeController extends BaseController {
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(GsonUtils.getDateFormatGson().toJson(result));
 	}
-	
+
 	@RequestMapping("/type")
 	public void type(HttpServletRequest request, HttpServletResponse response, @RequestParam("did") String did)
 			throws IOException {

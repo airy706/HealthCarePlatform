@@ -109,13 +109,13 @@ public class AlarmController extends BaseController {
 	}
 
 	@RequestMapping("/times")
-	public void times(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void times(HttpServletRequest request, HttpServletResponse response,Integer communityid) throws IOException {
 		Integer userid = (Integer) request.getSession().getAttribute("userid");
 		Result result = null;
 		if (userid == null) {
 			result = Result.getFailInstance("userid cannot been found", null);
 		} else {
-			List<ExceptionVO> list = alarmservicebo.findAllTimes();
+			List<ExceptionVO> list = alarmservicebo.findAllTimes(communityid);
 			result = Result.getSuccessInstance(list);
 		}
 		response.setContentType("text/html;charset=utf-8");

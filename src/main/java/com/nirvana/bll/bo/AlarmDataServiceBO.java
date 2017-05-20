@@ -19,8 +19,10 @@ import com.nirvana.dal.api.UserDao;
 import com.nirvana.dal.po.AlarmData;
 import com.nirvana.dal.po.Community;
 import com.nirvana.dal.po.User;
+
 /**
  * 报警数据接口实现
+ * 
  * @author Bin
  *
  */
@@ -39,8 +41,11 @@ public class AlarmDataServiceBO implements AlarmDataService {
 
 	/**
 	 * 创建分页查询请求
-	 * @param pageNumber 页码
-	 * @param pagzSize 每页容量
+	 * 
+	 * @param pageNumber
+	 *            页码
+	 * @param pagzSize
+	 *            每页容量
 	 * @return
 	 */
 	private PageRequest buildPageRequest(int pageNumber, int pagzSize) {
@@ -55,18 +60,18 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		data.setHasresloved(0);
 		PageRequest request = this.buildPageRequest(1, 1);
 		List<AlarmData> list = alarmdatadao.findLatest(data.getReasontype(), data.getDid(), request).getContent();
-		//没有报警直接插入
+		// 没有报警直接插入
 		if (list.size() == 0) {
 			alarmdatadao.save(data);
 			return;
 		}
-		//最新的报警
+		// 最新的报警
 		AlarmData latest = list.get(0);
 		// 时间间隔设为 30min;
 		if (latest == null) {
 			alarmdatadao.save(data);
 		} else {
-			//计算时间间隔
+			// 计算时间间隔
 			long between = data.getStatus_change_time().getTime() - latest.getStatus_change_time().getTime();
 			if (between > 30 * 60000) {
 				alarmdatadao.save(data);
@@ -78,19 +83,19 @@ public class AlarmDataServiceBO implements AlarmDataService {
 	public List<ExceptionVO> findAllRedo(Integer id) {
 		List<AlarmData> list = null;
 		List<ExceptionVO> exs = new ArrayList<ExceptionVO>();
-		//根据传入的id是否为空来做查询
+		// 根据传入的id是否为空来做查询
 		if (id == null) {
-			//超管查询所有
+			// 超管查询所有
 			list = alarmdatadao.findUnresloved();
 		} else {
-			//社管查询社区里的
+			// 社管查询社区里的
 			List<String> dids = userdao.findAllCommondid(id);
 			if (dids.size() == 0) {
 				return exs;
 			}
 			list = alarmdatadao.findUnreslovedByCid(dids);
 		}
-		//准备vo数据
+		// 准备vo数据
 		for (AlarmData data : list) {
 			User user = userdao.findByDid(data.getDid());
 			exs.add(new ExceptionVO(data, user));
@@ -100,7 +105,7 @@ public class AlarmDataServiceBO implements AlarmDataService {
 
 	@Override
 	public List<ExceptionVO> detect(Integer aid, Integer cid) {
-		//获得网页上显示的最新的一条数据的时间
+		// 获得网页上显示的最新的一条数据的时间
 		AlarmData data = alarmdatadao.findOne(aid);
 		List<ExceptionVO> exs = new ArrayList<ExceptionVO>();
 		List<AlarmData> list = null;
@@ -111,10 +116,10 @@ public class AlarmDataServiceBO implements AlarmDataService {
 			if (dids.size() == 0) {
 				return exs;
 			}
-			//查询之后的报警数据
+			// 查询之后的报警数据
 			list = alarmdatadao.findAfterByCid(data.getStatus_change_time(), dids);
 		}
-		//数据包装
+		// 数据包装
 		for (AlarmData alarm : list) {
 			User user = userdao.findByDid(alarm.getDid());
 			exs.add(new ExceptionVO(alarm, user));
@@ -133,13 +138,32 @@ public class AlarmDataServiceBO implements AlarmDataService {
 	}
 
 	@Override
-	public List<ExceptionVO> findAllTimes() {
-		List<ExceptionVO> list = findAlltype();
-		for (ExceptionVO vo : list) {
-			Integer times = alarmdatadao.findTypeTimes(vo.getAlarmType());
-			vo.setAlarmTimes(times);
+	public List<ExceptionVO> findAllTimes(Integer communityid) {
+		List<ExceptionVO> list = null;
+		if (communityid == null) {
+			list = findAlltype();
+			for (ExceptionVO vo : list) {
+				Integer times = alarmdatadao.findTypeTimes(vo.getAlarmType());
+				vo.setAlarmTimes(times);
+			}
+		} else {
+			List<String> dids = userdao.findAllCommondid(communityid);
+			list = findAlltypeByCid(dids);
+			for (ExceptionVO vo : list) {
+				Integer times = alarmdatadao.findTypeTimesByCid(vo.getAlarmType(),dids);
+				vo.setAlarmTimes(times);
+			}
 		}
 		return list;
+	}
+
+	private List<ExceptionVO> findAlltypeByCid(List<String> dids) {
+		List<Integer> list = alarmdatadao.findAlltypebyCid(dids);
+		List<ExceptionVO> exs = new ArrayList<ExceptionVO>();
+		for (Integer alarm : list) {
+			exs.add(new ExceptionVO(alarm));
+		}
+		return exs;
 	}
 
 	@Override
@@ -164,12 +188,12 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		}
 		if (communityids.size() == 0) {
 			List<Community> coms = communitydao.findAll();
-			int i=0;
+			int i = 0;
 			for (Community community : coms) {
 				System.out.println(community.getCommunityid());
 				communityids.add(community.getCommunityid());
 				i++;
-				if(i==4){
+				if (i == 4) {
 					break;
 				}
 			}
@@ -293,19 +317,19 @@ public class AlarmDataServiceBO implements AlarmDataService {
 	@Override
 	public void rmall(Integer communityId) {
 		List<AlarmData> list = null;
-		if(communityId==null){
-			//超管去除异常
+		if (communityId == null) {
+			// 超管去除异常
 			list = alarmdatadao.findUnresloved();
-		}else{
-			//社区管理员去除异常
+		} else {
+			// 社区管理员去除异常
 			List<String> dids = userdao.findAllCommondid(communityId);
-			if(dids.size()==0){
+			if (dids.size() == 0) {
 				return;
-			}else{
-			list = alarmdatadao.findUnreslovedByCid(dids);
+			} else {
+				list = alarmdatadao.findUnreslovedByCid(dids);
 			}
 		}
-		for(AlarmData alarmData:list){
+		for (AlarmData alarmData : list) {
 			alarmData.setHasresloved(1);
 			alarmdatadao.save(alarmData);
 		}

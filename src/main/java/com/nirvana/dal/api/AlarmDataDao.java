@@ -52,6 +52,8 @@ public interface AlarmDataDao extends JpaRepository<AlarmData, Integer> {
 	@Query("SELECT DISTINCT a.reasontype from AlarmData a")
 	List<Integer> findAlltype();
 
+	@Query("SELECT DISTINCT a.reasontype from AlarmData a WHERE a.did in :dids")
+	List<Integer> findAlltypebyCid(@Param("dids") List<String> dids);
 	/**
 	 * 查询相应报警类型的数据数目
 	 * @param alarmType
@@ -60,6 +62,9 @@ public interface AlarmDataDao extends JpaRepository<AlarmData, Integer> {
 	@Query("SELECT COUNT(*) FROM AlarmData a WHERE a.reasontype=:type")
 	Integer findTypeTimes(@Param("type") Integer alarmType);
 
+	@Query("SELECT COUNT(*) FROM AlarmData a WHERE a.reasontype=:type AND a.did in :dids")
+	Integer findTypeTimesByCid(@Param("type") Integer alarmType,@Param("dids") List<String> dids);
+	
 	/**
 	 * 查询一定时间段内 所有制定类型所有制定人员的报警数据
 	 * @param types
@@ -123,6 +128,7 @@ public interface AlarmDataDao extends JpaRepository<AlarmData, Integer> {
 	 */
 	@Query(value="SELECT a FROM AlarmData a WHERE a.did=:did")
 	List<AlarmData> findByDid(@Param("did") String useridentity);
+
 
 
 }

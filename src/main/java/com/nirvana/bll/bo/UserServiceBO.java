@@ -59,12 +59,15 @@ public class UserServiceBO implements UserService {
 		vo.setUserid(user.getUserid());
 		vo.setUsername(user.getUsername());
 		vo.setTypeid(user.getTypeid());
+		vo.setIdentity(user.getUseridentity());
+		vo.setUsertel(user.getUsertel());
 		//防止nullpoint
 		if (user.getCommunity() != null) {
 			vo.setCommunityid(user.getCommunity().getCommunityid());
 			vo.setCommunityname(user.getCommunity().getCommunityname());
 		}
 		vo.setState(user.getState());
+		vo.setAvatar(user.getAvatar());
 		return vo;
 	}
 
@@ -143,12 +146,12 @@ public class UserServiceBO implements UserService {
 		u.setFrequency(user.getFrequency());
 		u.setValid(user.getValid());
 		userdao.save(u);
-		List<Node> nodes = nodedao.findAllTypeByUid(user.getUserid());
-		for(Node node:nodes){
-			node.setFrequency(user.getFrequency());
-		}
-		nodedao.save(nodes);
-		
+//		List<Node> nodes = nodedao.findAllTypeByUid(user.getUserid());
+//		for(Node node:nodes){
+//			node.setFrequency(user.getFrequency());
+//		}
+//		nodedao.save(nodes);
+//		
 	}
 
 	@Override
@@ -175,7 +178,7 @@ public class UserServiceBO implements UserService {
 				vo.setLatestData(list.get(0).getData());
 				vo.setLastestTime(list.get(0).getStatus_change_time());
 			} else {
-				if (type == 4) {
+				if (type == 4||type==66) {
 					vo.setLatestData("暂无数据,暂无数据");
 				} else {
 					vo.setLatestData("暂无数据");
@@ -212,7 +215,7 @@ public class UserServiceBO implements UserService {
 							l2 = Integer.parseInt(v[1]);
 							vo.setLowTime(datas.get(i).getStatus_change_time());
 						}
-					} else {
+					}else {
 						if (Integer.parseInt(value) > h1) {
 							h1 = Integer.parseInt(value);
 							vo.setHighTime(datas.get(i).getStatus_change_time());
@@ -331,6 +334,7 @@ public class UserServiceBO implements UserService {
 			vo.setUserid(user.getUserid());
 			vo.setUsername(user.getUsername());
 			vo.setUsertel(user.getUsertel());
+			vo.setIdentity(user.getUseridentity());
 			if (user.getCommunity() != null) {
 				vo.setCommunityname(user.getCommunity().getCommunityname());
 				vo.setCommunityid(user.getCommunity().getCommunityid());

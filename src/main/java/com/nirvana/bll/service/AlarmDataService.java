@@ -44,7 +44,7 @@ public interface AlarmDataService {
 	 * 查找所有异常的出现的次数
 	 * @return
 	 */
-	List<ExceptionVO> findAllTimes();
+	List<ExceptionVO> findAllTimes(Integer communityid);
 
 	/**
 	 * 报警数据过滤器 根据条件筛选异常

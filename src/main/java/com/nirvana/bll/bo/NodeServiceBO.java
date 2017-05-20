@@ -86,4 +86,11 @@ public class NodeServiceBO implements NodeService {
 		nodedao.save(node);
 	}
 
+	@Override
+	public void setfreq(Integer nodeid, Integer freq) {
+		Node node = nodedao.findOne(nodeid);
+		node.setFrequency(freq);
+		nodedao.save(node);
+	}
+
 }
