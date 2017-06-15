@@ -121,7 +121,9 @@ response:
 		id
 	response
 		//置顶改为不置顶，不置顶改为置顶
-
+13.公告附件添加 /notice/upload
+	request:
+	response：
 ##节点模块##
 1. 获取节点 /node/list
 	request:
@@ -254,7 +256,8 @@ response:
 		default
 		
 3.上传图片 /case/upload
-		
+	request:
+	response:
 4.列出解决方案/case/list
 	request：
 	response: 
@@ -450,7 +453,11 @@ request jsonstr 格式：
 		exceptionId
 	response:
 		
-		
+4. 清除所有异常 /alarm/rmall
+	request:
+		communityId
+	response:
+	
 上传频率模块:
 1. 设置上传频率/user/setf
 	request:
@@ -986,8 +993,12 @@ response:
 	request:
 		consultId
 	response:
-		
 
+7. 创建咨询类型 /consult/typecreate		
+	request:
+		typename
+		communityid
+	response:
 +--------------------------------------------------------------------------------------------------+
 |--------------------------------------------------------------------------------------------------|
 |--------------------------------------------------------------------------------------------------|
@@ -1136,3 +1147,56 @@ response:
 改变节点状态 /node/cstatus
 		request： nodeid
 		responese：
+
+更新接口：
+ 注销账户：/logout
+ 		request
+		responese
+
+更改节点频率：/node/setfreq
+		request：
+			nodeid
+			freq
+		responese
+
+用户节点类型：/node/type	
+		request：
+			did
+		responese
+		
+根据did返回所有联系人  /linkman/mobilelist
+		request：
+			did
+		responese
+
+修改用户手机号 ：/user/changetel
+		request：
+			usertel
+		responese
+		
+用户是否已登录验证 /user/logincheck
+		request：
+		responese
+		
+用户冻结 ：/user/frozen
+		request：
+			userid
+		responese
+用户账户恢复：/user/recovery
+		request：
+			userid
+		responese
+注册用户删除：/user/registerdel
+		request：
+			userid
+		responese
+注册用户修改：/user/registeredit
+		request：
+			user
+		responese
+搜索用户：/user/search
+		request：
+			num
+			size
+			key
+		responese
