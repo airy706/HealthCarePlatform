@@ -79,7 +79,7 @@ public class UserController extends BaseController {
 		String attachurl = new String(url.getBytes("iso-8859-1"),"UTF-8");
 		int index =attachurl.lastIndexOf("/");
 		String filename = attachurl.substring(index+1);
-		FileInputStream fis = new FileInputStream("/usr/share/tomcat/webapps/Smartlab/upload/notice/"+filename);
+		FileInputStream fis = new FileInputStream(attachurl);
 		BufferedInputStream bis = new BufferedInputStream(fis);
 		byte[] bytes = new byte[bis.available()];
 		response.addHeader("Content-Disposition", "attachment;filename="+filename);
@@ -90,6 +90,18 @@ public class UserController extends BaseController {
 		bis.close();
 	}
 	
+	@RequestMapping("/showavatar")
+	public void showavatar(HttpServletRequest request,HttpServletResponse response,@RequestParam("url") String url) throws IOException{
+		String attachurl = new String(url.getBytes("iso-8859-1"),"UTF-8");
+		FileInputStream fis = new FileInputStream(attachurl);
+		BufferedInputStream bis = new BufferedInputStream(fis);
+		byte[] bytes = new byte[bis.available()];
+		response.setContentType("image/*");
+		OutputStream os = response.getOutputStream();
+		bis.read(bytes);
+		os.write(bytes);
+		bis.close();
+	}
 	
 	@RequestMapping("/logincheck")
 	public void logincheck(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -526,12 +538,14 @@ public class UserController extends BaseController {
 						if (file.getSize() > 200 * 1000) {
 							result = Result.getFailInstance("文件过大", null);
 						} else {
-							String realPath = request.getSession().getServletContext().getRealPath("/upload/avatar");
+							//String realPath = request.getSession().getServletContext().getRealPath("/upload/avatar");
+							String realPath ="/data/upload/avatar";
 							File uploadfile = new File(realPath, fileName);
 							//  不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉  
 							FileUtils.copyInputStreamToFile(file.getInputStream(), uploadfile);
-							String url = "http://139.199.76.64:8080" + request.getServletContext().getContextPath()
-									+ "/upload/avatar/" + fileName;
+//							String url = "http://139.199.76.64:8080" + request.getServletContext().getContextPath()
+//									+ "/upload/avatar/" + fileName;
+							String url = "/data/upload/avatar/" + fileName;
 							System.out.println(url);
 							result = Result.getSuccessInstance(url);
 						}

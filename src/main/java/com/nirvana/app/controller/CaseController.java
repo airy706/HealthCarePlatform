@@ -106,11 +106,13 @@ public class CaseController extends BaseController{
 						 *  file.transferTo(localFile);
 						 */
 						// 如果用的是Tomcat服务器，则文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\WEB-INF\\upload\\文件夹中  
-						String realPath = request.getSession().getServletContext().getRealPath("/upload/case");
+//						String realPath = request.getSession().getServletContext().getRealPath("/upload/case");
+						String realPath = "/data/upload/case";
 						File uploadfile = new File(realPath, fileName);
 						//  不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉  
 						FileUtils.copyInputStreamToFile(file.getInputStream(), uploadfile);
-						String url = "http://139.199.76.64:8080"+request.getServletContext().getContextPath() + "/upload/case/" + fileName;
+//						String url = "http://139.199.76.64:8080"+request.getServletContext().getContextPath() + "/upload/case/" + fileName;
+						String url = "/data/upload/case/" + fileName;
 						System.out.println(url);
 						Result result = Result.getSuccessInstance(url);
 						response.setContentType("text/html;charset=utf-8");
