@@ -17,22 +17,18 @@ public class SolutionCaseServiceBO implements SolutionCaseService {
 	@Autowired
 	private SolutionCaseDao solutioncasedao;
 
-	@Override
 	public void add(SolutionCase solutionCase) {
 		solutioncasedao.save(solutionCase);
 	}
 
-	@Override
 	public void delById(Integer id) {
 		solutioncasedao.delete(id);
 	}
 
-	@Override
 	public List<SolutionCase> findAll() {
 		return solutioncasedao.findAll();
 	}
 
-	@Override
 	public List<SolutionCaseVO> findShowSolutionCase() {
 		return SolutionCaseVO.toListVO(solutioncasedao.findShowSolutionCase());
 	}

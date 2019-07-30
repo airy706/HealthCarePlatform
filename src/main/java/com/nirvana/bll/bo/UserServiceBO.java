@@ -48,7 +48,6 @@ public class UserServiceBO implements UserService {
 	@Autowired
 	private CommunityDao communitydao;
 
-	@Override
 	public UserVO login(String account, String password) {
 		User user = userdao.findByAccountandPsd(account, password);
 		if (user == null) {
@@ -71,18 +70,15 @@ public class UserServiceBO implements UserService {
 		return vo;
 	}
 
-	@Override
 	public void add(User user) {
 		userdao.save(user);
 	}
 
-	@Override
 	public User findById(Integer id) {
 		User user = userdao.findOne(id);
 		return user;
 	}
 
-	@Override
 	public Page<User> findBykeypage(String key, Integer num, Integer size, Integer cid) {
 		//创建分页类
 		PageRequest request = this.buildPageRequest(num, size);
@@ -106,7 +102,6 @@ public class UserServiceBO implements UserService {
 		return new PageRequest(pageNumber - 1, pagzSize, null);
 	}
 
-	@Override
 	public void updateloc(String did, String longtitude, String latitude, Date updatetime) {
 		User user = userdao.findByDid(did);
 		//更新相应的用户
@@ -117,7 +112,6 @@ public class UserServiceBO implements UserService {
 	}
 
 	
-	@Override
 	public List<UserVO> findOnline(Integer cid) {
 		List<User> list = null;
 		if (cid == null) {
@@ -140,8 +134,8 @@ public class UserServiceBO implements UserService {
 		return volist;
 	}
 
-	@Override
 	public void setFrequency(User user) {
+		//防止横向越权,user最好从session中获取
 		User u = userdao.findOne(user.getUserid());
 		u.setFrequency(user.getFrequency());
 		u.setValid(user.getValid());
@@ -154,7 +148,6 @@ public class UserServiceBO implements UserService {
 //		
 	}
 
-	@Override
 	public List<NodeHomePageVO> findNodeDataByUid(Integer userid) {
 		User user = userdao.findOne(userid);
 		String did = user.getUseridentity();
@@ -239,7 +232,6 @@ public class UserServiceBO implements UserService {
 		return volist;
 	}
 
-	@Override
 	public UserVO getDetailByUid(Integer userid) {
 		User user = userdao.findOne(userid);
 		UserVO vo = new UserVO();
@@ -256,18 +248,17 @@ public class UserServiceBO implements UserService {
 		return vo;
 	}
 
-	@Override
 	public void regist(User user) {
 		user.setRegisttime(new Date());
 		user.setTypeid(3);
 		user.setFrequency(5);
 		user.setValid(0);
 		user.setState(1);
+		//todo 社区名无值
 		user.setUserapartment("");
 		userdao.save(user);
 	}
 
-	@Override
 	public UserVO findInfoByUid(Integer userid) {
 		User user = userdao.findOne(userid);
 		UserVO vo = new UserVO();
@@ -292,9 +283,10 @@ public class UserServiceBO implements UserService {
 	 * false; } }
 	 */
 
-	@Override
 	public void updateinfo(Integer userid, User user) {
+		//可以通过session获取当前用户的userID，
 		User u = userdao.findOne(userid);
+		//没有对密码做越权保护，最好先提交原密码与数据库原密码比较之后再修改
 		if (!"".equals(user.getPassword()) && user.getPassword() != null) {
 			u.setPassword(user.getPassword());
 		}
@@ -310,20 +302,17 @@ public class UserServiceBO implements UserService {
 		userdao.save(u);
 	}
 
-	@Override
 	public Integer getFrequencyByDid(String did) {
 		User user = userdao.findByDid(did);
 		return user.getFrequency();
 	}
 
-	@Override
 	public void updatePassword(Integer userid, String newPassword) {
 		User user = userdao.findOne(userid);
 		user.setPassword(newPassword);
 		userdao.save(user);
 	}
 
-	@Override
 	public List<UserVO> findManagersByKey(String key) {
 		List<User> list = userdao.findManagerByKey(key);
 		System.out.println(list.size());
@@ -346,7 +335,6 @@ public class UserServiceBO implements UserService {
 		return volist;
 	}
 
-	@Override
 	public void delByUid(Integer userid) {
 		User user = userdao.findOne(userid);
 		List<AlarmData> adatas = alarmdatadao.findByDid(user.getUseridentity());
@@ -360,7 +348,6 @@ public class UserServiceBO implements UserService {
 
 	}
 
-	@Override
 	public UserVO commonlogin(String account, String password) {
 		User user = userdao.findCommonByAccountAndPsd(account, password);
 		if (user == null) {
@@ -385,7 +372,6 @@ public class UserServiceBO implements UserService {
 		return vo;
 	}
 
-	@Override
 	public boolean didIsExist(String did) {
 		User user = userdao.findByDid(did);
 		if (user == null) {
@@ -395,7 +381,6 @@ public class UserServiceBO implements UserService {
 		}
 	}
 
-	@Override
 	public boolean accountIsExist(String account) {
 		User user = userdao.findByAccount(account);
 		if (user == null) {
@@ -405,13 +390,11 @@ public class UserServiceBO implements UserService {
 		}
 	}
 
-	@Override
 	public User findByDid(String did) {
 		User user = userdao.findByDid(did);
 		return user;
 	}
 
-	@Override
 	public List<UserVO> findAllByCid(Integer communityid) {
 		List<User> polist = userdao.findAllByCid(communityid);
 		List<UserVO> volist = new ArrayList<UserVO>();
@@ -424,14 +407,12 @@ public class UserServiceBO implements UserService {
 		return volist;
 	}
 
-	@Override
 	public Page<User> findRegisterByKey(String key, Integer size, Integer num) {
 		PageRequest request = this.buildPageRequest(num, size);
 		Page<User> page = userdao.findRegisterByKey(key, request);
 		return page;
 	}
 
-	@Override
 	public void updateregister(User user) {
 		User u = userdao.findOne(user.getUserid());
 		u.setUsername(user.getUsername());
@@ -443,21 +424,18 @@ public class UserServiceBO implements UserService {
 		userdao.save(u);
 	}
 
-	@Override
 	public void frozen(Integer userid) {
 		User user = userdao.findOne(userid);
 		user.setState(0);
 		userdao.save(user);
 	}
 
-	@Override
 	public void recovery(Integer userid) {
 		User user = userdao.findOne(userid);
 		user.setState(1);
 		userdao.save(user);
 	}
 
-	@Override
 	public void update(User user) {
 		userdao.save(user);
 	}

@@ -33,7 +33,6 @@ public class NodeListVO {
 			ArrayList<Node> nodelist = new ArrayList<Node>(nodes);
 			Collections.sort(nodelist, new Comparator<Node>() {
 
-				@Override
 				public int compare(Node o1, Node o2) {
 					if(o1.getNodeid()>o2.getNodeid()){
 						return 1;

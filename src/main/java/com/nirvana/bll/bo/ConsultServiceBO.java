@@ -35,7 +35,6 @@ public class ConsultServiceBO implements ConsultService {
 	@Autowired
 	private ConsultDao consultdao;
 
-	@Override
 	public List<ConsulttypeVO> findAllTypeByCid(Integer communityId, String key) {
 		List<Consulttype> list = null;
 		if (key == null || "".equals(key)) {
@@ -53,7 +52,6 @@ public class ConsultServiceBO implements ConsultService {
 		return volist;
 	}
 
-	@Override
 	public List<UserVO> findAskByCid(Integer communityId) {
 		List<User> list = userdao.findManagerByCid(communityId);
 		List<UserVO> volist = new ArrayList<UserVO>();
@@ -66,17 +64,14 @@ public class ConsultServiceBO implements ConsultService {
 		return volist;
 	}
 
-	@Override
 	public void addOne(Consult consult) {
 		consultdao.save(consult);
 	}
 
-	@Override
 	public void delById(Integer id) {
 		consultdao.delete(id);
 	}
 
-	@Override
 	public void finishByCid(Integer id) {
 		Consult consult = consultdao.findOne(id);
 		consult.setIsfinish(true);
@@ -85,23 +80,21 @@ public class ConsultServiceBO implements ConsultService {
 	}
 
 	// 可能需要添加 提交人的更改 todo
-	@Override
 	public void update(Consult consult) {
 		Consult old = consultdao.findOne(consult.getConsultid());
+		//old.setUser(consult.getUser());
 		old.setConsulttype(consult.getConsulttype());
 		old.setContent(consult.getContent());
 		old.setToask(consult.getToask());
 		consultdao.save(old);
 	}
 
-	@Override
 	public Page<Consult> findUndoByUid(Integer id, Integer num, Integer size) {
 		PageRequest request = this.buildPageRequest(num, size);
 		Page<Consult> page = consultdao.findUndoByUid(id, request);
 		return page;
 	}
 
-	@Override
 	public Page<Consult> findDoneByUid(Integer id, Integer num, Integer size) {
 		PageRequest request = this.buildPageRequest(num, size);
 		Page<Consult> page = consultdao.findDoneByUid(id, request);
@@ -112,7 +105,6 @@ public class ConsultServiceBO implements ConsultService {
 		return new PageRequest(pageNumber - 1, pagzSize, null);
 	}
 
-	@Override
 	public Page<Consult> findByKey(Integer communityid, String key, Integer num, Integer size, Integer isfinish) {
 		PageRequest request = this.buildPageRequest(num, size);
 		Page<Consult> pages=null;

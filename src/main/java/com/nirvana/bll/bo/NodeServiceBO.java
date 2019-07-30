@@ -24,13 +24,13 @@ public class NodeServiceBO implements NodeService {
 	@Autowired
 	private UserDao userdao;
 
-	@Override
 	public boolean add(String did, Integer nodetype) {
 		Node node = new Node();
 		User user = userdao.findByDid(did);
 		if (user == null) {
 			return false;
 		}
+		//判断是否已经有了该节点
 		Node n = nodedao.findByDidAndTypeid(did, nodetype);
 		if (n != null) {
 			return false;
@@ -64,7 +64,6 @@ public class NodeServiceBO implements NodeService {
 		return true;
 	}
 
-	@Override
 	public List<NodeVO> findAllByUid(Integer userid) {
 		List<Node> list = nodedao.findAllTypeByUid(userid);
 		List<NodeVO> volist = new ArrayList<NodeVO>();
@@ -75,7 +74,6 @@ public class NodeServiceBO implements NodeService {
 		return volist;
 	}
 
-	@Override
 	public void cstatus(Integer nodeid) {
 		Node node = nodedao.findOne(nodeid);
 		if(node.getNodestatus()==1){
@@ -86,7 +84,6 @@ public class NodeServiceBO implements NodeService {
 		nodedao.save(node);
 	}
 
-	@Override
 	public void setfreq(Integer nodeid, Integer freq) {
 		Node node = nodedao.findOne(nodeid);
 		node.setFrequency(freq);

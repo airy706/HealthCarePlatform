@@ -10,5 +10,5 @@ import org.springframework.context.annotation.ImportResource;
 //@EnableTransactionManagement
 //@EnableJpaRepositories(basePackages="com.nirvana.dal.api")
 public class SpringMvcConfig {
-	
+
 }

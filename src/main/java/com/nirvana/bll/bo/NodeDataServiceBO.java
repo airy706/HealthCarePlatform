@@ -33,13 +33,11 @@ public class NodeDataServiceBO implements NodeDataService {
 	// 压力坐垫 数据集合 修改
 	private String[] cushion = { "未在轮椅上", "正坐", "左倾", "右倾", "前倾", "后倾" };
 
-	@Override
 	public void addData(NodeData data) {
 		data = nodedatadao.save(data);
 
 	}
 
-	@Override
 	public NodeDataVO findByUidAndType(Integer userid, Integer sensortype, Date start, Date end) {
 		// 需要返回的vo
 		NodeDataVO vo = new NodeDataVO();

@@ -17,29 +17,24 @@ public class CommunityServiceBO implements CommunityService{
 	@Autowired
 	private CommunityDao communitydao;
 
-	@Override
 	public void add(Community community) {
 		communitydao.save(community);	
 	}
 
-	@Override
 	public void delById(Integer id) {
 		communitydao.delete(id);
 	}
 
-	@Override
 	public List<CommunityVO> findFuzzy(String key) {
 		List<Community> polist = communitydao.fuzzyQueryOrderByGBK(key);
 		return CommunityVO.toListVO(polist);
 	}
 
-	@Override
 	public Community findById(Integer id) {
 		Community community = communitydao.findOne(id);
 		return community;
 	}
 
-	@Override
 	public List<CommunityVO> findAll() {
 		List<Community> list =  communitydao.findAllOrderByGBK();
 		List<CommunityVO> polist = new ArrayList<CommunityVO>();	
@@ -49,7 +44,6 @@ public class CommunityServiceBO implements CommunityService{
 		return polist;
 	}
 
-	@Override
 	public List<CommunityVO> findAllNotEmpty() {
 		List<Community> list =  communitydao.findAllNotEmpty();
 		List<CommunityVO> polist = new ArrayList<CommunityVO>();	

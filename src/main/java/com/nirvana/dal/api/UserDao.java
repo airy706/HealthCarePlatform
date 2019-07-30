@@ -21,7 +21,7 @@ public interface UserDao extends JpaRepository<User, Integer> {
 	/**
 	 * 根据账户和密码查询用户
 	 * @param account 账户
-	 * @param password密码
+	 * @param password 密码
 	 * @return 查询符合的用户
 	 */
 	@Query("SELECT u FROM User u WHERE u.account=:account and u.password=:password")

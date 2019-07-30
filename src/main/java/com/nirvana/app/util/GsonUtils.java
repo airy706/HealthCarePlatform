@@ -19,11 +19,16 @@ public class GsonUtils {
 
 	public static Gson getDateFormatGson() {
 		gb.setDateFormat("yyyy-MM-dd HH:mm:ss");
+		//返回gson对象
 		return gb.create();
 	}
 
 	public static String toJson(Object o) {
 		return gb.create().toJson(o);
+	}
+
+	public static Object fromJson(String json,Class<?> tClass){
+		return gb.create().fromJson(json,tClass);
 	}
 
 }

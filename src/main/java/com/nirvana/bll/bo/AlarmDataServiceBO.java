@@ -55,7 +55,6 @@ public class AlarmDataServiceBO implements AlarmDataService {
 	/**
 	 * 在30min内同一种类型同一个人的报警数据不会再次发送
 	 */
-	@Override
 	public void addData(AlarmData data) {
 		data.setHasresloved(0);
 		PageRequest request = this.buildPageRequest(1, 1);
@@ -79,7 +78,6 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		}
 	}
 
-	@Override
 	public List<ExceptionVO> findAllRedo(Integer id) {
 		List<AlarmData> list = null;
 		List<ExceptionVO> exs = new ArrayList<ExceptionVO>();
@@ -103,7 +101,6 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		return exs;
 	}
 
-	@Override
 	public List<ExceptionVO> detect(Integer aid, Integer cid) {
 		// 获得网页上显示的最新的一条数据的时间
 		AlarmData data = alarmdatadao.findOne(aid);
@@ -127,7 +124,6 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		return exs;
 	}
 
-	@Override
 	public List<ExceptionVO> findAlltype() {
 		List<Integer> list = alarmdatadao.findAlltype();
 		List<ExceptionVO> exs = new ArrayList<ExceptionVO>();
@@ -137,7 +133,6 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		return exs;
 	}
 
-	@Override
 	public List<ExceptionVO> findAllTimes(Integer communityid) {
 		List<ExceptionVO> list = null;
 		if (communityid == null) {
@@ -161,16 +156,18 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		List<Integer> list = alarmdatadao.findAlltypebyCid(dids);
 		List<ExceptionVO> exs = new ArrayList<ExceptionVO>();
 		for (Integer alarm : list) {
+			//原因类型
 			exs.add(new ExceptionVO(alarm));
 		}
 		return exs;
 	}
-
-	@Override
+//社区ID、类型ID
 	public AlarmFilterVO findByFilter(String[] ids, String[] types, Date start, Date end) {
 		List<Integer> typesint = new ArrayList<Integer>();
 		List<Integer> communityids = new ArrayList<Integer>();
 		for (int i = 0; i < types.length; i++) {
+
+			//过滤掉空元素
 			if (!"".equals(types[i])) {
 				typesint.add(Integer.parseInt(types[i]));
 			}
@@ -193,6 +190,7 @@ public class AlarmDataServiceBO implements AlarmDataService {
 				System.out.println(community.getCommunityid());
 				communityids.add(community.getCommunityid());
 				i++;
+				//为什么为4 todo
 				if (i == 4) {
 					break;
 				}
@@ -203,16 +201,20 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		List<AlarmCommunityVO> data = new ArrayList<AlarmCommunityVO>();
 		for (Integer id : communityids) {
 			Community community = communitydao.findOne(id);
+			//names集合元素为社区名
 			names.add(community.getCommunityname());
 			AlarmCommunityVO datavo = new AlarmCommunityVO();
 			datavo.setName(community.getCommunityname());
+			//查询社区内所有普通用户的身份证
 			List<String> dids = userdao.findAllCommondid(id);
 			List<Integer> times = null;
 			if (dids.size() == 0) {
 				times = analyseTimes(null, start.getTime(), end.getTime());
 			} else {
+				//一定时间内指定类型集合与指定社区人群的警报数据
 				List<AlarmData> list = alarmdatadao.findFilter(typesint, dids, start, end);
 				System.out.println(list.toString());
+				//报警次数
 				times = analyseTimes(list, start.getTime(), end.getTime());
 				System.out.println("over");
 			}
@@ -223,8 +225,7 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		filtervo.setData(data);
 		return filtervo;
 	}
-
-	@Override
+//社区ID，用户ID集合，类型集合
 	public AlarmFilterVO findPeopleByFilter(String communityid, String[] ids, String[] types, Date start, Date end) {
 		List<Integer> typesint = new ArrayList<Integer>();
 		List<User> useridsint = new ArrayList<User>();
@@ -251,11 +252,14 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		List<String> names = new ArrayList<String>();
 		List<AlarmCommunityVO> data = new ArrayList<AlarmCommunityVO>();
 		for (User user : useridsint) {
+			//nmaes为用户姓名
 			names.add(user.getUsername());
 			AlarmCommunityVO datavo = new AlarmCommunityVO();
 			datavo.setName(user.getUsername());
 			List<Integer> times = null;
+			//一定时间内某个用户某些原因类型的报警数据
 			List<AlarmData> list = alarmdatadao.findPeopleFilter(typesint, user.getUseridentity(), start, end);
+			//每天的报警次数
 			times = analyseTimes(list, start.getTime(), end.getTime());
 			datavo.setData(times);
 			data.add(datavo);
@@ -264,27 +268,33 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		filtervo.setData(data);
 		return filtervo;
 	}
-
+//start与end之差要为1天的整倍数
+	//返回集合中每一元素为每天的报警次数
 	private List<Integer> analyseTimes(List<AlarmData> list, long start, long end) {
 
 		List<Integer> times = new ArrayList<Integer>();
 		long now = 0;
 		Integer count = 0;
 		int index = 0;
+		//警报数据集合为空，根据开始结束天数之差，在times集合中添加几个0元素
 		if (list == null || list.size() == 0) {
+			//天数
 			long num = (end - start) / (24 * 60 * 60 * 1000);
 			for (int i = 0; i < num; i++) {
 				times.add(0);
 			}
 			return times;
 		}
+		//警报数据集合非空，进入循环，根据数据上传时间差（大于或等于一天跳出二级循环）
+		// 分析一天的数据次数count，times添加该元素；start加上一天，count置0，继续下一次循环
+		//直到start与end相等退出循环
 		while (true) {
 			now = start;
 			count = 0;
 			for (; index < list.size(); index++) {
 				long test = list.get(index).getStatus_change_time().getTime();
 				long between = test - now;
-
+    			//间隔小于1天，次数加1
 				if (between < 24 * 60 * 60 * 1000) {
 					count++;
 				} else {
@@ -301,20 +311,17 @@ public class AlarmDataServiceBO implements AlarmDataService {
 		return times;
 	}
 
-	@Override
 	public void sloveByAid(Integer id) {
 		AlarmData data = alarmdatadao.findOne(id);
 		data.setHasresloved(1);
 		alarmdatadao.save(data);
 	}
 
-	@Override
 	public List<AlarmData> findUndoByDid(String did) {
 		List<AlarmData> list = alarmdatadao.findUndoByDid(did);
 		return list;
 	}
 
-	@Override
 	public void rmall(Integer communityId) {
 		List<AlarmData> list = null;
 		if (communityId == null) {

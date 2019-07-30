@@ -22,6 +22,8 @@ import org.hibernate.annotations.ColumnDefault;
  * @author Bin
  * 系统用户类 （超管，社管，普通用户）
  */
+
+import antlr.Token;
 @Entity
 @Table(name = "user")
 public class User {
@@ -42,16 +44,15 @@ public class User {
 	@Column(unique = true)
 	//身份证
 	private String useridentity;
-	//用户类型id 1-2-3
+	//用户类型id
 	private Integer typeid;
-	//经纬度
 	private String longtitude;
 	private String latitude;
 	private Integer valid;
 	//账户名
 	@Column(unique = true)
 	private String account;
-	//位置数据上传频率
+	//位置数据上传频率,1小时内5次
 	@ColumnDefault(value = "5")
 	private Integer frequency;
 	//最近登入时间
@@ -79,7 +80,20 @@ public class User {
 	//密码
 	private String password;
 	private Integer gender;
-	
+	private String token ;
+
+//	public User(String username, String usertel) {
+//		this.username = username;
+//		this.usertel = usertel;
+//	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
 	private Set<Relationship> relationships;
@@ -313,7 +327,7 @@ public class User {
 				+ logouttime + ", registtime=" + registtime + ", ipaddress=" + ipaddress + ", state=" + state
 				+ ", lastupdatetime=" + lastupdatetime + ", community=" + community + ", avatar=" + avatar
 				+ ", password=" + password + ", gender=" + gender + ", relationships=" + relationships + ", nodes="
-				+ nodes + ", notices=" + notices + "]";
+				+ nodes + ", notices=" + notices +", token" + token + "]";
 	}
 
 }

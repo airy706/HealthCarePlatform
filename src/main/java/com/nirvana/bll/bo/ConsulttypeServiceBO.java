@@ -16,12 +16,10 @@ public class ConsulttypeServiceBO implements ConsulttypeService {
 	@Autowired
 	private ConsulttypeDao typedao;
 
-	@Override
 	public void delById(Integer typeid) {
 		typedao.delete(typeid);
 	}
 
-	@Override
 	public void add(Consulttype consulttype) {
 		typedao.save(consulttype);
 	}

@@ -26,23 +26,19 @@ public class NoticeServiceBO implements NoticeService {
 	@Autowired
 	private UserDao userdao;
 
-	@Override
 	public void add(Notice notice) {
 		noticedao.save(notice);
 	}
 
-	@Override
 	public void delById(Integer id) {
 		noticedao.delete(id);
 	}
 
-	@Override
 	public List<NoticeVO> findAllList() {
 		List<Notice> polist = noticedao.findAll();
 		return NoticeVO.toVoList(polist);
 	}
 
-	@Override
 	public List<NoticeVO> findAdmin(Integer num,Integer size) {
 		PageRequest request = this.buildPageRequest(num, size);
 		Page<Notice> page1 = noticedao.queryAdminNotTop(request);
@@ -54,7 +50,6 @@ public class NoticeServiceBO implements NoticeService {
 		return NoticeVO.toVoList(list2);
 	}
 
-	@Override
 	public List<NoticeVO> findByCommunityId(Integer id) {
 		List<Notice> polist = noticedao.queryByCommunityId(id);
 		return NoticeVO.toVoList(polist);
@@ -64,7 +59,6 @@ public class NoticeServiceBO implements NoticeService {
 		return new PageRequest(pageNumber - 1, pagzSize, null);
 	}
 
-	@Override
 	public Page<Notice> findByTitleOrUn(String key, Integer num, Integer size, Integer communityid) {
 		PageRequest request = this.buildPageRequest(num, size);
 		Page<Notice> polist = null;
@@ -76,7 +70,6 @@ public class NoticeServiceBO implements NoticeService {
 		return polist;
 	}
 
-	@Override
 	public List<NoticeVO> findNoticeByUid(Integer userid,Integer num,Integer size) {
 		PageRequest request = this.buildPageRequest(num,size);
 		User user = userdao.findOne(userid);
@@ -126,7 +119,6 @@ public class NoticeServiceBO implements NoticeService {
 		return volist;
 	}
 
-	@Override
 	public NoticeVO findByNid(Integer noticeid) {
 		Notice notice = noticedao.findOne(noticeid);
 		if (notice == null) {
@@ -136,7 +128,6 @@ public class NoticeServiceBO implements NoticeService {
 		return vo;
 	}
 
-	@Override
 	public List<NoticeVO> findByDate(Date start, Date end) {
 		List<Notice> list = noticedao.findByDate(start, end);
 		List<NoticeVO> volist = new ArrayList<NoticeVO>();
@@ -147,7 +138,6 @@ public class NoticeServiceBO implements NoticeService {
 		return volist;
 	}
 
-	@Override
 	public void setTopByNid(Integer noticeid) {
 		Notice notice = noticedao.findOne(noticeid);
 		if(notice.isIstop()==true){

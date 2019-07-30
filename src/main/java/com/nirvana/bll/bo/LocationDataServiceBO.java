@@ -14,7 +14,6 @@ public class LocationDataServiceBO implements LocationDataSerivce {
 	@Autowired
 	private LocationDataDao locationdatadao;
 
-	@Override
 	public void addData(LocationData data) {
 			locationdatadao.save(data);
 	}

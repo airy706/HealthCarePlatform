@@ -17,22 +17,18 @@ public class ProductIntroServiceBO implements ProductIntroService{
 	@Autowired
 	private ProductIntroDao productintrodao;
 
-	@Override
 	public void add(ProductIntro intro) {
 		productintrodao.save(intro);
 	}
 
-	@Override
 	public void delById(Integer id) {
 		productintrodao.delete(id);
 	}
 
-	@Override
 	public List<ProductIntro> findAll() {
 		return productintrodao.findAll();
 	}
 
-	@Override
 	public List<ProductIntroVO> findShowProductIntro() {
 		return ProductIntroVO.toListVO(productintrodao.findShowProductIntro());
 	}

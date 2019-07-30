@@ -10,6 +10,7 @@ public class Result {
 	public static final String FAIL="failed";
 	
 	public static Result getFailInstance(String msg,Object result){
+		//失败状态、失败说明、失败的对象
 		Result r=new Result();
 		r.state=FAIL;
 		r.msg=msg;
@@ -18,6 +19,7 @@ public class Result {
 	}
 	
 	public static Result getSuccessInstance(Object result){
+		//成功的状态、成功的对象
 		Result r=new Result();
 		r.state=SUCCESS;
 		r.msg="";

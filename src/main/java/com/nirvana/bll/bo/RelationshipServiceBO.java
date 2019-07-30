@@ -18,17 +18,14 @@ public class RelationshipServiceBO implements RelationshipService {
 	@Autowired
 	private RelationshipDao relationshipdao;
 
-	@Override
 	public void add(Relationship ship) {
 		relationshipdao.save(ship);
 	}
 
-	@Override
 	public void delById(Integer id) {
 		relationshipdao.delete(id);
 	}
 
-	@Override
 	public List<LinkManVO> findAllByUid(Integer userid) {
 		List<Relationship> list = relationshipdao.findALLByUid(userid);
 		List<LinkManVO> volist = new ArrayList<LinkManVO>();
@@ -44,7 +41,6 @@ public class RelationshipServiceBO implements RelationshipService {
 		return volist;
 	}
 
-	@Override
 	public Relationship findOneByAccountAndPsd(String account, String password) {
 		Relationship ship = relationshipdao.findOneByAccountAndPsd(account,password);
 		if(ship==null){

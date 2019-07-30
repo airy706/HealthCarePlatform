@@ -23,6 +23,7 @@ public class CommunityVO {
 		this.communityid = community.getCommunityid();
 		this.communitylocation = community.getCommunitylocation();
 		this.communityname = community.getCommunityname();
+		
 		this.communitytel = community.getCommunitytel();
 		this.latitude = community.getLatitude();
 		this.longtitude = community.getLongtitude();

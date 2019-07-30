@@ -19,7 +19,7 @@ import com.nirvana.app.vo.*;
 import com.nirvana.bll.service.*;
 import com.nirvana.dal.po.*;
 
-import org.apache.catalina.core.ApplicationContext;
+//import org.apache.catalina.core.ApplicationContext;
 import org.dom4j.io.STAXEventReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
